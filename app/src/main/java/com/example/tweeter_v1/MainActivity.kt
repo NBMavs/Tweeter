@@ -13,17 +13,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //OPEN login activity
         buttonLogin.setOnClickListener {
             startActivity( Intent( this, LoginScreen::class.java ) )
         }
 
+        //OPEN create account activity
         buttonCreateAccount.setOnClickListener {
             startActivity( Intent( this, CreateAccount::class.java ) )
         }
-
-        val preferences = getSharedPreferences( "database" , Context.MODE_PRIVATE )
-        val savedFirstName = preferences.getString( "savedFirstName", "This value doesn't exist." )
-        d( "name", "First Name: $savedFirstName" );
 
     }
 }

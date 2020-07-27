@@ -11,6 +11,11 @@ class LoginScreen: AppCompatActivity() {
         setContentView( R.layout.login_screen )
 
         buttonSubmitLogin.setOnClickListener {
+
+            fun verifyLogin( ){
+                //Enter code here
+            }
+
         }
     }
 
