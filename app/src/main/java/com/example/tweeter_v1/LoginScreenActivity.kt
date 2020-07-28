@@ -13,17 +13,14 @@ class LoginScreen: AppCompatActivity() {
 
         buttonSubmitLogin.setOnClickListener {
 
+            startActivity( Intent( this, UserMenu::class.java ) )
+
             fun verifyLogin( ){
                 //Enter code here
             }
             //  IF (Login Valid) {
-            startActivity( Intent( this, RecordAudio::class.java ) )
             //  }
 
         }
     }
-
-
-
-
 }
