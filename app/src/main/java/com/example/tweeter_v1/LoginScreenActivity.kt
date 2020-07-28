@@ -16,7 +16,7 @@ class LoginScreen: AppCompatActivity() {
             fun verifyLogin( ){
                 //Enter code here
             }
-            //  IF (login valid) {
+            //  IF (Login Valid) {
             startActivity( Intent( this, RecordAudio::class.java ) )
             //  }
 
