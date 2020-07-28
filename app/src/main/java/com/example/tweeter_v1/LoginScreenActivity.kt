@@ -9,11 +9,16 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.create_account.*
 import kotlinx.android.synthetic.main.login_screen.*
 import kotlinx.android.synthetic.main.login_screen.editTextPassword
+import kotlinx.android.synthetic.main.login_screen.editTextEmailAddress as editTextEmailAddress1
+
+lateinit var auth: FirebaseAuth
+
 
 class LoginScreen: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView( R.layout.login_screen )
+       // auth = Firebase.auth
 
         buttonSubmitLogin.setOnClickListener {
 
@@ -24,25 +29,20 @@ class LoginScreen: AppCompatActivity() {
             Log.d("Login", "Attempt login with email/pw: $email/***")
 
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener()
-                {
-                    if(!it.isSuccessful)
-                    {
-                        Toast.makeText(this, "Login information incorrect!", Toast.LENGTH_SHORT).show()
-                        return@addOnCompleteListener
-                    }
-                    else
-                    {
-                        Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show()
-                        startActivity( Intent( this, UserMenu::class.java ) )
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d("Log in","signInWithEmail:success")
+                        startActivity(Intent(this, UserMenu::class.java))
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.d("Log in","signInWithEmail:failure", task.exception)
+                        Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
               //  .addOnFailureListener()
 
-       //     if( verifyLogin( email, password ) ){
-                //This opens User Menu after username & password validation
-    //            startActivity( Intent( this, UserMenu::class.java ) )   //Move into verifyLogin()
-      //      }
 
 
         }
