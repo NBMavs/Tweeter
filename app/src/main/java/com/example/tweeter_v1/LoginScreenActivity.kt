@@ -7,19 +7,44 @@ import kotlinx.android.synthetic.main.login_screen.*
 
 class LoginScreen: AppCompatActivity() {
 
+    fun usernameIsInFirebase( username: String ): Boolean{
+        //CODE HERE
+        return true
+    }
+
+    fun passwordMatchesUsernameAccount( username: String, password: String ): Boolean{
+        //RETURN TRUE or FALSE
+        return true
+    }
+
+    fun verifyLogin( username: String, password: String ): Boolean{
+        if ( (usernameIsInFirebase( username ) ) && ( passwordMatchesUsernameAccount( username, password ) ) ) {
+            //uploadAccountInformation( username )
+            return true
+        }
+        else{
+            //display red text message saying "Invalid username/password"
+            return false
+        }
+
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView( R.layout.login_screen )
 
         buttonSubmitLogin.setOnClickListener {
 
-            startActivity( Intent( this, UserMenu::class.java ) )
+            //Take user input username & password
+            var username = editTextUsernameLogin.text.toString()
+            var password = editTextPassword.text.toString()
 
-            fun verifyLogin( ){
-                //Enter code here
+            if( verifyLogin( username, password ) ){
+                //This opens User Menu after username & password validation
+                startActivity( Intent( this, UserMenu::class.java ) )   //Move into verifyLogin()
             }
-            //  IF (Login Valid) {
-            //  }
+
 
         }
     }
