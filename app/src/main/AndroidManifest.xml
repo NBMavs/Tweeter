@@ -23,6 +23,10 @@
         <activity android:name=".CreateAccount" />
         <activity android:name=".RecordAudio"/>
         <activity android:name=".UserMenu" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
