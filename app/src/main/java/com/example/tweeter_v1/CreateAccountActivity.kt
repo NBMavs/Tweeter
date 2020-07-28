@@ -56,13 +56,18 @@ class CreateAccount: AppCompatActivity() {
                 .addOnCompleteListener {
                     if (!it.isSuccessful)
                     {
-                        Log.d("Account", "Failed")
+                        Toast.makeText(this, "Account creation failed!", Toast.LENGTH_SHORT).show()
+                        Log.d("Create_Account", "Failed")
                         return@addOnCompleteListener
                     }
 
                     //else if successful
-                    Log.d("Account", "Successfully created user with uid: $(it.result.user.uid}")
-                }
+                    else
+                    {
+                        Toast.makeText(this, "Account creation successful!", Toast.LENGTH_SHORT).show()
+                        Log.d("Create_Account","Successfully created user with uid: $(it.result.user.uid}")
+                    }
+                    }
             //ELSE display errors over correlating text field(s)
 
         }
