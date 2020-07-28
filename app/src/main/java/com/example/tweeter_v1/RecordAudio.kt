@@ -9,51 +9,61 @@ import android.os.Environment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import kotlinx.android.synthetic.main.record_audio.*
+import android.widget.Toast
+import java.io.IOException
+import android.util.Log
+
+private const val LOG_TAG = "AudioRecordTest"
+
 
 
 class RecordAudio: AppCompatActivity() {
 
-    lateinit var mr : MediaRecorder
+    private var output: String? = null
+    private var mediaRecorder: MediaRecorder? = null
+    private var state: Boolean = false
+    private var recordingStopped: Boolean = false
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView( R.layout.record_audio )
 
-        button.isEnabled = false
-        button2.isEnabled = false
 
-        var path = Environment.getExternalStorageDirectory().toString()+"/myrec.3gp"
-        mr = MediaRecorder()
+        output = Environment.getExternalStorageDirectory().toString() + "/recording.3gp"
+//        output = "${externalCacheDir?.absolutePath}/audiorecordtest.3gp"
 
-        if(ActivityCompat.checkSelfPermission( this,Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED)
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE),  111)
-            button.isEnabled = true
+
+
+
 
         //Start recording
         button.setOnClickListener {
-            mr.setAudioSource(MediaRecorder.AudioSource.MIC)
-            mr.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-            mr.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB)
-            mr.setOutputFile(path)
-            mr.prepare()
-            mr.start()
-            button2.isEnabled = true
-            button.isEnabled = false
+
+            if (ActivityCompat.checkSelfPermission(this,
+                    Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                val permissions = arrayOf(android.Manifest.permission.RECORD_AUDIO, android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                ActivityCompat.requestPermissions(this, permissions,0)
+                button.isEnabled = true
+            } else {
+                startRecording()
+            }
+
+
         }
 
         //Stop recording
         button2.setOnClickListener {
-            mr.stop()
-            button.isEnabled = true
-            button2.isEnabled = false
+            stopRecording()
         }
 
         button3.setOnClickListener {
             var mp = MediaPlayer()
-            mp.setDataSource(path)
+            mp.setDataSource(output)
             mp.prepare()
             mp.start()
-
         }
     }
 
@@ -62,6 +72,40 @@ class RecordAudio: AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if(requestCode==111 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
             button.isEnabled = true
+    }
+
+    private fun startRecording() {
+        mediaRecorder = MediaRecorder()
+        mediaRecorder?.setAudioSource(MediaRecorder.AudioSource.MIC)
+        mediaRecorder?.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+        mediaRecorder?.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+        mediaRecorder?.setOutputFile(output)
+
+        try {
+            mediaRecorder?.prepare()
+            mediaRecorder?.start()
+            state = true
+            Toast.makeText(this, "Recording started!", Toast.LENGTH_SHORT).show()
+        } catch (e: IllegalStateException) {
+            Toast.makeText(this, "Illegal State Exception!", Toast.LENGTH_SHORT).show()
+            e.printStackTrace()
+        } catch (e: IOException) {
+            Toast.makeText(this, "IO Exception!", Toast.LENGTH_SHORT).show()
+            e.printStackTrace()
+        }
+
+    }
+
+
+    private fun stopRecording(){
+        if(state){
+            mediaRecorder?.stop()
+            mediaRecorder?.release()
+            state = false
+            Toast.makeText(this, "Recording stopped!", Toast.LENGTH_SHORT).show()
+        }else{
+            Toast.makeText(this, "You are not recording right now!", Toast.LENGTH_SHORT).show()
+        }
     }
 
 }
