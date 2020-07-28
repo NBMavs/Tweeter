@@ -37,7 +37,7 @@ class LoginScreen: AppCompatActivity() {
         buttonSubmitLogin.setOnClickListener {
 
             //Take user input username & password
-            var username = editTextUsernameLogin.text.toString()
+            var username = editTextEmailLogin.text.toString()
             var password = editTextPassword.text.toString()
 
             if( verifyLogin( username, password ) ){
