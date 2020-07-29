@@ -1,10 +1,13 @@
 package com.example.tweeter_v1
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.create_account.*
 
 class CreateAccount: AppCompatActivity() {
@@ -48,8 +51,6 @@ class CreateAccount: AppCompatActivity() {
             Log.d("Create_Account", "Last Name is: " + lastName)
             Log.d("Create_Account", "Email Address is: " + email)
             Log.d("Create_Account", "Username is: " + username)
-            Log.d("Create_Account", "Password is: " + password)
-            Log.d("Create_Account", "First Name is: " + passwordConfirm)
 
             //IF account information is valid, add information to database
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
@@ -65,11 +66,17 @@ class CreateAccount: AppCompatActivity() {
                     else
                     {
                         Toast.makeText(this, "Account creation successful!", Toast.LENGTH_SHORT).show()
-                        Log.d("Create_Account","Successfully created user with uid: $(it.result.user.uid}")
+                        val user = Firebase.auth.currentUser
+                        user!!.sendEmailVerification()
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    Log.d("Create_Account","Email sent.")
+                                }
+                            }
+                        Log.d("Create_Account","Successfully created user with uid: $it.result.user.uid ")
+                        setContentView( R.layout.login_screen )
                     }
-                    }
-            //ELSE display errors over correlating text field(s)
-
+                }
         }
     }
 
