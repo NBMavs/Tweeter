@@ -18,28 +18,32 @@ class UserMenu: AppCompatActivity() {
         //Removes functionality of back button for this page. Back button stays on same page at MainMenu
         onBackPressedDispatcher.addCallback { this }
 
-        buttonRecordAudio.setOnClickListener {
+        buttonManageAccount.setOnClickListener {
             //Open AUDIO RECORDER
-            startActivity( Intent( this, RecordAudio::class.java ) )
+            startActivity(Intent(this, ManageAccount::class.java))
+
+            buttonRecordAudio.setOnClickListener {
+                //Open AUDIO RECORDER
+                startActivity(Intent(this, RecordAudio::class.java))
+
+            }
+            buttonBirdBook.setOnClickListener {
+                //OPEN BIRD BOOK
+                startActivity(Intent(this, BirdBookActivity::class.java))
+
+            }
+            buttonViewMap.setOnClickListener {
+                //OPEN MAP
+                startActivity(Intent(this, ViewMapActivity::class.java))
+
+            }
+            buttonLogout.setOnClickListener {
+                //Do firebase stuff/logout account
+                //OPEN main_activity
+                startActivity(Intent(this, MainActivity::class.java))
+
+            }
 
         }
-        buttonBirdBook.setOnClickListener {
-            //OPEN BIRD BOOK
-            startActivity( Intent( this, BirdBookActivity::class.java ) )
-
-        }
-        buttonViewMap.setOnClickListener {
-            //OPEN MAP
-            startActivity( Intent( this, ViewMapActivity::class.java ) )
-
-        }
-        buttonLogout.setOnClickListener{
-            //Do firebase stuff/logout account
-            //OPEN main_activity
-            startActivity( Intent( this, MainActivity::class.java ) )
-
-        }
-
-
     }
 }

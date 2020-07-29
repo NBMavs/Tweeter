@@ -18,6 +18,19 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:id="@+id/buttonManageAccount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:text="Manage Account"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+
+    <Button
         android:id="@+id/buttonRecordAudio"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -26,8 +39,8 @@
         android:layout_marginEnd="16dp"
         android:text="Record Audio"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintStart_toStartOf="@+id/buttonManageAccount"
+        app:layout_constraintTop_toBottomOf="@+id/buttonManageAccount" />
 
     <Button
         android:id="@+id/buttonViewMap"
