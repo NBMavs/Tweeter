@@ -11,7 +11,6 @@ import androidx.core.app.ActivityCompat
 import kotlinx.android.synthetic.main.record_audio.*
 import android.widget.Toast
 import java.io.IOException
-import android.util.Log
 
 private const val LOG_TAG = "AudioRecordTest"
 
@@ -39,14 +38,14 @@ class RecordAudio: AppCompatActivity() {
 
 
         //Start recording
-        button.setOnClickListener {
+        buttonViewMap.setOnClickListener {
 
             if (ActivityCompat.checkSelfPermission(this,
                     Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 val permissions = arrayOf(android.Manifest.permission.RECORD_AUDIO, android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE)
                 ActivityCompat.requestPermissions(this, permissions,0)
-                button.isEnabled = true
+                buttonViewMap.isEnabled = true
             } else {
                 startRecording()
             }
@@ -71,7 +70,7 @@ class RecordAudio: AppCompatActivity() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if(requestCode==111 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-            button.isEnabled = true
+            buttonViewMap.isEnabled = true
     }
 
     private fun startRecording() {

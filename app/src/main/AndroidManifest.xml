@@ -23,6 +23,8 @@
         <activity android:name=".CreateAccount" />
         <activity android:name=".RecordAudio"/>
         <activity android:name=".UserMenu" />
+        <activity android:name=".BirdBookActivity" />
+        <activity android:name=".ViewMapActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
