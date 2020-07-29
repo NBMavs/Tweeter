@@ -17,7 +17,6 @@ class UserMenu: AppCompatActivity() {
         //Removes functionality of back button for this page. Back button stays on same page at MainMenu
         onBackPressedDispatcher.addCallback { this }
 
-
         buttonManageAccount.setOnClickListener {
             //Open ACCOUNT MANAGEMENT
             startActivity(Intent(this, ManageAccount::class.java))
