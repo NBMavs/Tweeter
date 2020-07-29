@@ -28,6 +28,11 @@ class LoginScreen: AppCompatActivity() {
             val email = editTextEmailAddress.text.toString()
             val password = editTextPassword.text.toString()
 
+            if (email.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "Please enter an email AND a password.", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
             Log.d("Login", "Attempt login with email/pw: $email/***")
 
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
@@ -52,6 +57,11 @@ class LoginScreen: AppCompatActivity() {
 
             //Take user input username & password
             val email = editTextEmailAddress.text.toString()
+
+            if (email.isEmpty()) {
+                Toast.makeText(this, "Please enter an email.", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
 
             Log.d("Forgot Password", "Forgot Password with email: $email")
 
