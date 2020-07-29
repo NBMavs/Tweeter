@@ -9,7 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.create_account.*
 import kotlinx.android.synthetic.main.login_screen.*
 import kotlinx.android.synthetic.main.login_screen.editTextPassword
-import kotlinx.android.synthetic.main.login_screen.editTextEmailAddress as editTextEmailAddress1
+import kotlinx.android.synthetic.main.login_screen.editTextEmailLogin as editTextEmailAddress1
 
 lateinit var auth: FirebaseAuth
 
