@@ -65,7 +65,7 @@ class ManageAccount: AppCompatActivity() {
                 user!!.updateEmail(email)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            user!!.sendEmailVerification()
+                            user.sendEmailVerification()
                                 .addOnCompleteListener { task ->
                                     if (task.isSuccessful) {
                                         Log.d("Profile_Update","Email sent.")

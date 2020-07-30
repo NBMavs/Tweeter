@@ -68,7 +68,7 @@ class CreateAccount: AppCompatActivity() {
                                     val profileUpdates = userProfileChangeRequest {
                                         displayName = username
                                     }
-                                    user!!.updateProfile(profileUpdates)
+                                    user.updateProfile(profileUpdates)
                                         .addOnCompleteListener { task ->
                                             if (task.isSuccessful) {
                                                 Log.d("Create_Account","User profile updated.")
