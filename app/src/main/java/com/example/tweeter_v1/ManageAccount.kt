@@ -47,7 +47,7 @@ class ManageAccount: AppCompatActivity() {
                 user!!.updateProfile(profileUpdates)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            Log.d("Profile_Update","User profile updated.")
+                            Log.d("Profile_Update","Username updated to $username.")
                         }
                     }
             }
@@ -78,23 +78,30 @@ class ManageAccount: AppCompatActivity() {
         }
 
         buttonChangePassword.setOnClickListener {
-            val username = editTextChangeUsername.text.toString()
+            val newpassword = editTextChangePassword.text.toString()
+            val newpassconfirm = editTextChangePasswordConfirm.text.toString()
 
-            if(username.isEmpty()) {
-                Toast.makeText(this, "Please enter a new username.", Toast.LENGTH_LONG).show()
-                return@setOnClickListener
+            if(newpassword != newpassconfirm) {
+            Toast.makeText(this, "Password and Password Confirm must match completely.", Toast.LENGTH_LONG).show()
+            return@setOnClickListener
             }
-            else
-            {
-                val profileUpdates = userProfileChangeRequest {
-                    displayName = username
+            else {
+                if (newpassword.isEmpty() || newpassconfirm.isEmpty()) {
+                    Toast.makeText(
+                        this,
+                        "Both password and new password must be entered.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    return@setOnClickListener
                 }
-                user!!.updateProfile(profileUpdates)
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            Log.d("Profile_Update","User profile updated.")
+                else {
+                    user!!.updatePassword(newpassword)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                Log.d("Profile_Update", "User password updated.")
+                            }
                         }
-                    }
+                }
             }
         }
 

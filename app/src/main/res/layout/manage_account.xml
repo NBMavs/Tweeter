@@ -35,8 +35,8 @@
         android:id="@+id/buttonChangePassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="28dp"
         android:text="Change Password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextChangePasswordConfirm" />
@@ -46,7 +46,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="212dp"
+        android:layout_marginTop="184dp"
         android:layout_marginEnd="24dp"
         android:ems="10"
         android:hint="Old Password"
@@ -61,12 +61,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:ems="10"
         android:hint="New Password"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextOldPassword" />
 
@@ -75,7 +76,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="24dp"
         android:ems="10"
         android:hint="Confirm New Password"
@@ -103,7 +104,7 @@
         android:id="@+id/textViewManageAccountHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="4dp"
         android:text="MANAGE ACCOUNT"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -123,8 +124,8 @@
 
     <TextView
         android:id="@+id/textViewEmailCurrent"
-        android:layout_width="180dp"
-        android:layout_height="25dp"
+        android:layout_width="187dp"
+        android:layout_height="29dp"
         android:layout_marginStart="112dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/editTextChangeEmail"
@@ -136,12 +137,12 @@
         android:id="@+id/buttonChangeEmail"
         android:layout_width="139dp"
         android:layout_height="46dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginBottom="20dp"
         android:text="Change Email"
         app:layout_constraintBottom_toTopOf="@+id/editTextOldPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextChangeEmail"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
