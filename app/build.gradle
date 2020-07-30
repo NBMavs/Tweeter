@@ -38,7 +38,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx:19.3.2'   // Firebase Auth KTX
     implementation 'com.google.firebase:firebase-core:17.4.4'       // Firebase Core
     implementation 'com.google.firebase:firebase-config:19.2.0'     // Firebase Config
-    implementation 'com.google.firebase:firebase-firestore:21.5.0'  // Firebase DB Storage
+    implementation 'com.google.firebase:firebase-firestore:21.5.0'
+    implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'// Firebase DB Storage
 
 
 
@@ -53,5 +55,15 @@ dependencies {
 
     //Material.io
     implementation 'com.google.android.material:material:1.1.0'
+
+    //CoordinatorLayout
+    implementation "androidx.coordinatorlayout:coordinatorlayout:1.1.0"
+
+
+
+
+
+
+
 
 }

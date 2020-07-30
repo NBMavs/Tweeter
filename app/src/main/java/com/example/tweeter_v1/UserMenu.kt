@@ -25,7 +25,9 @@ class UserMenu: AppCompatActivity() {
         }
         buttonRecordAudio.setOnClickListener {
             //Open AUDIO RECORDER
-            startActivity(Intent(this, RecordAudio::class.java))
+            val intent = Intent(this, RecordFragment::class.java)
+            startActivity(intent)
+            //startActivity(Intent(this, RecordAudio::class.java))
 
         }
         buttonBirdBook.setOnClickListener {
