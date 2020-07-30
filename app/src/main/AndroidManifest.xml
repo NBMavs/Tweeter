@@ -26,6 +26,8 @@
         <activity android:name=".BirdBookActivity" />
         <activity android:name=".ViewMapActivity" />
         <activity android:name=".ManageAccount" />
+        <activity android:name=".RecordingBrowser" />
+
 
 
         <meta-data

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 
@@ -26,7 +27,7 @@ class RecordFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
-        view.findViewById<Button>(R.id.record_list_btn).setOnClickListener(this)
+        view.findViewById<ImageButton>(R.id.record_list_btn).setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
