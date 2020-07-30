@@ -10,14 +10,12 @@ import kotlinx.android.synthetic.main.user_menu.*
 
 class UserMenu: AppCompatActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView( R.layout.user_menu )
 
         //Removes functionality of back button for this page. Back button stays on same page at MainMenu
         onBackPressedDispatcher.addCallback { this }
-
 
         buttonManageAccount.setOnClickListener {
             //Open ACCOUNT MANAGEMENT

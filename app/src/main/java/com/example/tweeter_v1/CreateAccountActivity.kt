@@ -20,19 +20,14 @@ class CreateAccount: AppCompatActivity() {
         buttonCreateAccountSubmit.setOnClickListener {
 
             //add user account information
-            val firstName = editTextFirstName.text.toString()
-            val lastName = editTextLastName.text.toString()
             val email = editTextEmailAddress.text.toString()
             val username = editTextUsernameCreateAccount.text.toString()
             val password = editTextPassword.text.toString()
             val passwordConfirm = editTextPasswordConfirm.text.toString()
 
             //Verify account information is valid
-            if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || username.isEmpty() || password.isEmpty() || passwordConfirm.isEmpty())
+            if (email.isEmpty() || username.isEmpty() || password.isEmpty() || passwordConfirm.isEmpty())
             {
-                if (firstName.isEmpty() || lastName.isEmpty())
-                    Toast.makeText(this, "Please input your name.", Toast.LENGTH_SHORT).show()
-
                 if (email.isEmpty())
                     Toast.makeText(this, "Please input your email.", Toast.LENGTH_SHORT).show()
 
@@ -48,8 +43,6 @@ class CreateAccount: AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            Log.d("Create_Account", "First Name is: " + firstName)
-            Log.d("Create_Account", "Last Name is: " + lastName)
             Log.d("Create_Account", "Email Address is: " + email)
             Log.d("Create_Account", "Username is: " + username)
 
