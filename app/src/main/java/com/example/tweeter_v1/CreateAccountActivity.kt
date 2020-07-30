@@ -31,8 +31,14 @@ class CreateAccount: AppCompatActivity() {
                 if (email.isEmpty())
                     Toast.makeText(this, "Please input your email.", Toast.LENGTH_SHORT).show()
 
+                if (username.isEmpty())
+                    Toast.makeText(this, "Please input a username.", Toast.LENGTH_SHORT).show()
+
                 if (password.isEmpty())
                     Toast.makeText(this, "Please input a password.", Toast.LENGTH_SHORT).show()
+
+                if (passwordConfirm.isEmpty())
+                    Toast.makeText(this, "Please confirm your password.", Toast.LENGTH_SHORT).show()
 
                             return@setOnClickListener
             }

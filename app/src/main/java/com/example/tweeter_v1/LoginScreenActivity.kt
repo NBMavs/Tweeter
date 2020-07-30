@@ -69,8 +69,6 @@ class LoginScreen: AppCompatActivity() {
                 .addOnCompleteListener{ task ->
                     if (task.isSuccessful) {
                         Log.d("Forgot Password", "Email sent.")
-                        Toast.makeText(baseContext, "Reset link sent to your email.", Toast.LENGTH_LONG).show()
-
                     }
                  else {
                         // If sign in fails, display a message to the user.
@@ -79,6 +77,9 @@ class LoginScreen: AppCompatActivity() {
                     }
                 }
             //  .addOnFailureListener()
+
+
+
         }
     }
 }

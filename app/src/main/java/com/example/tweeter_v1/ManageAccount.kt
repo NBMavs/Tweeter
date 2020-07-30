@@ -29,9 +29,6 @@ class ManageAccount: AppCompatActivity() {
         }
 
 
-
-
-
         buttonChangeUsername.setOnClickListener {
             val username = editTextChangeUsername.text.toString()
 
@@ -48,6 +45,7 @@ class ManageAccount: AppCompatActivity() {
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             Log.d("Profile_Update","Username updated to $username.")
+                            Toast.makeText(this, "Username updated to $username", Toast.LENGTH_LONG).show()
                         }
                     }
             }
@@ -72,14 +70,19 @@ class ManageAccount: AppCompatActivity() {
                                     }
                                 }
                             Log.d("Profile_Update","User email updated to $email.")
+                            Toast.makeText(this, "User email updated to $email. Verification email sent.", Toast.LENGTH_LONG).show()
                         }
+                        else
+                            Toast.makeText(this, "Email authentication failed, please enter a full email address.", Toast.LENGTH_LONG).show()
                     }
             }
         }
 
         buttonChangePassword.setOnClickListener {
+            val oldpassword = editTextOldPassword.text.toString()
             val newpassword = editTextChangePassword.text.toString()
             val newpassconfirm = editTextChangePasswordConfirm.text.toString()
+
 
             if(newpassword != newpassconfirm) {
             Toast.makeText(this, "Password and Password Confirm must match completely.", Toast.LENGTH_LONG).show()
@@ -87,11 +90,7 @@ class ManageAccount: AppCompatActivity() {
             }
             else {
                 if (newpassword.isEmpty() || newpassconfirm.isEmpty()) {
-                    Toast.makeText(
-                        this,
-                        "Both password and new password must be entered.",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    Toast.makeText(this,"Both password and new password must be entered.",Toast.LENGTH_LONG).show()
                     return@setOnClickListener
                 }
                 else {
@@ -99,12 +98,11 @@ class ManageAccount: AppCompatActivity() {
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
                                 Log.d("Profile_Update", "User password updated.")
+                                Toast.makeText(this,"User password updated.",Toast.LENGTH_LONG).show()
                             }
                         }
                 }
             }
         }
-
-        //ADD functionality here!
     }
 }
