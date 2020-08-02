@@ -40,7 +40,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-config:19.2.0'     // Firebase Config
     implementation 'com.google.firebase:firebase-firestore:21.5.0'
     implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'// Firebase DB Storage
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'        // Firebase DB Storage
+    implementation 'com.firebaseui:firebase-ui-auth:6.2.0'          // Firebase UI Authentication - Twitter Login
+    implementation 'com.twitter.sdk.android:twitter-core:3.1.1'       // Twitter Authentication
 
 
 

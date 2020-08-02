@@ -83,6 +83,10 @@ class ManageAccount: AppCompatActivity() {
             val newpassword = editTextChangePassword.text.toString()
             val newpassconfirm = editTextChangePasswordConfirm.text.toString()
 
+            if(oldpassword.isEmpty()) {
+                Toast.makeText(this, "Must enter old password.", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
 
             if(newpassword != newpassconfirm) {
             Toast.makeText(this, "Password and Password Confirm must match completely.", Toast.LENGTH_LONG).show()

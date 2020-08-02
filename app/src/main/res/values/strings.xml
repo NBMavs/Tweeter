@@ -2,4 +2,7 @@
     <string name="app_name">Tweeter_V1</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Twitter consumer key and secret -->
+    <string name="twitter_consumer_key" translatable="false">qrTHvnZSew4Y35cpYgrcD1r44</string>
+    <string name="twitter_consumer_secret" translatable="false">A0JoV26odZIr0LZX9D2EHz7wsczSv9ch5g3Urqr7U938aZ2o3r</string>
 </resources>

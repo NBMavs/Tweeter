@@ -14,6 +14,5 @@
         android:layout_height="match_parent"
         android:fontFamily="@font/alex_brush"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/nav_graph"
-        />
+        app:navGraph="@navigation/nav_graph" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
