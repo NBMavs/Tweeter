@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#2196F3">
@@ -60,6 +61,17 @@
         app:layout_constraintEnd_toEndOf="@+id/buttonViewMap"
         app:layout_constraintStart_toStartOf="@+id/buttonViewMap"
         app:layout_constraintTop_toBottomOf="@+id/buttonViewMap" />
+
+    <Button
+        android:id="@+id/buttonTempVerify"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Verify Classification"
+        app:layout_constraintEnd_toEndOf="@+id/buttonViewMap"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/buttonViewMap"
+        app:layout_constraintTop_toBottomOf="@+id/buttonBirdBook" />
 
     <Button
         android:id="@+id/buttonTwitterLogin1"

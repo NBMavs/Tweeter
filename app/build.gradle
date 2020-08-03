@@ -43,6 +43,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:21.5.0'
     implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'        // Firebase DB Storage
+    implementation 'com.google.firebase:firebase-database-ktx:19.3.1'   // Firebase Database
 
     // Twitter Stuff
     implementation 'com.firebaseui:firebase-ui-auth:6.2.0'          // Firebase UI Authentication - Twitter Login
@@ -51,7 +52,8 @@ dependencies {
     implementation 'org.twitter4j:twitter4j-core:4.0.7'                         // Twitter
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.5'     // Twitter
 
-    implementation 'com.google.android.gms:play-services-location:17.0.0'       // Location Services
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation 'androidx.work:work-runtime:2.2.0'// Location Services
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

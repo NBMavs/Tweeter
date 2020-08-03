@@ -17,7 +17,7 @@
         android:layout_marginEnd="24dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Hey everybody, I just verified a bird using tweeter at"
+        android:text="@string/hey_everybody_i_just_verified_a_bird_using_tweeter_at"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"

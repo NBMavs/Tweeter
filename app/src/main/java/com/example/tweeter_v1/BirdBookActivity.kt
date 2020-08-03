@@ -17,14 +17,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.google.android.gms.location.FusedLocationProviderClient
 import kotlinx.android.synthetic.main.bird_book.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
-
-private lateinit var fusedLocationClient: FusedLocationProviderClient
 
 
 class BirdBookActivity: AppCompatActivity() {

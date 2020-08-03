@@ -56,6 +56,14 @@ class UserMenu: AppCompatActivity() {
             startActivity(Intent(this, ViewMapActivity::class.java))
 
         }
+
+        buttonTempVerify.setOnClickListener {
+            //Verify Classification Window
+            startActivity(Intent(this, VerifyClassification::class.java))
+
+        }
+
+
         buttonLogout.setOnClickListener {
             //Do firebase stuff/logout account
             FirebaseAuth.getInstance().signOut()    // Sign user out of system
