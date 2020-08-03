@@ -26,6 +26,7 @@ android {
 }
 
 ext.kotlin_version = '1.3.72'
+
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -49,6 +50,8 @@ dependencies {
     implementation 'com.twitter.sdk.android:twitter:3.1.1'          // Twitter SDK
     implementation 'org.twitter4j:twitter4j-core:4.0.7'                         // Twitter
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.5'     // Twitter
+
+    implementation 'com.google.android.gms:play-services-location:17.0.0'       // Location Services
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

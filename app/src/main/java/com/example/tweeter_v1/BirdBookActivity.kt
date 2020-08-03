@@ -1,8 +1,13 @@
 package com.example.tweeter_v1
 
+import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
@@ -10,28 +15,24 @@ import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.OAuthProvider
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import com.google.android.gms.location.FusedLocationProviderClient
 import kotlinx.android.synthetic.main.bird_book.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
 
-
-var provider = OAuthProvider.newBuilder("twitter.com")
-
-var firebaseUser = Firebase.auth.currentUser
-val user = Firebase.auth.currentUser!!
+private lateinit var fusedLocationClient: FusedLocationProviderClient
 
 
 class BirdBookActivity: AppCompatActivity() {
 
-    fun shareTwitter(message:Editable) {
+    fun shareTwitter(message: Editable, CurLoc: String) {
             val tweetIntent = Intent(Intent.ACTION_SEND)
-            tweetIntent.putExtra(Intent.EXTRA_TEXT, message.toString())
+            val c = message.toString() + " " +  CurLoc
+            tweetIntent.putExtra(Intent.EXTRA_TEXT, c)
             tweetIntent.setType("text/plain")
             val packManager = getPackageManager()
             val resolvedInfoList = packManager.queryIntentActivities(tweetIntent, PackageManager.MATCH_DEFAULT_ONLY)
@@ -76,11 +77,21 @@ class BirdBookActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.bird_book)
 
+        var CurLoc = "Lat, Long"
+
+        LocationHelper().startListeningUserLocation(this , object : LocationHelper.MyLocationListener {
+            override fun onLocationChanged(location: Location) {
+                // Here you got user location :)
+                CurLoc = location.latitude.toString() + "," + location.longitude.toString()
+                Log.d("Location","" + location.latitude + "," + location.longitude)
+            }
+        })
+
         val message = editTextTweet.text
 
         val buttonIntentTweet: Button = findViewById(R.id.buttonIntentTweet)
         buttonIntentTweet.setOnClickListener {
-            shareTwitter(message)
+            shareTwitter(message, CurLoc)
         }
 
         suspend fun getUserProfile() {
@@ -110,6 +121,45 @@ class BirdBookActivity: AppCompatActivity() {
             val sharedPref = this.getPreferences(Context.MODE_PRIVATE)
             sharedPref.edit().putString("oauth_token", accToken?.token ?: "").apply()
             sharedPref.edit().putString("oauth_token_secret", accToken?.tokenSecret ?: "").apply()
+        }
+    }
+
+    class LocationHelper {
+
+        val LOCATION_REFRESH_TIME = 3000 // 3 seconds. The Minimum Time to get location update
+        val LOCATION_REFRESH_DISTANCE = 30 // 30 meters. The Minimum Distance to be changed to get location update
+        val MY_PERMISSIONS_REQUEST_LOCATION = 100
+
+        var myLocationListener: MyLocationListener? = null
+
+        interface MyLocationListener {
+            fun onLocationChanged(location: Location)
+        }
+
+        fun startListeningUserLocation(context: Context, myListener: MyLocationListener) {
+            myLocationListener = myListener
+
+            val mLocationManager = context.getSystemService(LOCATION_SERVICE) as LocationManager
+
+            val mLocationListener = object : LocationListener {
+                override fun onLocationChanged(location: Location) {
+                    //your code here
+                    myLocationListener!!.onLocationChanged(location) // calling listener to inform that updated location is available
+                }
+                override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
+                override fun onProviderEnabled(provider: String) {}
+                override fun onProviderDisabled(provider: String) {}
+            }
+// check for permissions
+            if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(context,Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_REFRESH_TIME.toLong(),LOCATION_REFRESH_DISTANCE.toFloat(), mLocationListener)
+            } else {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(context as Activity, Manifest.permission.ACCESS_FINE_LOCATION) || ActivityCompat.shouldShowRequestPermissionRationale(context as Activity,Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                    // permission is denied by user, you can show your alert dialog here to send user to App settings to enable permission
+                } else {
+                    ActivityCompat.requestPermissions(context,arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),MY_PERMISSIONS_REQUEST_LOCATION)
+                }
+            }
         }
     }
 }
