@@ -6,52 +6,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/editTextTwitterPassword"
-        android:layout_width="358dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:ems="10"
-        android:hint="Enter Tweet"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTwitterLogin" />
+    <!--Twitter Login Button-->
 
     <EditText
-        android:id="@+id/editTextTwitterLogin"
+        android:id="@+id/editTextTweet"
         android:layout_width="358dp"
-        android:layout_height="0dp"
+        android:layout_height="133dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="472dp"
         android:layout_marginEnd="24dp"
         android:ems="10"
-        android:hint="Enter Tweet"
+        android:hint="Tweet"
         android:inputType="textPersonName"
+        android:text="Tweet"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="28dp"
         android:text="BIRD BOOK"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="170dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/buttonTwitterLogin"
-        android:layout_width="250dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="36dp"
-        android:text="Twitter Login"
+        android:id="@+id/buttonIntentTweet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="16dp"
+        android:text="Tweet"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTwitterPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextTweet"
+        tools:text="Tweet" />
 </androidx.constraintlayout.widget.ConstraintLayout>

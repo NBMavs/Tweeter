@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#2196F3">
@@ -11,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="USER MENU"
+        android:text="@string/user_menu"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +23,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:text="Manage Account"
+        android:text="@string/manage_account"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewUserMenuHeading" />
@@ -37,7 +36,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:text="Record Audio"
+        android:text="@string/record_audio"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonManageAccount" />
@@ -47,7 +46,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="View Map"
+        android:text="@string/view_map"
         app:layout_constraintEnd_toEndOf="@+id/buttonRecordAudio"
         app:layout_constraintStart_toStartOf="@+id/buttonRecordAudio"
         app:layout_constraintTop_toBottomOf="@+id/buttonRecordAudio" />
@@ -57,17 +56,27 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Bird Book"
+        android:text="@string/bird_book"
         app:layout_constraintEnd_toEndOf="@+id/buttonViewMap"
         app:layout_constraintStart_toStartOf="@+id/buttonViewMap"
         app:layout_constraintTop_toBottomOf="@+id/buttonViewMap" />
+
+    <Button
+        android:id="@+id/buttonTwitterLogin1"
+        android:layout_width="250dp"
+        android:layout_height="44dp"
+        android:text="@string/twitter_login"
+        app:layout_constraintBottom_toTopOf="@+id/buttonLogout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/buttonLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:text="LOGOUT"
+        android:text="@string/logout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
