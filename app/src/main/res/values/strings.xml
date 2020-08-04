@@ -13,4 +13,7 @@
     <string name="twitter_login">Twitter Login</string>
     <string name="logout">LOGOUT</string>
     <string name="hey_everybody_i_just_verified_a_bird_using_tweeter_at">Hey everybody, I just verified a bird using tweeter at</string>
+    <string name="write_to_bird_book">Write to Bird Book</string>
+    <string name="write_to_bird_book1">Write to bird book</string>
+    <string name="blue_jay">Blue Jay</string>
 </resources>
