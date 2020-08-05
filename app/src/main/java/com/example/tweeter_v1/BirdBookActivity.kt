@@ -12,8 +12,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.util.Log
-import android.widget.Button
-import android.widget.Toast
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -24,7 +26,7 @@ import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
 
 
-class BirdBookActivity: AppCompatActivity() {
+class BirdBookActivity: AppCompatActivity(){
 
     fun shareTwitter(message: Editable, CurLoc: String) {
             val tweetIntent = Intent(Intent.ACTION_SEND)
@@ -69,6 +71,7 @@ class BirdBookActivity: AppCompatActivity() {
                 return ""
             }
         }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -119,6 +122,61 @@ class BirdBookActivity: AppCompatActivity() {
             sharedPref.edit().putString("oauth_token", accToken?.token ?: "").apply()
             sharedPref.edit().putString("oauth_token_secret", accToken?.tokenSecret ?: "").apply()
         }
+
+        //listView
+        val listView = findViewById<ListView>( R.id.listView )
+
+        listView.adapter = myCustomAdapter( this ) // this needs to be custom adapter telling list what to render
+
+    }
+
+    private class myCustomAdapter( context: Context ): BaseAdapter() {
+
+        private val mContext: Context
+
+        private val names = arrayListOf < String >(
+            "Mockingbird", "BlueJay", "Other", "AddedFromML", "Moose", "MockingBird", "Other", "Other"
+            //NEED TO DYNAMICALLY ADD BIRD NAMES
+        )
+
+        init{
+            this.mContext = context
+        }
+
+        // 4 methods needed to avoid error
+        // responsible for number of rows in list
+        override fun getCount(): Int {
+            return names.size
+        }
+        // Ignore
+        override fun getItemId(position: Int): Long {
+            return position.toLong()
+        }
+        // Ignore
+        override fun getItem(position: Int): Any {
+            return "Test String!"
+        }
+        // responsible for rendering out each row
+        override fun getView(position: Int, convertView: View?, viewGroup: ViewGroup?): View {
+            val layoutInflater = LayoutInflater.from( mContext )
+            val rowMain = layoutInflater.inflate( R.layout.bird_book_list_row_layout, viewGroup, false )
+
+            //Overwriting textViewClassName in row_main.xml
+            val textViewClassName = rowMain.findViewById<TextView>( R.id.textViewClassName)
+            textViewClassName.text = names.get(position)
+
+            //Overwriting textViewDate in row_main.xml
+            val textViewDate = rowMain.findViewById<TextView>( R.id.textViewDate )
+            textViewDate.text = "Date: $position"
+
+//            val textView = TextView(mContext)
+//            textView.text = "Here is my ROW for my ListView"
+//            return textView
+
+            return rowMain
+        }
+
+
     }
 
     class LocationHelper {

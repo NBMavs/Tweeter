@@ -8,22 +8,35 @@
 
     <!--Twitter Login Button-->
 
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="0dp"
+        android:layout_height="336dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:background="#AAAAAA"
+        app:layout_constraintBottom_toTopOf="@+id/editTextTweet"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
     <EditText
         android:id="@+id/editTextTweet"
         android:layout_width="358dp"
         android:layout_height="133dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="384dp"
         android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="@string/hey_everybody_i_just_verified_a_bird_using_tweeter_at"
         android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/buttonIntentTweet"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
         tools:visibility="visible" />
+
 
     <TextView
         android:id="@+id/textView3"
@@ -39,10 +52,10 @@
         android:id="@+id/buttonIntentTweet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp"
         android:text="Tweet"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTweet"
         tools:text="Tweet" />
 </androidx.constraintlayout.widget.ConstraintLayout>

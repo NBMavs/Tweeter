@@ -49,8 +49,6 @@ class LoginScreen: AppCompatActivity() {
                 }
               //  .addOnFailureListener()
 
-
-
         }
 
         buttonForgotPassword.setOnClickListener {
