@@ -129,14 +129,19 @@ class BirdBookActivity: AppCompatActivity(){
         listView.adapter = myCustomAdapter( this ) // this needs to be custom adapter telling list what to render
 
     }
-
     private class myCustomAdapter( context: Context ): BaseAdapter() {
 
         private val mContext: Context
 
-        private val names = arrayListOf < String >(
-            "Mockingbird", "BlueJay", "Other", "AddedFromML", "Moose", "MockingBird", "Other", "Other"
-            //NEED TO DYNAMICALLY ADD BIRD NAMES
+        //Hardcoded Array List used to fill the bird book with examples. Need to implement dynamic usage.
+        //Array List of birds should be saved on users local storage...
+        private val birds = arrayListOf<Bird>(
+            Bird( "Metallic Starling", R.drawable.metallic_starling, "unknown" ),
+            Bird( "Blue Jay", R.drawable.blue_jay, "unknown" ),
+            Bird( "Common Blackbird", R.drawable.common_blackbird, "unknown" ),
+            Bird( "Eurasion Magpie", R.drawable.eurasion_magpie, "unknown" ),
+            Bird( "European Robin", R.drawable.european_robin, "unknown" )
+
         )
 
         init{
@@ -146,7 +151,7 @@ class BirdBookActivity: AppCompatActivity(){
         // 4 methods needed to avoid error
         // responsible for number of rows in list
         override fun getCount(): Int {
-            return names.size
+            return birds.size
         }
         // Ignore
         override fun getItemId(position: Int): Long {
@@ -163,11 +168,15 @@ class BirdBookActivity: AppCompatActivity(){
 
             //Overwriting textViewClassName in row_main.xml
             val textViewClassName = rowMain.findViewById<TextView>( R.id.textViewClassName)
-            textViewClassName.text = names.get(position)
+            textViewClassName.text = birds.get(position).name
+
+            //Using image from arrayListOf<Bird>
+            val imageViewBird = rowMain.findViewById<ImageView>( R.id.imageViewBird )
+            imageViewBird.setImageResource( birds.get(position).image )
 
             //Overwriting textViewDate in row_main.xml
             val textViewDate = rowMain.findViewById<TextView>( R.id.textViewDate )
-            textViewDate.text = "Date: $position"
+            textViewDate.text = "Date: ${birds.get(position).date}"
 
 //            val textView = TextView(mContext)
 //            textView.text = "Here is my ROW for my ListView"
