@@ -17,7 +17,9 @@ class MainActivity: AppCompatActivity() {
 
         //OPEN login activity
         buttonLogin.setOnClickListener {
-            startActivity( Intent( this, LoginScreen::class.java ) )
+            startActivity(Intent(this, UserMenu::class.java))   //Remove after testing
+
+            //startActivity( Intent( this, LoginScreen::class.java ) )          //Uncomment after testing
         }
 
         //OPEN create account activity
