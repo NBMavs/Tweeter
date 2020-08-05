@@ -22,7 +22,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class RecordFragment : Fragment(), View.OnClickListener {
+class RecordFragment : Fragment(), View.OnClickListener, MediaRecorder.OnInfoListener {
 
     private var navController: NavController?=null
 
@@ -75,10 +75,11 @@ class RecordFragment : Fragment(), View.OnClickListener {
                 isRecording = if(isRecording){
 
                     //Stop Recording
-                    timer!!.stop()
-                    stopRecording()
-                    recButton!!.setImageDrawable(resources.getDrawable(R.drawable.record_btn_stopped, null))
-                    false;
+//                    timer!!.stop()
+//                    stopRecording()
+//                    recButton!!.setImageDrawable(resources.getDrawable(R.drawable.record_btn_stopped, null))
+//                    false;
+                    true
 
                 } else {
 
@@ -107,6 +108,9 @@ class RecordFragment : Fragment(), View.OnClickListener {
         mediaRecorder!!.reset()
         mediaRecorder!!.release()
         mediaRecorder = null
+        recButton!!.setImageDrawable(resources.getDrawable(R.drawable.record_btn_stopped, null))
+        timer!!.stop()
+        isRecording = false
 
         var file = File(recFilePath)
         if(file.exists()){
@@ -140,6 +144,8 @@ class RecordFragment : Fragment(), View.OnClickListener {
         mediaRecorder?.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
         mediaRecorder?.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
         mediaRecorder?.setOutputFile("$recordPath/$recFileName")
+        mediaRecorder?.setMaxDuration(5000)
+        mediaRecorder?.setOnInfoListener(this)
 
         Log.d("TAG", recFilePath!!)
 
@@ -147,6 +153,8 @@ class RecordFragment : Fragment(), View.OnClickListener {
         mediaRecorder!!.prepare()
 
         mediaRecorder!!.start()
+
+
     }
 
     private fun checkUserPerms(): Boolean {
@@ -158,6 +166,13 @@ class RecordFragment : Fragment(), View.OnClickListener {
             activity?.let { ActivityCompat.requestPermissions(it, arrayOf(recPerms, writePerms), reqCode) }
             //activity?.let { ActivityCompat.requestPermissions(it, arrayOf(writePerms), reqCode) }
             false
+        }
+    }
+
+    override fun onInfo(p0: MediaRecorder?, p1: Int, p2: Int) {
+        if(p1 == MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED){
+            Log.v("AUDIOCAPTURE","Max duration reached")
+            stopRecording()
         }
     }
 }
