@@ -74,11 +74,6 @@ class RecordFragment : Fragment(), View.OnClickListener, MediaRecorder.OnInfoLis
             recButton!!.id -> {
                 isRecording = if(isRecording){
 
-                    //Stop Recording
-//                    timer!!.stop()
-//                    stopRecording()
-//                    recButton!!.setImageDrawable(resources.getDrawable(R.drawable.record_btn_stopped, null))
-//                    false;
                     true
 
                 } else {
@@ -127,11 +122,9 @@ class RecordFragment : Fragment(), View.OnClickListener, MediaRecorder.OnInfoLis
 
     private fun startRecording() {
         var recordPath: String = requireActivity().getExternalFilesDir("/")!!.absolutePath
-//        val formatter = DateTimeFormatter.ofPattern('yyyy_MM_dd_hh_ss')
         val pattern = "yyyy-MM-dd_hh_ss"
         val simpleDateFormat = SimpleDateFormat(pattern)
         val date = simpleDateFormat.format(Date())
-
 
         recFileName = "Recording_$date.3gp"
         recFilePath = "$recordPath/$recFileName"
@@ -149,12 +142,9 @@ class RecordFragment : Fragment(), View.OnClickListener, MediaRecorder.OnInfoLis
 
         Log.d("TAG", recFilePath!!)
 
-
         mediaRecorder!!.prepare()
 
         mediaRecorder!!.start()
-
-
     }
 
     private fun checkUserPerms(): Boolean {
@@ -168,6 +158,7 @@ class RecordFragment : Fragment(), View.OnClickListener, MediaRecorder.OnInfoLis
             false
         }
     }
+
 
     override fun onInfo(p0: MediaRecorder?, p1: Int, p2: Int) {
         if(p1 == MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED){

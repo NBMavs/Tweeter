@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ListView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -47,9 +48,11 @@ class AudioListFragment : Fragment() {
 
         audioFileList = view.findViewById<RecyclerView>(R.id.audio_list_view)
 
+
         var audioFilePath: String = requireActivity().getExternalFilesDir("/")!!.absolutePath
         var directory: File = File(audioFilePath)
         fileList = directory.listFiles()
+
 
         audioListAdapter = AudioListAdapter(fileList)
         audioFileList!!.setHasFixedSize(true)
@@ -72,6 +75,7 @@ class AudioListFragment : Fragment() {
 
 
     }
+
 
 
 }
