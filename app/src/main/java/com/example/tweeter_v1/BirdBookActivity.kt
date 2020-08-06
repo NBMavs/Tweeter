@@ -178,6 +178,12 @@ class BirdBookActivity: AppCompatActivity(){
             val textViewDate = rowMain.findViewById<TextView>( R.id.textViewDate )
             textViewDate.text = "Date: ${birds.get(position).date}"
 
+            //Apply function to individual row Buttons. Add functionality from birds ArrayList
+            val buttonPlaySound = rowMain.findViewById<Button>( R.id.buttonPlaySound )
+            buttonPlaySound.setOnClickListener {
+                Toast.makeText(mContext, "Button clicked for item #$position", Toast.LENGTH_SHORT).show()
+            }
+
 //            val textView = TextView(mContext)
 //            textView.text = "Here is my ROW for my ListView"
 //            return textView

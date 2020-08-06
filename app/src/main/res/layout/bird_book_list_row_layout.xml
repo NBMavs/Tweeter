@@ -12,19 +12,19 @@
         android:id="@+id/textViewClassName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="BirdClassified: "
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageViewBird"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewDate"
         android:layout_width="141dp"
         android:layout_height="23dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:text="Date: MM/DD/YYYY"
         app:layout_constraintStart_toStartOf="@+id/textViewClassName"
         app:layout_constraintTop_toBottomOf="@+id/textViewClassName" />
@@ -33,9 +33,19 @@
         android:id="@+id/imageViewBird"
         android:layout_width="80dp"
         android:layout_height="64dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/tweeter_bird" />
+
+    <Button
+        android:id="@+id/buttonPlaySound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Listen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
