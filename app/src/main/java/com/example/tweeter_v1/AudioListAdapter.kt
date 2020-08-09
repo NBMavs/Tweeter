@@ -51,7 +51,6 @@ class AudioListAdapter(private val allFiles: ArrayList<File>, private var onPlay
                 adapterPosition
 
             )
-            Toast.makeText(itemView.context,"You clicked PLAY on recording ${position + 1}", Toast.LENGTH_SHORT).show()
         }
 
 
