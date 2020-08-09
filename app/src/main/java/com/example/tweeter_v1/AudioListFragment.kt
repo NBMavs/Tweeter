@@ -4,15 +4,15 @@ import android.media.Image
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.ListView
-import android.widget.Toast
+import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.os.postDelayed
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,7 +21,7 @@ import java.io.File
 
 class AudioListFragment : Fragment(), AudioListAdapter.onPlayClick {
 
-//    private var playerSheet: ConstraintLayout? = null
+    private var playerSheet: ConstraintLayout? = null
     private var audioFileList: RecyclerView? = null
     private var fileList: ArrayList<File> = arrayListOf<File>()
     private var audioListAdapter: AudioListAdapter? = null
@@ -32,9 +32,13 @@ class AudioListFragment : Fragment(), AudioListAdapter.onPlayClick {
     private var isPlaying: Boolean = false
 
     //UI stuff
-//    private var playButton = requireView().findViewById<ImageButton>(R.id.player_play_button)
-//    private var playerFileName = requireView().findViewById<ImageButton>(R.id.player_header_name)
-//    private var playerHeaderName = requireView().findViewById<ImageButton>(R.id.player_header_title)
+    private var playButton: ImageButton? = null
+    private var playerFileName: TextView? = null
+    private var playerStatusBar: TextView? = null
+    private var seekBar: SeekBar? = null
+    private var seekBarHandler: Handler? = null
+    private var seekBarRunnable: Runnable? = null
+    private var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,8 +56,8 @@ class AudioListFragment : Fragment(), AudioListAdapter.onPlayClick {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        playerSheet = view.findViewById<ConstraintLayout>(R.id.player_sheet)
-//        var bottomSheetBehavior = BottomSheetBehavior.from(playerSheet!!)
+        playerSheet = view.findViewById<ConstraintLayout>(R.id.player_sheet)
+        bottomSheetBehavior = BottomSheetBehavior.from(playerSheet!!)
 
         audioFileList = view.findViewById<RecyclerView>(R.id.audio_list_view)
 
@@ -66,20 +70,37 @@ class AudioListFragment : Fragment(), AudioListAdapter.onPlayClick {
         audioFileList!!.layoutManager = LinearLayoutManager(context)
         audioFileList!!.adapter = AudioListAdapter(fileList, this)
 
+        playButton = view.findViewById<ImageButton>(R.id.player_play_button)
+        playerFileName = view.findViewById<TextView>(R.id.file_name)
+        playerStatusBar = view.findViewById<TextView>(R.id.player_header_title)
+
+        seekBar = view.findViewById(R.id.seek_bar)
+
+        playButton!!.setOnClickListener(View.OnClickListener {View ->
+            if (isPlaying) {
+                pause()
+            } else {
+                if (fileToPlay != null) {
+                    resume()
+                }
+            }
+        })
 
 
-//        bottomSheetBehavior.addBottomSheetCallback(object :
-//            BottomSheetBehavior.BottomSheetCallback() {
-//            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-//
-//            }
-//
-//            override fun onStateChanged(bottomSheet: View, newState: Int) {
-//                if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-//                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-//                }
-//            }
-//        })
+
+
+        (bottomSheetBehavior as BottomSheetBehavior<ConstraintLayout>).addBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+
+            }
+
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_HIDDEN) {
+                    (bottomSheetBehavior as BottomSheetBehavior<ConstraintLayout>).state = BottomSheetBehavior.STATE_COLLAPSED
+                }
+            }
+        })
     }
 
     override fun onClickListener(file: File, position: Int) {
@@ -94,6 +115,7 @@ class AudioListFragment : Fragment(), AudioListAdapter.onPlayClick {
     }
 
     private fun playAudio(fileToPlay: File) {
+        bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_EXPANDED
 
         isPlaying = true
         mediaPlayer = MediaPlayer()
@@ -102,6 +124,42 @@ class AudioListFragment : Fragment(), AudioListAdapter.onPlayClick {
         mediaPlayer!!.prepare()
         mediaPlayer!!.start()
 
+        playButton!!.setImageDrawable(this.activity?.resources?.getDrawable(R.drawable.player_pause_btn))
+        playerFileName!!.setText(fileToPlay.getName())
+        playerStatusBar!!.setText("Playing")
+
+        mediaPlayer!!.setOnCompletionListener { mediaPlayer ->
+            stopAudio()
+            playerStatusBar!!.text = "Finished"
+            playButton!!.setImageDrawable(this.activity?.resources?.getDrawable(R.drawable.player_play_btn))
+        }
+
+        seekBar?.max = mediaPlayer!!.duration
+        seekBarHandler = Handler()
+        updateRunnable()
+        seekBarHandler!!.postDelayed(seekBarRunnable!!, 0)
+
+    }
+
+    private fun pause() {
+        mediaPlayer!!.pause()
+        playButton!!.setImageDrawable(this.activity?.resources?.getDrawable(R.drawable.player_play_btn))
+        isPlaying = false
+    }
+
+    private fun resume() {
+        mediaPlayer!!.start()
+        playButton!!.setImageDrawable(this.activity?.resources?.getDrawable(R.drawable.player_pause_btn))
+        isPlaying = true
+    }
+
+    private fun updateRunnable() {
+        seekBarRunnable = object : Runnable {
+            override fun run() {
+                seekBar!!.progress = mediaPlayer!!.currentPosition
+                seekBarHandler!!.postDelayed(this, 5)
+            }
+        }
     }
 
     private fun stopAudio() {
@@ -112,3 +170,4 @@ class AudioListFragment : Fragment(), AudioListAdapter.onPlayClick {
 
 
 }
+
