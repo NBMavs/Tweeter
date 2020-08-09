@@ -1,7 +1,8 @@
 
-package layout
+package com.example.tweeter_v1
 
 import android.media.MediaMetadataRetriever
+import android.media.MediaPlayer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,23 +15,44 @@ import com.example.tweeter_v1.R
 import com.example.tweeter_v1.R.id
 import java.io.File
 
-class AudioListAdapter(private val allFiles: Array<File>) :
+class AudioListAdapter(private val allFiles: ArrayList<File>, private var onPlayClick1: onPlayClick) :
     RecyclerView.Adapter<AudioListAdapter.ViewHolder>(){
 
-    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
-        val list_play: ImageView = itemView.findViewById(id.list_play_btn)
+    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
+
+
+        val list_play_btn: ImageView = itemView.findViewById(id.list_play_btn)
         val list_title: TextView = itemView.findViewById(id.list_title)
         val list_duration: TextView = itemView.findViewById(id.list_duration)
         val list_classify_btn: Button = itemView.findViewById(id.list_classify_btn)
         val list_delete_btn: ImageView = itemView.findViewById(id.list_delete_btn)
 
         init{
-            itemView.setOnClickListener { View ->
+            list_play_btn.setOnClickListener(this)
+
+
+            list_classify_btn.setOnClickListener {View ->
                 val position: Int = adapterPosition
-                Toast.makeText(itemView.context,"You clicked on item # ${position + 1}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(itemView.context,"You clicked on classify recording ${position + 1}", Toast.LENGTH_SHORT).show()
+            }
+
+            list_delete_btn.setOnClickListener {View ->
+                val position: Int = adapterPosition
+                Toast.makeText(itemView.context,"You clicked on delete recording ${position + 1}", Toast.LENGTH_SHORT).show()
+                onDeleteCLick(adapterPosition)
             }
         }
+
+        override fun onClick(p0: View?) {
+            onPlayClick1.onClickListener(
+                allFiles[adapterPosition],
+                adapterPosition
+            )
+        }
+
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -57,5 +79,25 @@ class AudioListAdapter(private val allFiles: Array<File>) :
         val seconds = (timeDuration / (1000)) % 60
         return String.format("%02d:%02d", minutes, seconds)
     }
+
+    private fun onDeleteCLick(position: Int) {
+        val file: File = File(allFiles[position].absolutePath)
+        file.delete()
+        allFiles.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+    private fun onClassifyClick(position: Int) {
+
+    }
+
+    private fun onPlayClick(position: Int) {
+
+    }
+
+    public interface onPlayClick {
+        fun onClickListener(file: File, position: Int)
+    }
+
 
 }
