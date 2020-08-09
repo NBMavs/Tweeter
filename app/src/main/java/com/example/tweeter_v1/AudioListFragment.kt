@@ -13,23 +13,20 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import layout.AudioListAdapter
 import java.io.File
 
 class AudioListFragment : Fragment() {
 
-    private var playerSheet: ConstraintLayout?=null
-    private var audioFileList: RecyclerView?=null
-
+    private var playerSheet: ConstraintLayout? = null
+    private var audioFileList: RecyclerView? = null
     private var fileList: Array<File> = emptyArray()
-
-    private var audioListAdapter: AudioListAdapter?=null
-
+    private var audioListAdapter: AudioListAdapter? = null
     private lateinit var audioListView: ListView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -48,34 +45,28 @@ class AudioListFragment : Fragment() {
 
         audioFileList = view.findViewById<RecyclerView>(R.id.audio_list_view)
 
-
         var audioFilePath: String = requireActivity().getExternalFilesDir("/")!!.absolutePath
         var directory: File = File(audioFilePath)
         fileList = directory.listFiles()
 
-
-        audioListAdapter = AudioListAdapter(fileList)
+//        audioListAdapter = AudioListAdapter(fileList)
         audioFileList!!.setHasFixedSize(true)
         audioFileList!!.layoutManager = LinearLayoutManager(context)
-        audioFileList!!.adapter = audioListAdapter
+        audioFileList!!.adapter = AudioListAdapter(fileList)
 
 
-        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+
+        bottomSheetBehavior.addBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
 
             }
 
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                if(newState == BottomSheetBehavior.STATE_HIDDEN){
+                if (newState == BottomSheetBehavior.STATE_HIDDEN) {
                     bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
                 }
             }
-
         })
-
-
     }
-
-
-
 }

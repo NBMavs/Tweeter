@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/audio_list_item_cardview"
+    android:layout_margin="4dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?selectableItemBackground"
+    app:cardCornerRadius="10dp">
+
+    <RelativeLayout
+        android:id="@+id/relative_layout_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp">
+
+        <ImageButton
+            android:id="@+id/list_play_btn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="#2196F3"
+
+            android:layout_margin="10dp"
+            app:srcCompat="@drawable/player_play_btn"
+            />
+
+        <LinearLayout
+            android:id="@+id/text_LL"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignTop="@+id/list_play_btn"
+            android:layout_alignBottom="@+id/list_play_btn"
+            android:layout_marginBottom="5dp"
+            android:layout_toEndOf="@+id/list_play_btn"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/list_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:text="Filename"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/list_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:text="Duration" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/list_classify_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/list_play_btn"
+            android:text="Classify"
+            />
+
+        <ImageView
+            android:id="@+id/list_delete_btn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/list_play_btn"
+            android:layout_alignRight="@+id/text_LL"
+            android:src="@drawable/ic_delete"
+            />
+
+
+
+
+
+    </RelativeLayout>
+
+
+
+
+</androidx.cardview.widget.CardView>
+
