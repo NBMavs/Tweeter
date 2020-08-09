@@ -8,7 +8,9 @@
     android:clickable="true"
     android:focusable="true"
     android:foreground="?selectableItemBackground"
-    app:cardCornerRadius="10dp">
+    app:cardCornerRadius="10dp"
+    android:descendantFocusability="blocksDescendants"
+    >
 
     <RelativeLayout
         android:id="@+id/relative_layout_wrapper"
