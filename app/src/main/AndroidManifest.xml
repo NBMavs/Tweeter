@@ -26,13 +26,14 @@
         </activity>
         <activity android:name=".LoginScreen" />
         <activity android:name=".CreateAccount" />
-        <activity android:name=".RecordAudio"/>
         <activity android:name=".UserMenu" />
         <activity android:name=".BirdBookActivity" />
         <activity android:name=".ViewMapActivity" />
         <activity android:name=".ManageAccount" />
         <activity android:name=".RecordingBrowser" />
         <activity android:name=".VerifyClassification"/>
+        <activity android:name=".ReadDBTest"/>
+
 
 
 

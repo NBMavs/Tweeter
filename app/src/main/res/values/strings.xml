@@ -16,4 +16,9 @@
     <string name="write_to_bird_book">Write to Bird Book</string>
     <string name="write_to_bird_book1">Write to bird book</string>
     <string name="blue_jay">Blue Jay</string>
+    <string name="update_user_info">Update User Info</string>
+    <string name="dummy_name">dummy name</string>
+    <string name="dummy_mobile">dummy mobile</string>
+    <string name="name_hint">name hint</string>
+    <string name="mobile_hint">mobile hint</string>
 </resources>

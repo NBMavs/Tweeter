@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 30
@@ -31,8 +32,9 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.1'
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.3.1'
 
 
     //  Firebase
@@ -47,16 +49,21 @@ dependencies {
     implementation 'com.google.firebase:firebase-database-ktx:19.3.1'   // Firebase Database
 
     // Twitter Stuff
-    implementation 'com.firebaseui:firebase-ui-auth:6.2.0'          // Firebase UI Authentication - Twitter Login
+    implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
+    // Firebase UI Authentication - Twitter Login
     implementation 'com.twitter.sdk.android:twitter-core:3.1.1'       // Twitter Authentication
     implementation 'com.twitter.sdk.android:twitter:3.1.1'          // Twitter SDK
     implementation 'org.twitter4j:twitter4j-core:4.0.7'                         // Twitter
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.5'     // Twitter
 
     implementation 'com.google.android.gms:play-services-location:17.0.0'
-    implementation 'androidx.work:work-runtime:2.2.0'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'// Location Services
+    implementation 'androidx.work:work-runtime:2.4.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    // Location Services
 
+    implementation 'com.google.firebase:firebase-database:19.3.1'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
@@ -67,12 +74,17 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
     //Material.io
-    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'com.google.android.material:material:1.2.0'
 
     //CoordinatorLayout
     implementation "androidx.coordinatorlayout:coordinatorlayout:1.1.0"
 
-    //Tensorflow lite
-    implementation 'org.tensorflow:tensorflow-lite:0.0.0-nightly'
-    implementation('org.tensorflow:tensorflow-lite-support:0.0.0-nightly'){ changing = true}
+    implementation 'androidx.recyclerview:recyclerview:1.2.0-alpha05'
+
+    //RxJava adapter
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.6.0'
+    //RxJava
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.12'
+    //RxAndroid
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 }
