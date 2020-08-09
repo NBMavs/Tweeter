@@ -1,9 +1,9 @@
 package com.example.tweeter_v1
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.addCallback
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.main_activity.*
 
 class MainActivity: AppCompatActivity() {
@@ -17,9 +17,9 @@ class MainActivity: AppCompatActivity() {
 
         //OPEN login activity
         buttonLogin.setOnClickListener {
-            startActivity(Intent(this, UserMenu::class.java))   //Remove after testing
+            //startActivity(Intent(this, UserMenu::class.java))   //Remove after testing
 
-            //startActivity( Intent( this, LoginScreen::class.java ) )          //Uncomment after testing
+            startActivity( Intent( this, LoginScreen::class.java ) )          //Uncomment after testing
         }
 
         //OPEN create account activity
