@@ -3,6 +3,8 @@ package com.example.tweeter_v1
 
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
+import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,9 +35,25 @@ class AudioListAdapter(private val allFiles: ArrayList<File>, private var onPlay
         init{
             list_play_btn.setOnClickListener(this)
 
+            //Click listener for classify button
             list_classify_btn.setOnClickListener {View ->
                 val position: Int = absoluteAdapterPosition
-                Toast.makeText(itemView.context,"You clicked on classify recording ${allFiles[position].name}", Toast.LENGTH_SHORT).show()
+
+                //Toast.makeText(itemView.context,"You clicked on classify recording ${allFiles[position].name}", Toast.LENGTH_SHORT).show()
+
+                val audioFilePath = allFiles[absoluteAdapterPosition].absolutePath
+                Log.d("ABS_PATH", allFiles[absoluteAdapterPosition].absolutePath)
+
+
+                if ( audioFilePath != null){
+
+                    Toast.makeText(itemView.context,"This bird is here, dude...", Toast.LENGTH_SHORT).show()
+//                    val result = classifyNoise(audioFilePath)
+//                    result_text.text = "Predicted Noise : $result"
+                }
+                else{
+                    Toast.makeText(itemView.context,"Add some birds, dude...", Toast.LENGTH_SHORT).show()
+                }
             }
 
             list_delete_btn.setOnClickListener {View ->
@@ -95,6 +113,8 @@ class AudioListAdapter(private val allFiles: ArrayList<File>, private var onPlay
     public interface onPlayClick {
         fun onClickListener(file: File, position: Int)
     }
+
+
 
 
 }
