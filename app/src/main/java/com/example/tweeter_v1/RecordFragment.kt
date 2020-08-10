@@ -2,6 +2,7 @@ package com.example.tweeter_v1
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.content.res.AssetManager
 import android.media.MediaRecorder
 import android.os.Bundle
 import android.os.SystemClock
@@ -16,8 +17,7 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import kotlinx.android.synthetic.main.player_sheet.*
-import java.io.File
+import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -122,6 +122,8 @@ class RecordFragment : Fragment(), View.OnClickListener, MediaRecorder.OnInfoLis
 
     private fun startRecording() {
         var recordPath: String = requireActivity().getExternalFilesDir("/")!!.absolutePath
+        //var recordPath: String = "/sdcard/AudioData"
+        Log.d("Recording_location", recordPath)
         val pattern = "yyyy-MM-dd_hh_ss"
         val simpleDateFormat = SimpleDateFormat(pattern)
         val date = simpleDateFormat.format(Date())
@@ -166,4 +168,6 @@ class RecordFragment : Fragment(), View.OnClickListener, MediaRecorder.OnInfoLis
             stopRecording()
         }
     }
+
+
 }

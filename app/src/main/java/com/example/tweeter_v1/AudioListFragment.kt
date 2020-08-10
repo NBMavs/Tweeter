@@ -58,9 +58,16 @@ class AudioListFragment : Fragment(), AudioListAdapter.onPlayClick {
 
         audioFileList = view.findViewById<RecyclerView>(R.id.audio_list_view)
 
-        var audioFilePath: String = requireActivity().getExternalFilesDir("/")!!.absolutePath
+        //Getting path for all phone-recorded audio files
+//        var audioFilePath: String = requireActivity().getExternalFilesDir("/")!!.absolutePath
+//        var directory: File = File(audioFilePath)
+//        fileList.addAll(directory.listFiles())
+
+        //Getting path for trial files
+        var audioFilePath: String = "/sdcard/AudioData/"
         var directory: File = File(audioFilePath)
         fileList.addAll(directory.listFiles())
+
 
 
         audioFileList!!.setHasFixedSize(true)

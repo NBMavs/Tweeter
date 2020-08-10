@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.tweeter_v1.R
 import com.example.tweeter_v1.R.id
 import java.io.File
+//import com.tensorflow.android.audio.features.WavFile
 
 class AudioListAdapter(private val allFiles: ArrayList<File>, private var onPlayClick1: onPlayClick) :
     RecyclerView.Adapter<AudioListAdapter.ViewHolder>(){
@@ -34,22 +35,21 @@ class AudioListAdapter(private val allFiles: ArrayList<File>, private var onPlay
 
 
             list_classify_btn.setOnClickListener {View ->
-                val position: Int = adapterPosition
+                val position: Int = absoluteAdapterPosition
                 Toast.makeText(itemView.context,"You clicked on classify recording ${position + 1}", Toast.LENGTH_SHORT).show()
             }
 
             list_delete_btn.setOnClickListener {View ->
-                val position: Int = adapterPosition
+                val position: Int = absoluteAdapterPosition
                 Toast.makeText(itemView.context,"You clicked on delete recording ${position + 1}", Toast.LENGTH_SHORT).show()
-                onDeleteCLick(adapterPosition)
+                onDeleteCLick(absoluteAdapterPosition)
             }
         }
 
         override fun onClick(p0: View?) {
             onPlayClick1.onClickListener(
-                allFiles[adapterPosition],
-                adapterPosition
-
+                allFiles[absoluteAdapterPosition],
+                absoluteAdapterPosition
             )
         }
 
@@ -88,13 +88,12 @@ class AudioListAdapter(private val allFiles: ArrayList<File>, private var onPlay
         notifyItemRemoved(position)
     }
 
-    private fun onClassifyClick(position: Int) {
+//    private fun classifySound(position: Int) {
+//        try {
+//            //wavFile = WavFile.openWavFile(allFiles[position])
+//        }
+//    }
 
-    }
-
-    private fun onPlayClick(position: Int) {
-
-    }
 
     public interface onPlayClick {
         fun onClickListener(file: File, position: Int)
