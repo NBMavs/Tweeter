@@ -71,6 +71,8 @@ class AudioListAdapter(private val allFiles: ArrayList<File>, private var onPlay
                     val result = classifyNoise(audioFilePath)
                     val result_1 = "Predicted Noise : $result"
                     Log.d("RESULT", result_1)
+                    Toast.makeText(itemView.context,"Bird is classified as $result", Toast.LENGTH_SHORT).show()
+
 
                 }
 
