@@ -51,8 +51,6 @@ class AudioListAdapter(private val allFiles: ArrayList<File>, private var onPlay
                 absoluteAdapterPosition
             )
         }
-
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
