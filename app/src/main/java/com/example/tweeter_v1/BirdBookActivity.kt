@@ -24,15 +24,14 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.bird_book.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
 import java.util.*
 
 var dbReference: DatabaseReference = FirebaseDatabase.getInstance().getReference("VerifiedBirds")
 var birds : MutableList<VerifyClassification.DBWrite> =  mutableListOf(VerifyClassification.DBWrite("","","","",""))
-
+var tweet : String = "Click here to display bird book!"
+var CurLoc: String = ""
 class BirdBookActivity: AppCompatActivity() {
 
     // Code to read from database!
@@ -45,13 +44,15 @@ class BirdBookActivity: AppCompatActivity() {
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
+                tweet = "Click here to display bird book!"
                 Log.d("Snapshot UID", user.uid)
                 snapshot.children.forEach {
                     if(snapshot.key!!.equals(user.uid))
                     {
                         val user5 = it.getValue(VerifyClassification.DBWrite::class.java)
                         birds.add(user5!!)
-                        Log.d("Birds","$birds")
+
+                        tweet = "I just verified a " + user5.birdsType + " at " + user5.location + " on " + user5.time + " on the Tweeter app!"
                     }
                 }
                 val size = birds.size
@@ -61,9 +62,10 @@ class BirdBookActivity: AppCompatActivity() {
     }
 
 
-    fun shareTwitter(message: Editable, CurLoc: String) {
+
+    fun shareTwitter(message: Editable) {
         val tweetIntent = Intent(Intent.ACTION_SEND)
-        val c = message.toString() + " " + CurLoc
+        val c = message.toString()
         tweetIntent.putExtra(Intent.EXTRA_TEXT, c)
         tweetIntent.setType("text/plain")
         val packManager = getPackageManager()
@@ -80,6 +82,7 @@ class BirdBookActivity: AppCompatActivity() {
                 break
             }
         }
+
         if (resolved) {
             startActivity(tweetIntent)
         } else {
@@ -107,12 +110,11 @@ class BirdBookActivity: AppCompatActivity() {
         setContentView(R.layout.bird_book)
 
         loadDB()
-
-                var CurLoc = "Lat, Long"
+        editTextTweet.text = tweet.toEditable()
 
                 fun getCompleteAddressString(LATITUDE: Double, LONGITUDE: Double): String {
                     var strAdd = ""
-                    var geocoder = Geocoder(this, Locale.getDefault())
+                    val geocoder = Geocoder(this, Locale.getDefault())
                     try {
                         val addresses = geocoder.getFromLocation(LATITUDE, LONGITUDE, 1)
                         if (addresses != null) {
@@ -140,57 +142,46 @@ class BirdBookActivity: AppCompatActivity() {
                             // Here you got user location :)
                             //CurLoc = location.latitude.toString() + "," + location.longitude.toString()
                             CurLoc = getCompleteAddressString(location.latitude, location.longitude)
-                            Log.d("Location", "" + CurLoc)
                         }
                     })
+
 
                 val message = editTextTweet.text
 
                 val buttonIntentTweet: Button = findViewById(R.id.buttonIntentTweet)
                 buttonIntentTweet.setOnClickListener {
-                    shareTwitter(message, CurLoc)
+                    shareTwitter(message)
                 }
 
-                suspend fun getUserProfile() {
-                    val usr = withContext(Dispatchers.IO) { twitter.verifyCredentials() }
 
+                /*suspend fun getUserProfile() {
+                    val usr = withContext(Dispatchers.IO) { twitter.verifyCredentials() }
                     //Twitter Id
                     val twitterId = usr.id.toString()
                     Log.d("Twitter Id: ", twitterId)
-
                     //Twitter Handle
                     val twitterHandle = usr.screenName
                     Log.d("Twitter Handle: ", twitterHandle)
-
                     //Twitter Name
                     val twitterName = usr.name
                     Log.d("Twitter Name: ", twitterName)
-
                     //Twitter Email
                     val twitterEmail = usr.email
-
                     // Twitter Access Token
                     Log.d("Twitter Access Token", accToken?.token ?: "")
                     var accessToken = accToken?.token ?: ""
-
                     // Save the Access Token (accToken.token) and Access Token Secret (accToken.tokenSecret) using SharedPreferences
                     // This will allow us to check user's logging state every time they open the app after cold start.
                     val sharedPref = this.getPreferences(Context.MODE_PRIVATE)
                     sharedPref.edit().putString("oauth_token", accToken?.token ?: "").apply()
                     sharedPref.edit().putString("oauth_token_secret", accToken?.tokenSecret ?: "")
                         .apply()
-                }
-
-
+                }*/
 
                 //listView
                 val listView = findViewById<ListView>(R.id.listView)
-
                 listView.adapter =
                     myCustomAdapter(this) // this needs to be custom adapter telling list what to render
-
-
-
     }
 
             private class myCustomAdapter(context: Context) : BaseAdapter() {
@@ -248,37 +239,37 @@ class BirdBookActivity: AppCompatActivity() {
                     val buttonBirdWiki = rowMain.findViewById<Button>(R.id.buttonBirdWiki)
                     if (birds.get(position).birdsType.equals("Blue Jay")) {
                        buttonBirdWiki.setOnClickListener {
-                            val uriUrl = Uri.parse("https://en.wikipedia.org/wiki/Blue_jay")
-                            val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
-                          //  startActivity(launchBrowser)
+                           val uriUrl = Uri.parse("https://en.wikipedia.org/wiki/Blue_jay")
+                           val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
+                           this.mContext.startActivity(launchBrowser)
                         }
                     }
                     else if (birds.get(position).birdsType.equals("Metallic Starling")) {
                         buttonBirdWiki.setOnClickListener {
                             val uriUrl = Uri.parse("https://en.wikipedia.org/wiki/Metallic_starling")
                             val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
-                            //startActivity(launchBrowser)
+                            this.mContext.startActivity(launchBrowser)
                         }
                     }
                     else if (birds.get(position).birdsType.equals("European Robin")) {
                         buttonBirdWiki.setOnClickListener {
                             val uriUrl = Uri.parse("https://en.wikipedia.org/wiki/European_robin")
                             val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
-                            //startActivity(launchBrowser)
+                            this.mContext.startActivity(launchBrowser)
                         }
                     }
                     else if (birds.get(position).birdsType.equals("Common Blackbird")) {
                         buttonBirdWiki.setOnClickListener {
                             val uriUrl = Uri.parse("https://en.wikipedia.org/wiki/Common_blackbird")
                             val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
-                            //startActivity(launchBrowser)
+                            this.mContext.startActivity(launchBrowser)
                         }
                     }
                     else if (birds.get(position).birdsType.equals("Eurasian Magpie")) {
                         buttonBirdWiki.setOnClickListener {
                             val uriUrl = Uri.parse("https://en.wikipedia.org/wiki/Eurasian_magpie")
                             val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
-                           // startActivity(launchBrowser)
+                            this.mContext.startActivity(launchBrowser)
                         }
                     }
 
@@ -389,3 +380,4 @@ class BirdBookActivity: AppCompatActivity() {
                 }
             }
         }
+fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
