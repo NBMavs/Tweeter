@@ -24,7 +24,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.bird_book.*
-import kotlinx.android.synthetic.main.bird_book_list_row_layout.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.UnsupportedEncodingException
@@ -34,11 +33,12 @@ import java.util.*
 var dbReference: DatabaseReference = FirebaseDatabase.getInstance().getReference("VerifiedBirds")
 val user2 = Firebase.auth.currentUser
 
-lateinit var birds: MutableList<VerifyClassification.DBWrite>
+var birds : MutableList<VerifyClassification.DBWrite> =  mutableListOf(VerifyClassification.DBWrite("","","","",""))
 
 class BirdBookActivity: AppCompatActivity() {
 
     fun loadDB(){
+        birds.clear()
         // Code to read from database!
         dbReference.child(user2!!.uid).addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
@@ -50,47 +50,13 @@ class BirdBookActivity: AppCompatActivity() {
                     if(snapshot.key!!.equals(user2.uid))
                     {
                         val user5 = it.getValue(VerifyClassification.DBWrite::class.java)
-                        Log.d("test",it.toString())
+                        birds.add(user5!!)
+                        Log.d("Birds","$birds")
 
-
-                        textViewClassName.setText(user5?.birdsType).toString()
+                        /*textViewClassName.setText(user5?.birdsType).toString()
                         textViewLocation.setText(user5?.location).toString()
-                        textViewDate.setText(user5?.time).toString()
-                        if (user5!!.birdsType.equals("Blue Jay")) {
-                            buttonBirdWiki.setOnClickListener {
-                                val uriUrl = Uri.parse("https://en.wikipedia.org/wiki/Blue_jay")
-                                val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
-                                startActivity(launchBrowser)
-                            }
-                        }
-                        else if (user5!!.birdsType.equals("Metallic Starling")) {
-                            buttonBirdWiki.setOnClickListener {
-                                val uriUrl = Uri.parse("https://en.wikipedia.org/wiki/Metallic_starling")
-                                val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
-                                startActivity(launchBrowser)
-                            }
-                        }
-                        else if (user5!!.birdsType.equals("European Robin")) {
-                            buttonBirdWiki.setOnClickListener {
-                                val uriUrl = Uri.parse("https://en.wikipedia.org/wiki/European_robin")
-                                val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
-                                startActivity(launchBrowser)
-                            }
-                        }
-                        else if (user5!!.birdsType.equals("Common Blackbird")) {
-                            buttonBirdWiki.setOnClickListener {
-                                val uriUrl = Uri.parse("https://en.wikipedia.org/wiki/Common_blackbird")
-                                val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
-                                startActivity(launchBrowser)
-                            }
-                        }
-                        else if (user5!!.birdsType.equals("Eurasian Magpie")) {
-                            buttonBirdWiki.setOnClickListener {
-                                val uriUrl = Uri.parse("https://en.wikipedia.org/wiki/Eurasian_magpie")
-                                val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
-                                startActivity(launchBrowser)
-                            }
-                        }
+                        textViewDate.setText(user5?.time).toString()*/
+
                     }
                 }
             }
@@ -237,7 +203,7 @@ class BirdBookActivity: AppCompatActivity() {
 
                 //Hardcoded Array List used to fill the bird book with examples. Need to implement dynamic usage.
                 //Array List of birds should be saved on users local storage...
-                private val birds = arrayListOf<Bird>(
+                private val birdslocal = arrayListOf<Bird>(
                     Bird("Metallic Starling", R.drawable.metallic_starling, "unknown"),
                     Bird("Blue Jay", R.drawable.blue_jay, "unknown"),
                     Bird("Common Blackbird", R.drawable.common_blackbird, "unknown"),
@@ -277,19 +243,59 @@ class BirdBookActivity: AppCompatActivity() {
 
                     //Overwriting textViewClassName in row_main.xml
                     val textViewClassName = rowMain.findViewById<TextView>(R.id.textViewClassName)
-                    textViewClassName.text = birds.get(position).name
+                    textViewClassName.text = birds.get(position).birdsType
 
                     //Overwriting textViewWiki in row_main.xml
                     //val textViewWiki = rowMain.findViewById<TextView>( R.id.textViewWiki)
                     //textViewWiki.text = birds.get(position).wiki
+                    val buttonBirdWiki = rowMain.findViewById<Button>(R.id.buttonBirdWiki)
+                    if (birds.get(position).birdsType.equals("Blue Jay")) {
+                       buttonBirdWiki.setOnClickListener {
+                            val uriUrl = Uri.parse("https://en.wikipedia.org/wiki/Blue_jay")
+                            val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
+                          //  startActivity(launchBrowser)
+                        }
+                    }
+                    else if (birds.get(position).birdsType.equals("Metallic Starling")) {
+                        buttonBirdWiki.setOnClickListener {
+                            val uriUrl = Uri.parse("https://en.wikipedia.org/wiki/Metallic_starling")
+                            val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
+                            //startActivity(launchBrowser)
+                        }
+                    }
+                    else if (birds.get(position).birdsType.equals("European Robin")) {
+                        buttonBirdWiki.setOnClickListener {
+                            val uriUrl = Uri.parse("https://en.wikipedia.org/wiki/European_robin")
+                            val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
+                            //startActivity(launchBrowser)
+                        }
+                    }
+                    else if (birds.get(position).birdsType.equals("Common Blackbird")) {
+                        buttonBirdWiki.setOnClickListener {
+                            val uriUrl = Uri.parse("https://en.wikipedia.org/wiki/Common_blackbird")
+                            val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
+                            //startActivity(launchBrowser)
+                        }
+                    }
+                    else if (birds.get(position).birdsType.equals("Eurasian Magpie")) {
+                        buttonBirdWiki.setOnClickListener {
+                            val uriUrl = Uri.parse("https://en.wikipedia.org/wiki/Eurasian_magpie")
+                            val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
+                           // startActivity(launchBrowser)
+                        }
+                    }
+
+                    //Overwwriting textViewLocation in
+                    val textViewLocation = rowMain.findViewById<TextView>(R.id.textViewLocation)
+                    textViewLocation.text = birds.get(position).location
 
                     //Using image from arrayListOf<Bird>
                     val imageViewBird = rowMain.findViewById<ImageView>(R.id.imageViewBird)
-                    imageViewBird.setImageResource(birds.get(position).image)
+                    imageViewBird.setImageResource(birdslocal.get(position).image)
 
                     //Overwriting textViewDate in row_main.xml
                     val textViewDate = rowMain.findViewById<TextView>(R.id.textViewDate)
-                    textViewDate.text = "Date: ${birds.get(position).date}"
+                    textViewDate.text = "Date: ${birds.get(position).time}"
 
                     //Apply function to individual row Buttons. Add functionality from birds ArrayList
                     val buttonPlaySound = rowMain.findViewById<Button>(R.id.buttonPlaySound)
