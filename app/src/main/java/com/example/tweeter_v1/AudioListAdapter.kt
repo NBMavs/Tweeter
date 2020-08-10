@@ -32,12 +32,13 @@ import java.util.*
 import kotlin.Comparator
 import kotlin.collections.ArrayList
 import com.ml.quaterion.noiseClassification.Recognition
-
+import java.security.AccessControlContext
+import java.security.AccessController.getContext
 
 
 //import com.tensorflow.android.audio.features.WavFile
 
-class AudioListAdapter(private val allFiles: ArrayList<File>, private var onPlayClick1: onPlayClick) :
+class AudioListAdapter(private val allFiles: ArrayList<File>, private var onPlayClick1: onPlayClick, private var context: Context) :
     RecyclerView.Adapter<AudioListAdapter.ViewHolder>(){
 
 
@@ -66,12 +67,17 @@ class AudioListAdapter(private val allFiles: ArrayList<File>, private var onPlay
 
                 if ( audioFilePath != null){
 
-                    Toast.makeText(itemView.context,"This bird is here, dude...", Toast.LENGTH_SHORT).show()
-//                    val result = classifyNoise(audioFilePath)
-//                    result_text.text = "Predicted Noise : $result"
+                    //Toast.makeText(itemView.context,"This bird is here, dude...", Toast.LENGTH_SHORT).show()
+                    val result = classifyNoise(audioFilePath)
+                    val result_1 = "Predicted Noise : $result"
+                    Log.d("RESULT", result_1)
+
                 }
+
                 else{
+
                     Toast.makeText(itemView.context,"Add some birds, dude...", Toast.LENGTH_SHORT).show()
+
                 }
             }
 
@@ -217,13 +223,13 @@ class AudioListAdapter(private val allFiles: ArrayList<File>, private var onPlay
     }
 
 
-    protected fun loadModelAndMakePredictions(meanMFCCValues : FloatArray) : String? {
+    private fun loadModelAndMakePredictions(meanMFCCValues : FloatArray) : String? {
 
         var predictedResult: String? = "unknown"
 
         //load the TFLite model in 'MappedByteBuffer' format using TF Interpreter
         val tfliteModel: MappedByteBuffer =
-            FileUtil.loadMappedFile(this, getModelPath())
+            FileUtil.loadMappedFile(context, getModelPath())
         val tflite: Interpreter
 
         /** Options for configuring the Interpreter.  */
@@ -258,7 +264,7 @@ class AudioListAdapter(private val allFiles: ArrayList<File>, private var onPlay
         val ASSOCIATED_AXIS_LABELS = "labels.txt"
         var associatedAxisLabels: List<String?>? = null
         try {
-            associatedAxisLabels = FileUtil.loadLabels(this, ASSOCIATED_AXIS_LABELS)
+            associatedAxisLabels = FileUtil.loadLabels(context , ASSOCIATED_AXIS_LABELS)
         } catch (e: IOException) {
             Log.e("tfliteSupport", "Error reading label file", e)
         }

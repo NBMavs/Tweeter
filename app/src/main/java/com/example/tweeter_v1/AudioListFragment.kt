@@ -72,7 +72,7 @@ class AudioListFragment : Fragment(), AudioListAdapter.onPlayClick {
 
         audioFileList!!.setHasFixedSize(true)
         audioFileList!!.layoutManager = LinearLayoutManager(context)
-        audioFileList!!.adapter = AudioListAdapter(fileList, this)
+        audioFileList!!.adapter = AudioListAdapter(fileList, this, requireContext())
 
         playButton = view.findViewById<ImageButton>(R.id.player_play_button)
         playerFileName = view.findViewById<TextView>(R.id.file_name)
