@@ -31,34 +31,31 @@ import java.net.URLEncoder
 import java.util.*
 
 var dbReference: DatabaseReference = FirebaseDatabase.getInstance().getReference("VerifiedBirds")
-val user2 = Firebase.auth.currentUser
-
 var birds : MutableList<VerifyClassification.DBWrite> =  mutableListOf(VerifyClassification.DBWrite("","","","",""))
 
 class BirdBookActivity: AppCompatActivity() {
 
+    // Code to read from database!
     fun loadDB(){
         birds.clear()
-        // Code to read from database!
-        dbReference.child(user2!!.uid).addValueEventListener(object : ValueEventListener {
+        val user = Firebase.auth.currentUser
+        dbReference.child(user!!.uid).addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
-                Log.d("ValueEventListener", "Failed")
+                Log.d("ValueEventListener", "Backed out of Bird Book")
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
+                Log.d("Snapshot UID", user.uid)
                 snapshot.children.forEach {
-                    if(snapshot.key!!.equals(user2.uid))
+                    if(snapshot.key!!.equals(user.uid))
                     {
                         val user5 = it.getValue(VerifyClassification.DBWrite::class.java)
                         birds.add(user5!!)
                         Log.d("Birds","$birds")
-
-                        /*textViewClassName.setText(user5?.birdsType).toString()
-                        textViewLocation.setText(user5?.location).toString()
-                        textViewDate.setText(user5?.time).toString()*/
-
                     }
                 }
+                val size = birds.size
+                Log.d("birds array completed","Total birds: $size")
             }
         })
     }

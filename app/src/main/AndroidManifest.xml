@@ -32,7 +32,6 @@
         <activity android:name=".ManageAccount" />
         <activity android:name=".RecordingBrowser" />
         <activity android:name=".VerifyClassification"/>
-        <activity android:name=".ReadDBTest"/>
 
 
 

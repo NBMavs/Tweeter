@@ -15,6 +15,8 @@ import android.webkit.WebViewClient
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.user_menu.*
 import kotlinx.coroutines.*
 import twitter4j.Twitter
@@ -25,6 +27,8 @@ import twitter4j.conf.ConfigurationBuilder
 lateinit var twitterDialog: Dialog
 lateinit var twitter: Twitter
 var accToken: AccessToken? = null
+
+val user = Firebase.auth.currentUser
 
 class UserMenu: AppCompatActivity() {
 
@@ -67,6 +71,10 @@ class UserMenu: AppCompatActivity() {
         buttonLogout.setOnClickListener {
             //Do firebase stuff/logout account
             FirebaseAuth.getInstance().signOut()    // Sign user out of system
+            val intent = Intent(this, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             //OPEN main_activity
             startActivity(Intent(this, MainActivity::class.java))
 
