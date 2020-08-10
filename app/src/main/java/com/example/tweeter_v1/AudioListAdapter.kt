@@ -34,21 +34,21 @@ class AudioListAdapter(private val allFiles: ArrayList<File>, private var onPlay
             list_play_btn.setOnClickListener(this)
 
             list_classify_btn.setOnClickListener {View ->
-                val position: Int = adapterPosition
+                val position: Int = absoluteAdapterPosition
                 Toast.makeText(itemView.context,"You clicked on classify recording ${position + 1}", Toast.LENGTH_SHORT).show()
             }
 
             list_delete_btn.setOnClickListener {View ->
-                val position: Int = adapterPosition
+                val position: Int = absoluteAdapterPosition
                 Toast.makeText(itemView.context,"You clicked on delete recording ${position + 1}", Toast.LENGTH_SHORT).show()
-                onDeleteCLick(adapterPosition)
+                onDeleteCLick(absoluteAdapterPosition)
             }
         }
 
         override fun onClick(p0: View?) {
             onPlayClick1.onClickListener(
-                allFiles[adapterPosition],
-                adapterPosition
+                allFiles[absoluteAdapterPosition],
+                absoluteAdapterPosition
             )
         }
 
