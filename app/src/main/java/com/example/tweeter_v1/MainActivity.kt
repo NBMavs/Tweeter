@@ -12,7 +12,7 @@ class MainActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
-//Hello
+
         Toast.makeText(this, "You are working in BRANCH 'Tweeter_V2'", Toast.LENGTH_LONG).show()
 
 
