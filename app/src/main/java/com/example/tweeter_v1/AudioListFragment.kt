@@ -1,6 +1,6 @@
 package com.example.tweeter_v1
 
-
+import android.content.Context
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
@@ -14,7 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import java.io.File
+import java.io.*
 
 class AudioListFragment : Fragment(), AudioListAdapter.onPlayClick {
 
@@ -58,16 +58,26 @@ class AudioListFragment : Fragment(), AudioListAdapter.onPlayClick {
 
         audioFileList = view.findViewById<RecyclerView>(R.id.audio_list_view)
 
+
         //Getting path for all phone-recorded audio files
-//        var audioFilePath: String = requireActivity().getExternalFilesDir("/")!!.absolutePath
-//        var directory: File = File(audioFilePath)
-//        fileList.addAll(directory.listFiles())
+        var audioFilePath: String = requireActivity().getExternalFilesDir("/")!!.absolutePath
 
-        //Getting path for trial files
-        var audioFilePath: String = "/sdcard/AudioData/"
+
+        context?.let { getAssetsFile(it,"bluejay_sample_1.wav", audioFilePath) }
+        context?.let { getAssetsFile(it, "osprey_sample_1.wav", audioFilePath) }
+        context?.let { getAssetsFile(it, "owl_sample_1.wav", audioFilePath) }
+        context?.let { getAssetsFile(it, "swallow_sample_1.wav", audioFilePath) }
+        context?.let { getAssetsFile(it, "waxling_sample_1.wav", audioFilePath) }
+
         var directory: File = File(audioFilePath)
-        fileList.addAll(directory.listFiles())
 
+
+        fileList.addAll(directory!!.listFiles())
+        fileList.add(File(audioFilePath+"bluejay_sample_1.wav"))
+        fileList.add(File(audioFilePath+"osprey_sample_1.wav"))
+        fileList.add(File(audioFilePath+"owl_sample_1.wav"))
+        fileList.add(File(audioFilePath+"swallow_sample_1.wav"))
+        fileList.add(File(audioFilePath+"waxling_sample_1.wav"))
 
 
         audioFileList!!.setHasFixedSize(true)
@@ -91,8 +101,6 @@ class AudioListFragment : Fragment(), AudioListAdapter.onPlayClick {
         })
 
 
-
-
         (bottomSheetBehavior as BottomSheetBehavior<ConstraintLayout>).addBottomSheetCallback(object :
             BottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
@@ -105,6 +113,8 @@ class AudioListFragment : Fragment(), AudioListAdapter.onPlayClick {
                 }
             }
         })
+
+
     }
 
     override fun onClickListener(file: File, position: Int) {
@@ -119,25 +129,31 @@ class AudioListFragment : Fragment(), AudioListAdapter.onPlayClick {
     }
 
     private fun playAudio(fileToPlay: File) {
+        //Expands the audio player bottom sheet
         bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_EXPANDED
 
+        //Sets boolean that controls the playing state
         isPlaying = true
-        mediaPlayer = MediaPlayer()
 
+        //Initializes media player with necessary info, and starts playing
+        mediaPlayer = MediaPlayer()
         mediaPlayer!!.setDataSource(fileToPlay.absolutePath)
         mediaPlayer!!.prepare()
         mediaPlayer!!.start()
 
+        //Changes image from play to pause, and updates audio player text
         playButton!!.setImageDrawable(this.activity?.resources?.getDrawable(R.drawable.player_pause_btn))
         playerFileName!!.setText(fileToPlay.getName())
         playerStatusBar!!.setText("Playing")
 
+        //When the audio finishes playing
         mediaPlayer!!.setOnCompletionListener { mediaPlayer ->
             stopAudio()
             playerStatusBar!!.text = "Finished"
             playButton!!.setImageDrawable(this.activity?.resources?.getDrawable(R.drawable.player_play_btn))
         }
 
+        //Controls seek bar status
         seekBar?.max = mediaPlayer!!.duration
         seekBarHandler = Handler()
         updateRunnable()
@@ -157,6 +173,7 @@ class AudioListFragment : Fragment(), AudioListAdapter.onPlayClick {
         isPlaying = true
     }
 
+    //Used when updating seekbar position
     private fun updateRunnable() {
         seekBarRunnable = object : Runnable {
             override fun run() {
@@ -169,9 +186,35 @@ class AudioListFragment : Fragment(), AudioListAdapter.onPlayClick {
     private fun stopAudio() {
         isPlaying = false
         mediaPlayer!!.stop()
+        //mediaPlayer!!.release()
 
     }
 
+
+
+
+    private fun getAssetsFile(context: Context, fileName: String, filePath: String) {
+
+
+
+        var inputStream = context.assets.open(fileName)
+        var outFileNameAndPath = filePath + fileName
+        var outputStream: OutputStream = FileOutputStream(outFileNameAndPath)
+        val buffer: ByteArray = ByteArray(8192)
+        var length: Int? = 0
+
+        while (true) {
+            length = inputStream.read(buffer)
+            if (length <= 0)
+                break
+            outputStream.write(buffer, 0, length)
+        }
+
+        outputStream.flush()
+        outputStream.close()
+        inputStream.close()
+
+    }
 
 }
 

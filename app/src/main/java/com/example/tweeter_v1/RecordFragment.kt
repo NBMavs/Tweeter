@@ -1,6 +1,7 @@
 package com.example.tweeter_v1
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.AssetManager
 import android.media.MediaRecorder
@@ -54,6 +55,19 @@ class RecordFragment : Fragment(), View.OnClickListener, MediaRecorder.OnInfoLis
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
+
+
+
+        var checkPath: String = requireActivity().getExternalFilesDir("/")!!.absolutePath
+        checkPath += "bluejay_sample_1.wav"
+        var fileToCheck = File(checkPath)
+        if(fileToCheck.exists()){
+            Log.d("ASSETS_FILE_WRITE", "Status of write to $fileToCheck: Successful")
+        }
+        else {
+            Log.d("ASSETS_FILE_WRITE", "Status of write to $fileToCheck: Not Successful")
+        }
+
 
         recButton = view.findViewById<ImageButton>(R.id.record_btn)
         lstButton = view.findViewById<ImageButton>(R.id.record_list_btn)
@@ -168,6 +182,10 @@ class RecordFragment : Fragment(), View.OnClickListener, MediaRecorder.OnInfoLis
             stopRecording()
         }
     }
+
+
+
+
 
 
 }

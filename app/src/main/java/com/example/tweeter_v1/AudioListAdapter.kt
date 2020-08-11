@@ -22,12 +22,13 @@ class AudioListAdapter(private val allFiles: ArrayList<File>, private var onPlay
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
 
-
         val list_play_btn: ImageView = itemView.findViewById(id.list_play_btn)
         val list_title: TextView = itemView.findViewById(id.list_title)
         val list_duration: TextView = itemView.findViewById(id.list_duration)
         val list_classify_btn: Button = itemView.findViewById(id.list_classify_btn)
         val list_delete_btn: ImageView = itemView.findViewById(id.list_delete_btn)
+
+
 
         init{
             list_play_btn.setOnClickListener(this)
@@ -77,6 +78,7 @@ class AudioListAdapter(private val allFiles: ArrayList<File>, private var onPlay
     }
 
     override fun getItemCount(): Int {
+        Log.d("ALL_FILES_SIZE", allFiles.size.toString())
         return allFiles.size
     }
 
@@ -108,7 +110,6 @@ class AudioListAdapter(private val allFiles: ArrayList<File>, private var onPlay
 //            //wavFile = WavFile.openWavFile(allFiles[position])
 //        }
 //    }
-
 
     public interface onPlayClick {
         fun onClickListener(file: File, position: Int)
