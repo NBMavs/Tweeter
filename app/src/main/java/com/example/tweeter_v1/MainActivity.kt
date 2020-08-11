@@ -2,6 +2,7 @@ package com.example.tweeter_v1
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.main_activity.*
@@ -11,6 +12,7 @@ class MainActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
+        Toast.makeText( this,"YOU ARE WORKING IN BRANCH 'Tweeter_V2'", Toast.LENGTH_LONG).show()
 
         //Removes functionality of back button for this page. Back button stays on same page at MainMenu
         onBackPressedDispatcher.addCallback { this }
