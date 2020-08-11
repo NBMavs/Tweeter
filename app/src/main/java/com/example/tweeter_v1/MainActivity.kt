@@ -12,7 +12,6 @@ class MainActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
-        Toast.makeText( this,"YOU ARE WORKING IN BRANCH 'Tweeter_V2'", Toast.LENGTH_LONG).show()
 
         //Removes functionality of back button for this page. Back button stays on same page at MainMenu
         onBackPressedDispatcher.addCallback { this }
