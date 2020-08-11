@@ -6,7 +6,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.ml.quaterion.noiseClassification.Recognition
 import kotlinx.android.synthetic.main.classification.*
-import kotlinx.android.synthetic.main.login_screen.*
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.Interpreter
 import org.tensorflow.lite.support.common.FileUtil
