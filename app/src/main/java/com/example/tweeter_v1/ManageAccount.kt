@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.create_account.*
 import kotlinx.android.synthetic.main.manage_account.*
 
 class ManageAccount: AppCompatActivity() {
@@ -32,22 +31,27 @@ class ManageAccount: AppCompatActivity() {
         buttonChangeUsername.setOnClickListener {
             val username = editTextChangeUsername.text.toString()
 
-            if(username.isEmpty()) {
-                Toast.makeText(this, "Please enter a new username.", Toast.LENGTH_LONG).show()
-                return@setOnClickListener
-            }
-            else
-            {
-                val profileUpdates = userProfileChangeRequest {
-                    displayName = username
+            when {
+                username.isEmpty() -> {
+                    Toast.makeText(this, "Please enter a new username.", Toast.LENGTH_LONG).show()
+                    return@setOnClickListener
                 }
-                user!!.updateProfile(profileUpdates)
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            Log.d("Profile_Update","Username updated to $username.")
-                            Toast.makeText(this, "Username updated to $username", Toast.LENGTH_LONG).show()
-                        }
+                username.length > 25 -> {
+                    Toast.makeText(this, "Please input a username less than 25 characters long.", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                else -> {
+                    val profileUpdates = userProfileChangeRequest {
+                        displayName = username
                     }
+                    user!!.updateProfile(profileUpdates)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                Log.d("Profile_Update","Username updated to $username.")
+                                Toast.makeText(this, "Username updated to $username", Toast.LENGTH_LONG).show()
+                            }
+                        }
+                }
             }
         }
 

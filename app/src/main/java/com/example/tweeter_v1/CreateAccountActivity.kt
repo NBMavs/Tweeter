@@ -1,6 +1,5 @@
 package com.example.tweeter_v1
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -41,6 +40,12 @@ class CreateAccount: AppCompatActivity() {
                     Toast.makeText(this, "Please confirm your password.", Toast.LENGTH_SHORT).show()
 
                             return@setOnClickListener
+            }
+
+            if(username.length > 25)
+            {
+                Toast.makeText(this, "Please input a username less than 25 characters long.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
 
             if (password != passwordConfirm)
