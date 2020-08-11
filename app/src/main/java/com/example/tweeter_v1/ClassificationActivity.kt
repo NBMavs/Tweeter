@@ -1,22 +1,12 @@
 package com.example.tweeter_v1
 
-import android.content.Context
-import android.content.Intent
-import android.media.MediaMetadataRetriever
-import android.media.MediaPlayer
-import android.text.TextUtils
+import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
-import androidx.recyclerview.widget.RecyclerView
-import com.example.tweeter_v1.R
-import com.example.tweeter_v1.R.id
+import androidx.appcompat.app.AppCompatActivity
+import com.ml.quaterion.noiseClassification.Recognition
+import kotlinx.android.synthetic.main.classification.*
+import kotlinx.android.synthetic.main.login_screen.*
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.Interpreter
 import org.tensorflow.lite.support.common.FileUtil
@@ -33,119 +23,28 @@ import java.text.DecimalFormat
 import java.util.*
 import kotlin.Comparator
 import kotlin.collections.ArrayList
-import com.ml.quaterion.noiseClassification.Recognition
-import java.security.AccessControlContext
-import java.security.AccessController.getContext
 
+class ClassificationActivity: AppCompatActivity() {
 
-//import com.tensorflow.android.audio.features.WavFile
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView( R.layout.classification )
 
-class AudioListAdapter(private val allFiles: ArrayList<File>, private var onPlayClick1: onPlayClick, private var context: Context) :
-    RecyclerView.Adapter<AudioListAdapter.ViewHolder>(){
+        var audioFilePath = intent.getStringExtra( "audio_file" ).toString()
+        Log.d("File_Name", "filename is $audioFilePath" )
+        val textFileName = findViewById<TextView>( R.id.textViewClassificationTitle)
+        textFileName.setText("Audio File Path = '$audioFilePath'")
 
+        val classificationResult = findViewById<TextView>( R.id.textViewClassificationResult )
 
-    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView),
-        View.OnClickListener {
+        buttonSubmitForClassification.setOnClickListener{
+            val result = classifyNoise( audioFilePath )
+            val result_1 = "Predicted Noise: $result"
+            Log.d("RESULT", result_1)
 
-
-        val list_play_btn: ImageView = itemView.findViewById(id.list_play_btn)
-        val list_title: TextView = itemView.findViewById(id.list_title)
-        val list_duration: TextView = itemView.findViewById(id.list_duration)
-        val list_classify_btn: Button = itemView.findViewById(id.list_classify_btn)
-        val list_delete_btn: ImageView = itemView.findViewById(id.list_delete_btn)
-
-        init{
-            list_play_btn.setOnClickListener(this)
-
-            //Click listener for classify button
-            list_classify_btn.setOnClickListener {View ->
-                val position: Int = absoluteAdapterPosition
-
-                //Toast.makeText(itemView.context,"You clicked on classify recording ${allFiles[position].name}", Toast.LENGTH_SHORT).show()
-
-                val audioFilePath = allFiles[absoluteAdapterPosition].absolutePath
-                Log.d("ABS_PATH", allFiles[absoluteAdapterPosition].absolutePath)
-
-
-                if ( audioFilePath != null){
-
-                    val intent = Intent( context, ClassificationActivity::class.java )
-                    Log.d("audio_file_path", "Path is $audioFilePath")
-                    intent.putExtra( "audio_file", audioFilePath )
-                    context.startActivity( intent )
-                    /**
-                    //Toast.makeText(itemView.context,"This bird is here, dude...", Toast.LENGTH_SHORT).show()
-                    val result = classifyNoise(audioFilePath)
-                    val result_1 = "Predicted Noise : $result"
-                    Log.d("RESULT", result_1)
-                    Toast.makeText(itemView.context,"Sound is classified as $result", Toast.LENGTH_SHORT).show()
-                    */
-
-                }
-
-                else{
-
-                    Toast.makeText(itemView.context,"Add some birds, dude...", Toast.LENGTH_SHORT).show()
-
-                }
-            }
-
-            list_delete_btn.setOnClickListener {View ->
-                val position: Int = absoluteAdapterPosition
-                Toast.makeText(itemView.context,"You clicked on delete recording ${position + 1}", Toast.LENGTH_SHORT).show()
-                onDeleteCLick(absoluteAdapterPosition)
-            }
+            classificationResult.text = result_1
         }
 
-        override fun onClick(p0: View?) {
-            onPlayClick1.onClickListener(
-                allFiles[absoluteAdapterPosition],
-                absoluteAdapterPosition
-            )
-        }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.audio_list_item, parent, false)
-        return ViewHolder(v)
-    }
-
-    override fun getItemCount(): Int {
-        return allFiles.size
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.list_title.text = allFiles[position].name
-        holder.list_duration.text = getDuration(allFiles[position]).toString()
-    }
-
-    private fun getDuration(file: File): String {
-        val mediaMetadataRetriever = MediaMetadataRetriever()
-        mediaMetadataRetriever.setDataSource(file.absolutePath)
-        val durationStr =
-            mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
-        val timeDuration = durationStr!!.toLong()
-        val minutes = (timeDuration / (1000*60)) % 60
-        val seconds = (timeDuration / (1000)) % 60
-        return String.format("%02d:%02d", minutes, seconds)
-    }
-
-    private fun onDeleteCLick(position: Int) {
-        val file: File = File(allFiles[position].absolutePath)
-        file.delete()
-        allFiles.removeAt(position)
-        notifyItemRemoved(position)
-    }
-
-//    private fun classifySound(position: Int) {
-//        try {
-//            //wavFile = WavFile.openWavFile(allFiles[position])
-//        }
-//    }
-
-
-    public interface onPlayClick {
-        fun onClickListener(file: File, position: Int)
     }
 
     fun classifyNoise ( audioFilePath: String ): String? {
@@ -238,7 +137,7 @@ class AudioListAdapter(private val allFiles: ArrayList<File>, private var onPlay
 
         //load the TFLite model in 'MappedByteBuffer' format using TF Interpreter
         val tfliteModel: MappedByteBuffer =
-            FileUtil.loadMappedFile(context, getModelPath())
+            FileUtil.loadMappedFile(this, getModelPath())
         val tflite: Interpreter
 
         /** Options for configuring the Interpreter.  */
@@ -273,7 +172,7 @@ class AudioListAdapter(private val allFiles: ArrayList<File>, private var onPlay
         val ASSOCIATED_AXIS_LABELS = "labels.txt"
         var associatedAxisLabels: List<String?>? = null
         try {
-            associatedAxisLabels = FileUtil.loadLabels(context , ASSOCIATED_AXIS_LABELS)
+            associatedAxisLabels = FileUtil.loadLabels(this , ASSOCIATED_AXIS_LABELS)
         } catch (e: IOException) {
             Log.e("tfliteSupport", "Error reading label file", e)
         }
@@ -336,5 +235,4 @@ class AudioListAdapter(private val allFiles: ArrayList<File>, private var onPlay
         }
         return recognitions
     }
-
 }
