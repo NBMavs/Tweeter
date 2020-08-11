@@ -14,6 +14,7 @@ class LoginScreen: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView( R.layout.login_screen )
+        Toast.makeText( this,"YOU ARE WORKING IN BRANCH 'Tweeter_V2'", Toast.LENGTH_LONG).show()
 
         buttonSubmitLogin.setOnClickListener {
 
