@@ -57,9 +57,14 @@ class ManageAccount: AppCompatActivity() {
 
         buttonChangeEmail.setOnClickListener {
             val email = editTextChangeEmail.text.toString()
+            val emailconfirm = editTextConfirmEmail.text.toString()
 
-            if(email.isEmpty()) {
-                Toast.makeText(this, "Please enter a new email.", Toast.LENGTH_LONG).show()
+            if(email.isEmpty() || emailconfirm.isEmpty()) {
+                Toast.makeText(this, "Please enter both a new email and  matching confirmation email.", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+            else if(email != emailconfirm) {
+                Toast.makeText(this, "Please enter both a new email and  matching confirmation email.", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
             else
