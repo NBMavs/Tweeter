@@ -15,6 +15,8 @@ class LoginScreen: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView( R.layout.login_screen )
 
+        Toast.makeText(this, "You are working in BRANCH 'Tweeter_V2'", Toast.LENGTH_LONG).show()
+
         buttonSubmitLogin.setOnClickListener {
 
             //Take user input username & password
