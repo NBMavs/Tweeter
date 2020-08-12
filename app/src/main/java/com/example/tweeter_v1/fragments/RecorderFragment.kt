@@ -1,9 +1,7 @@
 package com.example.tweeter_v1
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
-import android.content.res.AssetManager
 import android.media.MediaRecorder
 import android.os.Bundle
 import android.os.SystemClock
@@ -17,8 +15,6 @@ import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
 
