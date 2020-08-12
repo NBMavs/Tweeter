@@ -5,7 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.tweeter_v1.R
+import kotlinx.android.synthetic.main.fragment_profile.*
+import kotlinx.android.synthetic.main.manage_account.*
 
 
 class ProfileFragment : Fragment() {
@@ -13,6 +16,11 @@ class ProfileFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        buttonChangeUsername.setOnClickListener {
+            Toast.makeText(context, "Sup, dood", Toast.LENGTH_LONG).show()
+
+        }
 
     }
 

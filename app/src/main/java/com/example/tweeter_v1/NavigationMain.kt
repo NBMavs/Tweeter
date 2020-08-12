@@ -18,7 +18,7 @@ class NavigationMain: AppCompatActivity() {
         val recorderFragment = RecorderFragment()
         val statsFragment = StatsFragment()
 
-        makeCurrentFragment( profileFragment )
+        makeCurrentFragment( recorderFragment )
 
         top_navigation.setOnNavigationItemSelectedListener {
             when (it.itemId ){
