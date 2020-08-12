@@ -8,6 +8,10 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET" />
+    <permission
+        android:name="com.example.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature"/>
+    <uses-permission android:name="com.example.permission.MAPS_RECEIVE"/>
 
 
     <application
@@ -28,13 +32,15 @@
         <activity android:name=".CreateAccount" />
         <activity android:name=".UserMenu" />
         <activity android:name=".BirdBookActivity" />
-        <activity android:name=".ViewMapActivity" />
         <activity android:name=".ManageAccount" />
         <activity android:name=".RecordingBrowser" />
         <activity android:name=".VerifyClassification"/>
         <activity android:name=".ClassificationActivity" />
         <activity android:name=".NavigationMain" />
 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBYkOUSjnJl4q5I8B2div8ZmIrAt4jiozI" />
 
         <meta-data
             android:name="preloaded_fonts"
