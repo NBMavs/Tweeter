@@ -136,8 +136,8 @@ class AudioListFragment : Fragment(), AudioListAdapter.onPlayClick {
 
         //Changes image from play to pause, and updates audio player text
         playerPlayButton!!.setImageDrawable(this.activity?.resources?.getDrawable(R.drawable.player_pause_btn))
-        playerFileName!!.setText(fileToPlay.getName())
-        playerStatusBar!!.setText("Playing")
+        playerFileName!!.text = fileToPlay.name
+        playerStatusBar!!.text = "Playing"
 
         //When the audio finishes playing
         mediaPlayer!!.setOnCompletionListener { mediaPlayer ->
