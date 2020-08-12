@@ -52,7 +52,7 @@ class UserMenu: AppCompatActivity() {
         }
         buttonBirdBook.setOnClickListener {
             //OPEN BIRD BOOK
-            startActivity(Intent(this, BirdBookActivity::class.java))
+            //startActivity(Intent(this, BirdBookActivity::class.java))
 
         }
         buttonViewMap.setOnClickListener {

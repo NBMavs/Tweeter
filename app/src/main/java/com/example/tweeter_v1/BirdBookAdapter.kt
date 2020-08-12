@@ -13,6 +13,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.ktx.Firebase
 import java.io.File
 import java.security.AccessController.getContext
 
@@ -66,36 +71,30 @@ class BirdBookAdapter (private var birdsArrayFromDB: MutableList<VerifyClassific
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.birdBookEntrySpecies!!.text = "Hello"
-        holder.birdBookEntryTimeDate!!.text = "My"
-        holder.birdBookEntryLocation!!.text = "Dood"
+        holder.birdBookEntrySpecies!!.text = birdsArrayFromDB[position].birdsType
+        holder.birdBookEntryTimeDate!!.text = birdsArrayFromDB[position].time
+        holder.birdBookEntryLocation!!.text = birdsArrayFromDB[position].location
         holder.birdBookEntryImage!!.setImageDrawable(context.resources.getDrawable(getImageDrawable(
             birdsArrayFromDB[position].birdsType), null))
 
     }
 
-    fun getImageDrawable(birdName: String) : Int {
-        val birdNames = arrayListOf<String>(
-            "blue jay",
-            "cedar waxling",
-            "great horned owl",
-            "osprey",
-            "tree swallow"
+    private fun getImageDrawable(birdName: String) : Int {
+
+        val birdsLocal = arrayListOf<Bird>(
+            Bird("Metallic Starling", R.drawable.metallic_starling, "unknown"),
+            Bird("Blue Jay", R.drawable.blue_jay, "unknown"),
+            Bird("Common Blackbird", R.drawable.common_blackbird, "unknown"),
+            Bird("Eurasion Magpie", R.drawable.eurasion_magpie, "unknown"),
+            Bird("European Robin", R.drawable.european_robin, "unknown")
         )
 
-        val birdsDrawables = arrayListOf<Int>(
-            R.drawable.metallic_starling,
-            R.drawable.blue_jay,
-            R.drawable.common_blackbird,
-            R.drawable.eurasion_magpie,
-            R.drawable.european_robin
-        )
-
-        for(i in birdNames.indices){
-            if(birdNames[i] == birdName){
-                return birdsDrawables[i]
+        for(bird in birdsLocal){
+            if(bird.name == birdName){
+                return bird.image
             }
         }
         return 0
     }
+
 }
