@@ -4,15 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AudioListFragment"
+    tools:context=".AndroidFragment"
     android:background="#ffffff">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/audio_list_view"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:paddingTop="40dp"
-        android:paddingBottom="490dp"
+        android:paddingBottom="430dp"
+        android:paddingTop="60dp"
         android:clipToPadding="false"
         />
 

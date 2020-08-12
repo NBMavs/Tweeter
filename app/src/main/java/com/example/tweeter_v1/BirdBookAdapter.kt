@@ -21,7 +21,8 @@ import com.google.firebase.ktx.Firebase
 import java.io.File
 import java.security.AccessController.getContext
 
-class BirdBookAdapter (private var birdsArrayFromDB: MutableList<VerifyClassification.DBWrite>, private val context: Context) :
+//class BirdBookAdapter (private var birdsArrayFromDB: MutableList<VerifyClassification.DBWrite>, private val context: Context) :
+class BirdBookAdapter (private var birdsArrayFromDB: ArrayList<Bird>, private val context: Context) :
     RecyclerView.Adapter<BirdBookAdapter.ViewHolder>(){
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -71,11 +72,17 @@ class BirdBookAdapter (private var birdsArrayFromDB: MutableList<VerifyClassific
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.birdBookEntrySpecies!!.text = birdsArrayFromDB[position].birdsType
-        holder.birdBookEntryTimeDate!!.text = birdsArrayFromDB[position].time
-        holder.birdBookEntryLocation!!.text = birdsArrayFromDB[position].location
-        holder.birdBookEntryImage!!.setImageDrawable(context.resources.getDrawable(getImageDrawable(
-            birdsArrayFromDB[position].birdsType), null))
+//        holder.birdBookEntrySpecies!!.text = birdsArrayFromDB[position].birdsType
+//        holder.birdBookEntryTimeDate!!.text = birdsArrayFromDB[position].time
+//        holder.birdBookEntryLocation!!.text = birdsArrayFromDB[position].location
+//        holder.birdBookEntryImage!!.setImageDrawable(context.resources.getDrawable(getImageDrawable(
+//            birdsArrayFromDB[position].birdsType), null))
+
+                holder.birdBookEntrySpecies!!.text = birdsArrayFromDB[position].name
+        holder.birdBookEntryTimeDate!!.text = birdsArrayFromDB[position].name
+        holder.birdBookEntryLocation!!.text = birdsArrayFromDB[position].name
+        holder.birdBookEntryImage!!.setImageDrawable(context.resources.getDrawable(birdsArrayFromDB[position].image
+        , null))
 
     }
 

@@ -58,7 +58,7 @@ class BirdBookFragment : Fragment() {
 
         userBirdBookRecyclerView!!.setHasFixedSize(true)
         userBirdBookRecyclerView!!.layoutManager = LinearLayoutManager(context)
-        userBirdBookRecyclerView!!.adapter = BirdBookAdapter(birdsArrayFromDB!!, requireContext())
+       // userBirdBookRecyclerView!!.adapter = BirdBookAdapter(birdsArrayFromDB!!, requireContext())
 
     }
 
