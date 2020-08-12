@@ -10,8 +10,6 @@ import com.example.tweeter_v1.R
 
 
 class StatsFragment : Fragment() {
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Toast.makeText(context, "Sup, dood", Toast.LENGTH_LONG).show()
@@ -25,5 +23,4 @@ class StatsFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_stats, container, false)
     }
-
 }

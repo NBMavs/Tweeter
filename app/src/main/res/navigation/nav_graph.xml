@@ -19,4 +19,12 @@
         android:name="com.example.tweeter_v1.AudioListFragment"
         android:label="fragment_audio_list"
         tools:layout="@layout/fragment_audio_list" />
+    <fragment
+        android:id="@+id/recorderFragment"
+        android:name="com.example.tweeter_v1.RecorderFragment"
+        android:label="RecorderFragment" >
+        <action
+            android:id="@+id/action_recorderFragment_to_audioListFragment"
+            app:destination="@id/audioListFragment" />
+    </fragment>
 </navigation>
