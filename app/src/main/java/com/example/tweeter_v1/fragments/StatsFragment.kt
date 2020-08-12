@@ -12,7 +12,6 @@ import com.example.tweeter_v1.R
 class StatsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Toast.makeText(context, "Sup, dood", Toast.LENGTH_LONG).show()
 
     }
 
