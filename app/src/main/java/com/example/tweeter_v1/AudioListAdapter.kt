@@ -29,7 +29,6 @@ class AudioListAdapter(private val allFiles: ArrayList<File>, private var onPlay
         val list_delete_btn: ImageView = itemView.findViewById(id.list_delete_btn)
 
 
-
         init{
             list_play_btn.setOnClickListener(this)
 

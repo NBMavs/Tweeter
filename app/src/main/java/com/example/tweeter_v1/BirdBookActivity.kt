@@ -42,6 +42,7 @@ class BirdBookActivity: AppCompatActivity() {
             override fun onCancelled(error: DatabaseError) {
                 Log.d("ValueEventListener", "Backed out of Bird Book")
             }
+            }
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 tweet = "Click here to display bird book!"
@@ -110,200 +111,173 @@ class BirdBookActivity: AppCompatActivity() {
         setContentView(R.layout.bird_book)
 
         loadDB()
-        editTextTweet.text = tweet.toEditable()
+        //editTextTweet.text = tweet.toEditable()
 
-                fun getCompleteAddressString(LATITUDE: Double, LONGITUDE: Double): String {
-                    var strAdd = ""
-                    val geocoder = Geocoder(this, Locale.getDefault())
-                    try {
-                        val addresses = geocoder.getFromLocation(LATITUDE, LONGITUDE, 1)
-                        if (addresses != null) {
-                            val returnedAddress = addresses.get(0)
-                            val strReturnedAddress = StringBuilder("")
-                            for (i in 0..returnedAddress.getMaxAddressLineIndex()) {
-                                strReturnedAddress.append(returnedAddress.getAddressLine(i))
-                                    .append("\n")
-                            }
-                            strAdd = strReturnedAddress.toString()
-                            Log.d("Address", strReturnedAddress.toString())
-                        } else {
-                            Log.w("Address", "No Address returned!")
-                        }
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                        Log.w("Address", "Cannot get Address!")
-                    }
-                    return strAdd
+        LocationHelper().startListeningUserLocation(
+            this,
+            object : LocationHelper.MyLocationListener {
+                override fun onLocationChanged(location: Location) {
+                    // Here you got user location :)
+                    //CurLoc = location.latitude.toString() + "," + location.longitude.toString()
+                    CurLoc = getCompleteAddressString(location.latitude, location.longitude)
                 }
-                LocationHelper().startListeningUserLocation(
-                    this,
-                    object : LocationHelper.MyLocationListener {
-                        override fun onLocationChanged(location: Location) {
-                            // Here you got user location :)
-                            //CurLoc = location.latitude.toString() + "," + location.longitude.toString()
-                            CurLoc = getCompleteAddressString(location.latitude, location.longitude)
-                        }
-                    })
+            })
 
 
-                val message = editTextTweet.text
-
-                val buttonIntentTweet: Button = findViewById(R.id.buttonIntentTweet)
-                buttonIntentTweet.setOnClickListener {
-                    shareTwitter(message)
-                }
+                //val message = editTextTweet.text
 
 
-                /*suspend fun getUserProfile() {
-                    val usr = withContext(Dispatchers.IO) { twitter.verifyCredentials() }
-                    //Twitter Id
-                    val twitterId = usr.id.toString()
-                    Log.d("Twitter Id: ", twitterId)
-                    //Twitter Handle
-                    val twitterHandle = usr.screenName
-                    Log.d("Twitter Handle: ", twitterHandle)
-                    //Twitter Name
-                    val twitterName = usr.name
-                    Log.d("Twitter Name: ", twitterName)
-                    //Twitter Email
-                    val twitterEmail = usr.email
-                    // Twitter Access Token
-                    Log.d("Twitter Access Token", accToken?.token ?: "")
-                    var accessToken = accToken?.token ?: ""
-                    // Save the Access Token (accToken.token) and Access Token Secret (accToken.tokenSecret) using SharedPreferences
-                    // This will allow us to check user's logging state every time they open the app after cold start.
-                    val sharedPref = this.getPreferences(Context.MODE_PRIVATE)
-                    sharedPref.edit().putString("oauth_token", accToken?.token ?: "").apply()
-                    sharedPref.edit().putString("oauth_token_secret", accToken?.tokenSecret ?: "")
-                        .apply()
-                }*/
-
-                //listView
-                val listView = findViewById<ListView>(R.id.listView)
-                listView.adapter =
-                    myCustomAdapter(this) // this needs to be custom adapter telling list what to render
+        //listView
+        val listView = findViewById<ListView>(R.id.birdbook_list_view)
+//        listView.adapter =
+//            myCustomAdapter(this) // this needs to be custom adapter telling list what to render
     }
 
-            private class myCustomAdapter(context: Context) : BaseAdapter() {
-
-                private val mContext: Context
-
-
-                //Hardcoded Array List used to fill the bird book with examples. Need to implement dynamic usage.
-                //Array List of birds should be saved on users local storage...
-                private val birdslocal = arrayListOf<Bird>(
-                    Bird("Metallic Starling", R.drawable.metallic_starling, "unknown"),
-                    Bird("Blue Jay", R.drawable.blue_jay, "unknown"),
-                    Bird("Common Blackbird", R.drawable.common_blackbird, "unknown"),
-                    Bird("Eurasion Magpie", R.drawable.eurasion_magpie, "unknown"),
-                    Bird("European Robin", R.drawable.european_robin, "unknown")
-                )
-
-                init {
-                    this.mContext = context
+    fun getCompleteAddressString(LATITUDE: Double, LONGITUDE: Double): String {
+        var strAdd = ""
+        val geocoder = Geocoder(this, Locale.getDefault())
+        try {
+            val addresses = geocoder.getFromLocation(LATITUDE, LONGITUDE, 1)
+            if (addresses != null) {
+                val returnedAddress = addresses.get(0)
+                val strReturnedAddress = StringBuilder("")
+                for (i in 0..returnedAddress.maxAddressLineIndex) {
+                    strReturnedAddress.append(returnedAddress.getAddressLine(i))
+                        .append("\n")
                 }
-
-                // 4 methods needed to avoid error
-                // responsible for number of rows in list
-                override fun getCount(): Int {
-                    return birds.size
-                }
-
-                // Ignore
-                override fun getItemId(position: Int): Long {
-                    return position.toLong()
-                }
-
-                // Ignore
-                override fun getItem(position: Int): Any {
-                    return "Test String!"
-                }
-
-                // responsible for rendering out each row
-                override fun getView(
-                    position: Int,
-                    convertView: View?,
-                    viewGroup: ViewGroup?
-                ): View {
-                    val layoutInflater = LayoutInflater.from(mContext)
-                    val rowMain =
-                        layoutInflater.inflate(R.layout.bird_book_list_row_layout, viewGroup, false)
-
-                    //Overwriting textViewClassName in row_main.xml
-                    val textViewClassName = rowMain.findViewById<TextView>(R.id.textViewClassName)
-                    textViewClassName.text = birds.get(position).birdsType
-
-                    //Overwriting textViewWiki in row_main.xml
-                    //val textViewWiki = rowMain.findViewById<TextView>( R.id.textViewWiki)
-                    //textViewWiki.text = birds.get(position).wiki
-                    val buttonBirdWiki = rowMain.findViewById<Button>(R.id.buttonBirdWiki)
-                    if (birds.get(position).birdsType.equals("Blue Jay")) {
-                       buttonBirdWiki.setOnClickListener {
-                           val uriUrl = Uri.parse("https://en.wikipedia.org/wiki/Blue_jay")
-                           val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
-                           this.mContext.startActivity(launchBrowser)
-                        }
-                    }
-                    else if (birds.get(position).birdsType.equals("Metallic Starling")) {
-                        buttonBirdWiki.setOnClickListener {
-                            val uriUrl = Uri.parse("https://en.wikipedia.org/wiki/Metallic_starling")
-                            val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
-                            this.mContext.startActivity(launchBrowser)
-                        }
-                    }
-                    else if (birds.get(position).birdsType.equals("European Robin")) {
-                        buttonBirdWiki.setOnClickListener {
-                            val uriUrl = Uri.parse("https://en.wikipedia.org/wiki/European_robin")
-                            val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
-                            this.mContext.startActivity(launchBrowser)
-                        }
-                    }
-                    else if (birds.get(position).birdsType.equals("Common Blackbird")) {
-                        buttonBirdWiki.setOnClickListener {
-                            val uriUrl = Uri.parse("https://en.wikipedia.org/wiki/Common_blackbird")
-                            val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
-                            this.mContext.startActivity(launchBrowser)
-                        }
-                    }
-                    else if (birds.get(position).birdsType.equals("Eurasian Magpie")) {
-                        buttonBirdWiki.setOnClickListener {
-                            val uriUrl = Uri.parse("https://en.wikipedia.org/wiki/Eurasian_magpie")
-                            val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
-                            this.mContext.startActivity(launchBrowser)
-                        }
-                    }
-
-                    //Overwwriting textViewLocation in
-                    val textViewLocation = rowMain.findViewById<TextView>(R.id.textViewLocation)
-                    textViewLocation.text = birds.get(position).location
-
-                    //Using image from arrayListOf<Bird>
-                    val imageViewBird = rowMain.findViewById<ImageView>(R.id.imageViewBird)
-                    imageViewBird.setImageResource(birdslocal.get(position).image)
-
-                    //Overwriting textViewDate in row_main.xml
-                    val textViewDate = rowMain.findViewById<TextView>(R.id.textViewDate)
-                    textViewDate.text = "Date: ${birds.get(position).time}"
-
-                    //Apply function to individual row Buttons. Add functionality from birds ArrayList
-                    val buttonPlaySound = rowMain.findViewById<Button>(R.id.buttonPlaySound)
-                    buttonPlaySound.setOnClickListener {
-                        Toast.makeText(
-                            mContext,
-                            "Button clicked for item #$position",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-
-//            val textView = TextView(mContext)
-//            textView.text = "Here is my ROW for my ListView"
-//            return textView
-
-                    return rowMain
-                }
-
-
+                strAdd = strReturnedAddress.toString()
+                Log.d("Address", strReturnedAddress.toString())
+            } else {
+                Log.w("Address", "No Address returned!")
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.w("Address", "Cannot get Address!")
+        }
+        return strAdd
+    }
+
+
+
+//    private class myCustomAdapter(context: Context) : BaseAdapter() {
+//
+//        private val mContext: Context
+//
+//        //Hardcoded Array List used to fill the bird book with examples. Need to implement dynamic usage.
+//        //Array List of birds should be saved on users local storage...
+//        private val birdslocal = arrayListOf<Bird>(
+//            Bird("Metallic Starling", R.drawable.metallic_starling, "unknown"),
+//            Bird("Blue Jay", R.drawable.blue_jay, "unknown"),
+//            Bird("Common Blackbird", R.drawable.common_blackbird, "unknown"),
+//            Bird("Eurasion Magpie", R.drawable.eurasion_magpie, "unknown"),
+//            Bird("European Robin", R.drawable.european_robin, "unknown")
+//        )
+//
+//        init {
+//            this.mContext = context
+//        }
+//
+//        // 4 methods needed to avoid error
+//        // responsible for number of rows in list
+//        override fun getCount(): Int {
+//            return birds.size
+//        }
+//
+//        // Ignore
+//        override fun getItemId(position: Int): Long {
+//            return position.toLong()
+//        }
+//
+//        // Ignore
+//        override fun getItem(position: Int): Any {
+//            return "Test String!"
+//        }
+//
+//        // responsible for rendering out each row
+//        override fun getView(
+//            position: Int,
+//            convertView: View?,
+//            viewGroup: ViewGroup?
+//        ): View {
+//            val layoutInflater = LayoutInflater.from(mContext)
+//            val rowMain =
+//                layoutInflater.inflate(R.layout.bird_book_list_row_layout, viewGroup, false)
+//
+//            //Overwriting textViewClassName in row_main.xml
+//            val textViewClassName = rowMain.findViewById<TextView>(R.id.textViewClassName)
+//            textViewClassName.text = birds.get(position).birdsType
+//
+//            //Overwriting textViewWiki in row_main.xml
+//            //val textViewWiki = rowMain.findViewById<TextView>( R.id.textViewWiki)
+//            //textViewWiki.text = birds.get(position).wiki
+//            val buttonBirdWiki = rowMain.findViewById<Button>(R.id.buttonBirdWiki)
+//            if (birds.get(position).birdsType.equals("Blue Jay")) {
+//               buttonBirdWiki.setOnClickListener {
+//                   val uriUrl = Uri.parse("https://en.wikipedia.org/wiki/Blue_jay")
+//                   val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
+//                   this.mContext.startActivity(launchBrowser)
+//                }
+//            }
+//            else if (birds.get(position).birdsType.equals("Metallic Starling")) {
+//                buttonBirdWiki.setOnClickListener {
+//                    val uriUrl = Uri.parse("https://en.wikipedia.org/wiki/Metallic_starling")
+//                    val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
+//                    this.mContext.startActivity(launchBrowser)
+//                }
+//            }
+//            else if (birds.get(position).birdsType.equals("European Robin")) {
+//                buttonBirdWiki.setOnClickListener {
+//                    val uriUrl = Uri.parse("https://en.wikipedia.org/wiki/European_robin")
+//                    val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
+//                    this.mContext.startActivity(launchBrowser)
+//                }
+//            }
+//            else if (birds.get(position).birdsType.equals("Common Blackbird")) {
+//                buttonBirdWiki.setOnClickListener {
+//                    val uriUrl = Uri.parse("https://en.wikipedia.org/wiki/Common_blackbird")
+//                    val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
+//                    this.mContext.startActivity(launchBrowser)
+//                }
+//            }
+//            else if (birds.get(position).birdsType.equals("Eurasian Magpie")) {
+//                buttonBirdWiki.setOnClickListener {
+//                    val uriUrl = Uri.parse("https://en.wikipedia.org/wiki/Eurasian_magpie")
+//                    val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
+//                    this.mContext.startActivity(launchBrowser)
+//                }
+//            }
+//
+//            //Overwwriting textViewLocation in
+//            val textViewLocation = rowMain.findViewById<TextView>(R.id.textViewLocation)
+//            textViewLocation.text = birds.get(position).location
+//
+//            //Using image from arrayListOf<Bird>
+//            val imageViewBird = rowMain.findViewById<ImageView>(R.id.imageViewBird)
+//            imageViewBird.setImageResource(birdslocal.get(position).image)
+//
+//            //Overwriting textViewDate in row_main.xml
+//            val textViewDate = rowMain.findViewById<TextView>(R.id.textViewDate)
+//            textViewDate.text = "Date: ${birds.get(position).time}"
+//
+//            //Apply function to individual row Buttons. Add functionality from birds ArrayList
+//            val buttonPlaySound = rowMain.findViewById<Button>(R.id.buttonPlaySound)
+//            buttonPlaySound.setOnClickListener {
+//                Toast.makeText(
+//                    mContext,
+//                    "Button clicked for item #$position",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//            }
+//
+////            val textView = TextView(mContext)
+////            textView.text = "Here is my ROW for my ListView"
+////            return textView
+//
+//            return rowMain
+//        }
+//
+//
+//    }
 
             class LocationHelper {
 
