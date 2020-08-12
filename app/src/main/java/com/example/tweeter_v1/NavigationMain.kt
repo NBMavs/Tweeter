@@ -4,7 +4,8 @@ import android.os.Bundle
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.tweeter_v1.fragments.*
+import com.example.tweeter_v1.fragments.ProfileFragment
+import com.example.tweeter_v1.fragments.StatsFragment
 import kotlinx.android.synthetic.main.navigation_main.*
 
 class NavigationMain: AppCompatActivity() {
