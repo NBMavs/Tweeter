@@ -153,7 +153,7 @@ class RecordFragment : Fragment(), View.OnClickListener, MediaRecorder.OnInfoLis
         mediaRecorder?.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
         mediaRecorder?.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
         mediaRecorder?.setOutputFile("$recordPath/$recFileName")
-        mediaRecorder?.setMaxDuration(5000)
+        mediaRecorder?.setMaxDuration(4000)
         mediaRecorder?.setOnInfoListener(this)
 
         Log.d("TAG", recFilePath!!)

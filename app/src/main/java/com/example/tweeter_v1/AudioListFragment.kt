@@ -29,7 +29,7 @@ class AudioListFragment : Fragment(), AudioListAdapter.onPlayClick {
     private var isPlaying: Boolean = false
 
     //UI stuff
-    private var playButton: ImageButton? = null
+    private var playerPlayButton: ImageButton? = null
     private var playerFileName: TextView? = null
     private var playerStatusBar: TextView? = null
     private var seekBar: SeekBar? = null
@@ -70,27 +70,27 @@ class AudioListFragment : Fragment(), AudioListAdapter.onPlayClick {
         context?.let { getAssetsFile(it, "waxling_sample_1.wav", audioFilePath) }
 
         var directory: File = File(audioFilePath)
-
-
         fileList.addAll(directory!!.listFiles())
-        fileList.add(File(audioFilePath+"bluejay_sample_1.wav"))
-        fileList.add(File(audioFilePath+"osprey_sample_1.wav"))
-        fileList.add(File(audioFilePath+"owl_sample_1.wav"))
-        fileList.add(File(audioFilePath+"swallow_sample_1.wav"))
-        fileList.add(File(audioFilePath+"waxling_sample_1.wav"))
+
+        fileList.add(File(requireActivity().getExternalFilesDir("/")!!.absolutePath+"bluejay_sample_1.wav"))
+        Log.d("TESTING_FILE_NAME", requireActivity().getExternalFilesDir("/")!!.absolutePath+"bluejay_sample_1.wav" )
+        fileList.add(File(requireActivity().getExternalFilesDir("/")!!.absolutePath+"osprey_sample_1.wav"))
+        fileList.add(File(requireActivity().getExternalFilesDir("/")!!.absolutePath+"owl_sample_1.wav"))
+        fileList.add(File(requireActivity().getExternalFilesDir("/")!!.absolutePath+"swallow_sample_1.wav"))
+        fileList.add(File(requireActivity().getExternalFilesDir("/")!!.absolutePath+"waxling_sample_1.wav"))
 
 
         audioFileList!!.setHasFixedSize(true)
         audioFileList!!.layoutManager = LinearLayoutManager(context)
         audioFileList!!.adapter = AudioListAdapter(fileList, this, requireContext())
 
-        playButton = view.findViewById<ImageButton>(R.id.player_play_button)
+        playerPlayButton = view.findViewById<ImageButton>(R.id.player_play_button)
         playerFileName = view.findViewById<TextView>(R.id.file_name)
         playerStatusBar = view.findViewById<TextView>(R.id.player_header_title)
 
         seekBar = view.findViewById(R.id.seek_bar)
 
-        playButton!!.setOnClickListener(View.OnClickListener {View ->
+        playerPlayButton!!.setOnClickListener(View.OnClickListener {View ->
             if (isPlaying) {
                 pause()
             } else {
@@ -142,7 +142,7 @@ class AudioListFragment : Fragment(), AudioListAdapter.onPlayClick {
         mediaPlayer!!.start()
 
         //Changes image from play to pause, and updates audio player text
-        playButton!!.setImageDrawable(this.activity?.resources?.getDrawable(R.drawable.player_pause_btn))
+        playerPlayButton!!.setImageDrawable(this.activity?.resources?.getDrawable(R.drawable.player_pause_btn))
         playerFileName!!.setText(fileToPlay.getName())
         playerStatusBar!!.setText("Playing")
 
@@ -150,7 +150,7 @@ class AudioListFragment : Fragment(), AudioListAdapter.onPlayClick {
         mediaPlayer!!.setOnCompletionListener { mediaPlayer ->
             stopAudio()
             playerStatusBar!!.text = "Finished"
-            playButton!!.setImageDrawable(this.activity?.resources?.getDrawable(R.drawable.player_play_btn))
+            playerPlayButton!!.setImageDrawable(this.activity?.resources?.getDrawable(R.drawable.player_play_btn))
         }
 
         //Controls seek bar status
@@ -163,14 +163,22 @@ class AudioListFragment : Fragment(), AudioListAdapter.onPlayClick {
 
     private fun pause() {
         mediaPlayer!!.pause()
-        playButton!!.setImageDrawable(this.activity?.resources?.getDrawable(R.drawable.player_play_btn))
+        playerPlayButton!!.setImageDrawable(this.activity?.resources?.getDrawable(R.drawable.player_play_btn))
         isPlaying = false
     }
 
     private fun resume() {
         mediaPlayer!!.start()
-        playButton!!.setImageDrawable(this.activity?.resources?.getDrawable(R.drawable.player_pause_btn))
+        playerPlayButton!!.setImageDrawable(this.activity?.resources?.getDrawable(R.drawable.player_pause_btn))
         isPlaying = true
+    }
+
+    private fun stopAudio() {
+        isPlaying = false
+        mediaPlayer!!.stop()
+        mediaPlayer!!.reset()
+        //mediaPlayer!!.release()
+
     }
 
     //Used when updating seekbar position
@@ -183,20 +191,11 @@ class AudioListFragment : Fragment(), AudioListAdapter.onPlayClick {
         }
     }
 
-    private fun stopAudio() {
-        isPlaying = false
-        mediaPlayer!!.stop()
-        //mediaPlayer!!.release()
-
-    }
 
 
 
 
     private fun getAssetsFile(context: Context, fileName: String, filePath: String) {
-
-
-
         var inputStream = context.assets.open(fileName)
         var outFileNameAndPath = filePath + fileName
         var outputStream: OutputStream = FileOutputStream(outFileNameAndPath)
@@ -213,7 +212,6 @@ class AudioListFragment : Fragment(), AudioListAdapter.onPlayClick {
         outputStream.flush()
         outputStream.close()
         inputStream.close()
-
     }
 
 }
