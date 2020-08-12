@@ -63,21 +63,14 @@ class AudioListFragment : Fragment(), AudioListAdapter.onPlayClick {
         var audioFilePath: String = requireActivity().getExternalFilesDir("/")!!.absolutePath
 
 
-        context?.let { getAssetsFile(it,"bluejay_sample_1.wav", audioFilePath) }
+        context?.let { getAssetsFile(it,"blue_jay_sample_1.wav", audioFilePath) }
         context?.let { getAssetsFile(it, "osprey_sample_1.wav", audioFilePath) }
-        context?.let { getAssetsFile(it, "owl_sample_1.wav", audioFilePath) }
-        context?.let { getAssetsFile(it, "swallow_sample_1.wav", audioFilePath) }
-        context?.let { getAssetsFile(it, "waxling_sample_1.wav", audioFilePath) }
+        context?.let { getAssetsFile(it, "great_horned_owl_sample_1.wav", audioFilePath) }
+        context?.let { getAssetsFile(it, "tree_swallow_sample_1.wav", audioFilePath) }
+        context?.let { getAssetsFile(it, "cedar_waxling_sample_1.wav", audioFilePath) }
 
         var directory: File = File(audioFilePath)
         fileList.addAll(directory!!.listFiles())
-
-        fileList.add(File(requireActivity().getExternalFilesDir("/")!!.absolutePath+"bluejay_sample_1.wav"))
-        Log.d("TESTING_FILE_NAME", requireActivity().getExternalFilesDir("/")!!.absolutePath+"bluejay_sample_1.wav" )
-        fileList.add(File(requireActivity().getExternalFilesDir("/")!!.absolutePath+"osprey_sample_1.wav"))
-        fileList.add(File(requireActivity().getExternalFilesDir("/")!!.absolutePath+"owl_sample_1.wav"))
-        fileList.add(File(requireActivity().getExternalFilesDir("/")!!.absolutePath+"swallow_sample_1.wav"))
-        fileList.add(File(requireActivity().getExternalFilesDir("/")!!.absolutePath+"waxling_sample_1.wav"))
 
 
         audioFileList!!.setHasFixedSize(true)
@@ -197,7 +190,7 @@ class AudioListFragment : Fragment(), AudioListAdapter.onPlayClick {
 
     private fun getAssetsFile(context: Context, fileName: String, filePath: String) {
         var inputStream = context.assets.open(fileName)
-        var outFileNameAndPath = filePath + fileName
+        var outFileNameAndPath = "$filePath/$fileName"
         var outputStream: OutputStream = FileOutputStream(outFileNameAndPath)
         val buffer: ByteArray = ByteArray(8192)
         var length: Int? = 0

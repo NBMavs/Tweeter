@@ -57,18 +57,6 @@ class RecordFragment : Fragment(), View.OnClickListener, MediaRecorder.OnInfoLis
         navController = Navigation.findNavController(view)
 
 
-
-        var checkPath: String = requireActivity().getExternalFilesDir("/")!!.absolutePath
-        checkPath += "bluejay_sample_1.wav"
-        var fileToCheck = File(checkPath)
-        if(fileToCheck.exists()){
-            Log.d("ASSETS_FILE_WRITE", "Status of write to $fileToCheck: Successful")
-        }
-        else {
-            Log.d("ASSETS_FILE_WRITE", "Status of write to $fileToCheck: Not Successful")
-        }
-
-
         recButton = view.findViewById<ImageButton>(R.id.record_btn)
         lstButton = view.findViewById<ImageButton>(R.id.record_list_btn)
         timer = view.findViewById<Chronometer>(R.id.record_chronometer)
@@ -121,13 +109,6 @@ class RecordFragment : Fragment(), View.OnClickListener, MediaRecorder.OnInfoLis
         timer!!.stop()
         isRecording = false
 
-        var file = File(recFilePath)
-        if(file.exists()){
-            Log.d("Tag", "$recFilePath exists")
-        }
-        else {
-            Log.d("Tag", "$recFilePath does not exist")
-        }
 
         fileNameText?.text = "Recording Stopped!\n Last File Saved: \n$recFileName"
 
@@ -136,7 +117,7 @@ class RecordFragment : Fragment(), View.OnClickListener, MediaRecorder.OnInfoLis
 
     private fun startRecording() {
         var recordPath: String = requireActivity().getExternalFilesDir("/")!!.absolutePath
-        //var recordPath: String = "/sdcard/AudioData"
+
         Log.d("Recording_location", recordPath)
         val pattern = "yyyy-MM-dd_hh_ss"
         val simpleDateFormat = SimpleDateFormat(pattern)
@@ -168,9 +149,7 @@ class RecordFragment : Fragment(), View.OnClickListener, MediaRecorder.OnInfoLis
             && context?.let { ActivityCompat.checkSelfPermission(it, writePerms) } == PackageManager.PERMISSION_GRANTED) {
             true
         } else {
-            Log.d("Tag", "Inside request perms block")
             activity?.let { ActivityCompat.requestPermissions(it, arrayOf(recPerms, writePerms), reqCode) }
-            //activity?.let { ActivityCompat.requestPermissions(it, arrayOf(writePerms), reqCode) }
             false
         }
     }
@@ -178,7 +157,6 @@ class RecordFragment : Fragment(), View.OnClickListener, MediaRecorder.OnInfoLis
 
     override fun onInfo(p0: MediaRecorder?, p1: Int, p2: Int) {
         if(p1 == MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED){
-            Log.v("AUDIOCAPTURE","Max duration reached")
             stopRecording()
         }
     }
