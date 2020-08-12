@@ -29,10 +29,11 @@ class ClassificationActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView( R.layout.classification )
 
-        var audioFilePath = intent.getStringExtra( "audio_file" ).toString()
-        Log.d("File_Name", "filename is $audioFilePath" )
+        var audioFilePath = intent.getStringExtra( "audio_file_path" ).toString()
+        var audioFile = intent.getStringExtra("audio_file" ).toString()
+        Log.d("File_path", "file path is $audioFilePath" )
         val textFileName = findViewById<TextView>( R.id.textViewClassificationTitle)
-        textFileName.setText("Audio File Path = '$audioFilePath'")
+        textFileName.text = audioFile
 
         val classificationResult = findViewById<TextView>( R.id.textViewClassificationResult )
 
@@ -168,7 +169,7 @@ class ClassificationActivity: AppCompatActivity() {
 
 
         //Code to transform the probability predictions into label values
-        val ASSOCIATED_AXIS_LABELS = "our_labels.txt"
+        val ASSOCIATED_AXIS_LABELS = "labels.txt"
         var associatedAxisLabels: List<String?>? = null
         try {
             associatedAxisLabels = FileUtil.loadLabels(this , ASSOCIATED_AXIS_LABELS)

@@ -37,14 +37,18 @@ class AudioListAdapter(private val allFiles: ArrayList<File>, private var onPlay
                 val position: Int = absoluteAdapterPosition
 
                 val audioFilePath = allFiles[absoluteAdapterPosition].absolutePath
+                val audioFile = allFiles[absoluteAdapterPosition].name
                 Log.d("ABS_PATH", allFiles[absoluteAdapterPosition].absolutePath)
+                Log.d("ABS_File", allFiles[absoluteAdapterPosition].name )
+
 
 
                 if ( audioFilePath != null){
 
                     val intent = Intent( context, ClassificationActivity::class.java )
                     Log.d("audio_file_path", "Path is $audioFilePath")
-                    intent.putExtra( "audio_file", audioFilePath )
+                    intent.putExtra( "audio_file_path", audioFilePath )
+                    intent.putExtra( "audio_file", allFiles[absoluteAdapterPosition].name )
                     context.startActivity( intent )
 
                 }

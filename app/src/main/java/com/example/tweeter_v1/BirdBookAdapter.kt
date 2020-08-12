@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
 val birdsLocal = arrayListOf<Bird>(
@@ -40,6 +41,8 @@ class BirdBookAdapter (private var birdsArrayFromDB: MutableList<VerifyClassific
 
             //Click listener for classify button
             birdBookEntryTweetButton.setOnClickListener { View ->
+                Toast.makeText(context, "Clicked TWEET", Toast.LENGTH_SHORT).show()
+
             }
 
             birdBookEntryViewMapButton.setOnClickListener {View ->
