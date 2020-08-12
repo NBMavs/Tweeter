@@ -67,6 +67,12 @@ class UserMenu: AppCompatActivity() {
 
         }
 
+        buttonNavigationMain.setOnClickListener{
+            startActivity(Intent(this, NavigationMain::class.java))
+
+        }
+
+
 
         buttonLogout.setOnClickListener {
             //Do firebase stuff/logout account

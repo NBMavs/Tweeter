@@ -3,10 +3,7 @@ package com.example.tweeter_v1
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.tweeter_v1.fragments.AndroidFragment
-import com.example.tweeter_v1.fragments.ProfileFragment
-import com.example.tweeter_v1.fragments.RecorderFragment
-import com.example.tweeter_v1.fragments.StatsFragment
+import com.example.tweeter_v1.fragments.*
 import kotlinx.android.synthetic.main.navigation_main.*
 
 class NavigationMain: AppCompatActivity() {
@@ -17,7 +14,7 @@ class NavigationMain: AppCompatActivity() {
 
         val profileFragment = ProfileFragment()
         val androidFragment = AndroidFragment()
-        val bookFragment = BirdBookFragment()
+        val bookFragment = BookFragment()
         val recorderFragment = RecorderFragment()
         val statsFragment = StatsFragment()
 
