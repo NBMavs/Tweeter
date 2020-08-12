@@ -1,6 +1,8 @@
 package com.example.tweeter_v1
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +11,14 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+
+val birdsLocal = arrayListOf<Bird>(
+    Bird("Metallic Starling", R.drawable.metallic_starling, "https://en.wikipedia.org/wiki/Metallic_starling"),
+    Bird("Blue Jay", R.drawable.blue_jay, "https://en.wikipedia.org/wiki/Blue_jay"),
+    Bird("Common Blackbird", R.drawable.common_blackbird, "https://en.wikipedia.org/wiki/Common_blackbird"),
+    Bird("Eurasion Magpie", R.drawable.eurasion_magpie, "https://en.wikipedia.org/wiki/Eurasian_magpie"),
+    Bird("European Robin", R.drawable.european_robin, "https://en.wikipedia.org/wiki/European_robin")
+)
 
 class BirdBookAdapter (private var birdsArrayFromDB: MutableList<VerifyClassification.DBWrite>, private val context: Context) :
 //class BirdBookAdapter(private var birdsArrayFromDB: ArrayList<Bird>, private val context: Context) :
@@ -29,8 +39,7 @@ class BirdBookAdapter (private var birdsArrayFromDB: MutableList<VerifyClassific
 
 
             //Click listener for classify button
-            birdBookEntryTweetButton.setOnClickListener {View ->
-
+            birdBookEntryTweetButton.setOnClickListener { View ->
             }
 
             birdBookEntryViewMapButton.setOnClickListener {View ->
@@ -38,7 +47,10 @@ class BirdBookAdapter (private var birdsArrayFromDB: MutableList<VerifyClassific
             }
 
             birdBookEntryWikiButton.setOnClickListener {View ->
-
+                val wiki : String = getWiki(birdsArrayFromDB[position].birdsType)
+                    val uriUrl = Uri.parse(wiki)
+                    val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
+                    context.startActivity(launchBrowser)
             }
 
 
@@ -76,21 +88,21 @@ class BirdBookAdapter (private var birdsArrayFromDB: MutableList<VerifyClassific
     }
 
     private fun getImageDrawable(birdName: String) : Int {
-
-        val birdsLocal = arrayListOf<Bird>(
-            Bird("Metallic Starling", R.drawable.metallic_starling, "unknown"),
-            Bird("Blue Jay", R.drawable.blue_jay, "unknown"),
-            Bird("Common Blackbird", R.drawable.common_blackbird, "unknown"),
-            Bird("Eurasion Magpie", R.drawable.eurasion_magpie, "unknown"),
-            Bird("European Robin", R.drawable.european_robin, "unknown")
-        )
-
         for(bird in birdsLocal){
             if(bird.name == birdName){
                 return bird.image
             }
         }
         return 0
+    }
+
+    private fun getWiki(birdName: String) : String {
+        for(bird in birdsLocal){
+            if(bird.name == birdName){
+                return bird.wiki
+            }
+        }
+        return "https://en.wikipedia.org/wiki/Bird"
     }
 
 }
