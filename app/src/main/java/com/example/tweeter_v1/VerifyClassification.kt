@@ -18,43 +18,18 @@ import java.util.*
 
 class VerifyClassification :  AppCompatActivity() {
     data class DBWrite(
-    //@SerializedName("wiki") var wiki: String,
     @SerializedName("user") var user: String,
     @SerializedName("time") var time: String,
     @SerializedName("location") var location: String,
     @SerializedName("id") var id: String,
     @SerializedName("birdsType") var birdsType: String
 ){
-
         constructor(bird: DBWrite) : this("","","","","")  constructor(): this("","","","","")}
-
 
     val database = FirebaseDatabase.getInstance()
     val user = Firebase.auth.currentUser
 
-    fun writeNewMS(
-        firebaseData: DatabaseReference,
-        CurLoc: String,
-        birdsType: String
-    ) {
-        val currentTime = Calendar.getInstance().getTime()
-        val User : List<DBWrite> = mutableListOf(
-            DBWrite("","","","","")
-        )
-        User.forEach {
-            it.birdsType = birdsType
-            it.user = user!!.displayName.toString()
-            it.time = currentTime.toString()
-            it.location = CurLoc
-            it.id = user!!.uid
-            firebaseData.child(user.uid).child(it.time).setValue(it)
-            Log.d("DBWrite","$it")
-        }
-        Log.d("Write_Bird_Book","Metallic Starling added to bird book at $currentTime from $CurLoc")
-        Toast.makeText(this, "Metallic Starling added to bird book at $currentTime from $CurLoc", Toast.LENGTH_LONG).show()
-    }
-
-    fun writeNewER(
+    fun writeNewBird(
         firebaseData: DatabaseReference,
         CurLoc: String,
         birdsType: String
@@ -71,73 +46,9 @@ class VerifyClassification :  AppCompatActivity() {
             it.id = user!!.uid
             firebaseData.child(user.uid).child(it.time).setValue(it)
         }
-        Log.d("Write_Bird_Book","European Robin added to bird book at $currentTime from $CurLoc")
-        Toast.makeText(this, "European Robin added to bird book at $currentTime from $CurLoc", Toast.LENGTH_LONG).show()
+        Log.d("Write_Bird_Book","$birdsType added to bird book at $currentTime from $CurLoc")
+        Toast.makeText(this, "$birdsType added to bird book at $currentTime from $CurLoc", Toast.LENGTH_LONG).show()
     }
-
-    fun writeNewCBB(
-        firebaseData: DatabaseReference,
-        CurLoc: String,
-        birdsType: String
-    ) {
-        val currentTime = Calendar.getInstance().getTime()
-        val User : List<DBWrite> = mutableListOf(
-            DBWrite("","","","","")
-        )
-        User.forEach {
-            it.birdsType = birdsType
-            it.user = user!!.displayName.toString()
-            it.time = currentTime.toString()
-            it.location = CurLoc
-            it.id = user!!.uid
-            firebaseData.child(user.uid).child(it.time).setValue(it)
-        }
-        Log.d("Write_Bird_Book","Common Blackbird added to bird book at $currentTime from $CurLoc")
-        Toast.makeText(this, "Common Blackbird added to bird book at $currentTime from $CurLoc", Toast.LENGTH_LONG).show()
-    }
-
-    fun writeNewEM(
-        firebaseData: DatabaseReference,
-        CurLoc: String,
-        birdsType: String
-    ) {
-        val currentTime = Calendar.getInstance().getTime()
-        val User : List<DBWrite> = mutableListOf(
-            DBWrite("","","","","")
-        )
-        User.forEach {
-            it.birdsType = birdsType
-            it.user = user!!.displayName.toString()
-            it.time = currentTime.toString()
-            it.location = CurLoc
-            it.id = user!!.uid
-            firebaseData.child(user.uid).child(it.time).setValue(it)
-        }
-        Log.d("Write_Bird_Book","Eurasian Magpie added to bird book at $currentTime from $CurLoc")
-        Toast.makeText(this, "Eurasian Magpie added to bird book at $currentTime from $CurLoc", Toast.LENGTH_LONG).show()
-    }
-
-    fun writeNewBJ(
-        firebaseData: DatabaseReference,
-        CurLoc: String,
-        birdsType: String
-    ) {
-        val currentTime = Calendar.getInstance().getTime()
-        val User : List<DBWrite> = mutableListOf(
-            DBWrite("","","","","")
-        )
-        User.forEach {
-            it.birdsType = birdsType
-            it.user = user!!.displayName.toString()
-            it.time = currentTime.toString()
-            it.location = CurLoc
-            it.id = user!!.uid
-            firebaseData.child(user.uid).child(it.time).setValue(it)
-        }
-        Log.d("Write_Bird_Book","Blue Jay added to bird book at $currentTime from $CurLoc")
-        Toast.makeText(this, "Blue Jay added to bird book at $currentTime from $CurLoc", Toast.LENGTH_LONG).show()
-    }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -190,36 +101,9 @@ class VerifyClassification :  AppCompatActivity() {
 
 
         buttonWriteDB.setOnClickListener {
-            birdType = editTextWriteDB.text.toString()
-            if(birdType.equals("Metallic Starling")){
-                birdsType = "Metallic Starling"
+                birdsType = editTextWriteDB.text.toString()
                 val ref = database.getReference("VerifiedBirds")
-                this.writeNewMS(ref, CurLoc, birdsType)
-            }
-            else if(birdType.equals("European Robin")){
-                birdsType = "European Robin"
-                val ref = database.getReference("VerifiedBirds")
-                this.writeNewER(ref, CurLoc, birdsType )
-            }
-            else if(birdType.equals("Common Blackbird")){
-                birdsType = "Common Blackbird"
-                val ref = database.getReference("VerifiedBirds")
-                this.writeNewCBB(ref, CurLoc, birdsType)
-            }
-            else if(birdType.equals("Blue Jay")){
-                birdsType = "Blue Jay"
-                val ref = database.getReference("VerifiedBirds")
-                this.writeNewBJ(ref, CurLoc, birdsType)
-            }
-            else if(birdType.equals("Eurasian Magpie")){
-                birdsType = "Eurasian Magpie"
-                val ref = database.getReference("VerifiedBirds")
-                this.writeNewEM(ref, CurLoc, birdsType)
-            }
-            else{
-                Log.d("Write_Bird_Book","Failed - Unknown Bird Type: $birdType")
-                Toast.makeText(this, "Failed to write to bird book!", Toast.LENGTH_LONG).show()
-                return@setOnClickListener
+                this.writeNewBird(ref, CurLoc, birdsType)
             }
 
 
@@ -230,5 +114,4 @@ class VerifyClassification :  AppCompatActivity() {
 
 
     }
-}
 
