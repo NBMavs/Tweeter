@@ -58,11 +58,10 @@ class RecordFragment : Fragment(), View.OnClickListener, MediaRecorder.OnInfoLis
 
 
         recButton = view.findViewById<ImageButton>(R.id.record_btn)
-        lstButton = view.findViewById<ImageButton>(R.id.record_list_btn)
         timer = view.findViewById<Chronometer>(R.id.record_chronometer)
         fileNameText = view.findViewById<TextView>(R.id.record_filename)
 
-        lstButton!!.setOnClickListener(this)
+
         recButton!!.setOnClickListener(this)
 
 

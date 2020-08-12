@@ -49,7 +49,7 @@ class RecorderFragment : Fragment(), View.OnClickListener, MediaRecorder.OnInfoL
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_record, container, false)
+        return inflater.inflate(R.layout.fragment_recorder, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,11 +58,10 @@ class RecorderFragment : Fragment(), View.OnClickListener, MediaRecorder.OnInfoL
 
 
         recButton = view.findViewById<ImageButton>(R.id.record_btn)
-        lstButton = view.findViewById<ImageButton>(R.id.record_list_btn)
         timer = view.findViewById<Chronometer>(R.id.record_chronometer)
         fileNameText = view.findViewById<TextView>(R.id.record_filename)
 
-        lstButton!!.setOnClickListener(this)
+
         recButton!!.setOnClickListener(this)
 
 
@@ -70,9 +69,7 @@ class RecorderFragment : Fragment(), View.OnClickListener, MediaRecorder.OnInfoL
 
     override fun onClick(v: View?) {
         when(v!!.id){
-            lstButton!!.id -> {
-//                navController!!.navigate(R.id.action_recordFragment_to_audioListFragment)
-            }
+
             recButton!!.id -> {
                 isRecording = if(isRecording){
 

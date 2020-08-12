@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RecordFragment"
+    tools:context=".RecorderFragment"
     android:background="#2196F3">
 
     <TextView
@@ -76,19 +76,7 @@
         app:layout_constraintTop_toBottomOf="@id/record_chronometer"
         />
 
-    <ImageButton
-        android:id="@+id/record_list_btn"
-        android:background="#2196F3"
-        app:layout_constraintTop_toTopOf="@id/record_btn"
-        app:layout_constraintBottom_toBottomOf="@id/record_btn"
-        app:layout_constraintStart_toEndOf="@id/record_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:padding="16dp"
-        android:src="@drawable/recorder_list_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:tint="#ffffff"
-        />
+
 
 
 
