@@ -20,11 +20,8 @@ class ManageAccount: AppCompatActivity() {
             val name = user.displayName
             val email = user.email
 
-            // Check if user's email is verified
-            val emailVerified = user.isEmailVerified
-
-            textViewUsernameCurrent.text = user.displayName
-            textViewEmailCurrent.text = user.email
+            textViewUsernameCurrent.text = name
+            textViewEmailCurrent.text = email
         }
 
 
@@ -88,14 +85,9 @@ class ManageAccount: AppCompatActivity() {
         }
 
         buttonChangePassword.setOnClickListener {
-            val oldpassword = editTextOldPassword.text.toString()
             val newpassword = editTextChangePassword.text.toString()
             val newpassconfirm = editTextChangePasswordConfirm.text.toString()
 
-            if(oldpassword.isEmpty()) {
-                Toast.makeText(this, "Must enter old password.", Toast.LENGTH_LONG).show()
-                return@setOnClickListener
-            }
 
             if(newpassword != newpassconfirm) {
             Toast.makeText(this, "Password and Password Confirm must match completely.", Toast.LENGTH_LONG).show()
