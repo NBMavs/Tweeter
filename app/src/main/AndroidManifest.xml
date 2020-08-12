@@ -33,6 +33,7 @@
         <activity android:name=".RecordingBrowser" />
         <activity android:name=".VerifyClassification"/>
         <activity android:name=".ClassificationActivity" />
+        <activity android:name=".NavigationMain" />
 
 
         <meta-data
