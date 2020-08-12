@@ -5,7 +5,11 @@ import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.tweeter_v1.fragments.*
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.navigation_main.*
+
+val user = Firebase.auth.currentUser
 
 class NavigationMain: AppCompatActivity() {
 

@@ -28,7 +28,7 @@ lateinit var twitterDialog: Dialog
 lateinit var twitter: Twitter
 var accToken: AccessToken? = null
 
-val user = Firebase.auth.currentUser
+//val user = Firebase.auth.currentUser
 
 class UserMenu: AppCompatActivity() {
 
@@ -36,55 +36,55 @@ class UserMenu: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.user_menu)
 
-        //Removes functionality of back button for this page. Back button stays on same page at MainMenu
-        onBackPressedDispatcher.addCallback { this }
+//        //Removes functionality of back button for this page. Back button stays on same page at MainMenu
+//        onBackPressedDispatcher.addCallback { this }
+//
+//        buttonManageAccount.setOnClickListener {
+//            //Open ACCOUNT MANAGEMENT
+//            startActivity(Intent(this, ManageAccount::class.java))
+//        }
+//        buttonRecordAudio.setOnClickListener {
+//            //Open AUDIO RECORDER
+//
+//
+//            startActivity(Intent(this, RecordingBrowser::class.java))
+//
+//        }
+//        buttonBirdBook.setOnClickListener {
+//            //OPEN BIRD BOOK
+//            //startActivity(Intent(this, BirdBookActivity::class.java))
+//
+//        }
+//        buttonViewMap.setOnClickListener {
+//            //OPEN MAP
+//            startActivity(Intent(this, ViewMapActivity::class.java))
+//
+//        }
+//
+//        buttonTempVerify.setOnClickListener {
+//            //Verify Classification Window
+//            startActivity(Intent(this, VerifyClassification::class.java))
+//
+//        }
+//
+//        buttonNavigationMain.setOnClickListener{
+//            startActivity(Intent(this, NavigationMain::class.java))
+//
+//        }
+//
+//
 
-        buttonManageAccount.setOnClickListener {
-            //Open ACCOUNT MANAGEMENT
-            startActivity(Intent(this, ManageAccount::class.java))
-        }
-        buttonRecordAudio.setOnClickListener {
-            //Open AUDIO RECORDER
-
-
-            startActivity(Intent(this, RecordingBrowser::class.java))
-
-        }
-        buttonBirdBook.setOnClickListener {
-            //OPEN BIRD BOOK
-            //startActivity(Intent(this, BirdBookActivity::class.java))
-
-        }
-        buttonViewMap.setOnClickListener {
-            //OPEN MAP
-            startActivity(Intent(this, ViewMapActivity::class.java))
-
-        }
-
-        buttonTempVerify.setOnClickListener {
-            //Verify Classification Window
-            startActivity(Intent(this, VerifyClassification::class.java))
-
-        }
-
-        buttonNavigationMain.setOnClickListener{
-            startActivity(Intent(this, NavigationMain::class.java))
-
-        }
-
-
-
-        buttonLogout.setOnClickListener {
-            //Do firebase stuff/logout account
-            FirebaseAuth.getInstance().signOut()    // Sign user out of system
-            val intent = Intent(this, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            //OPEN main_activity
-            startActivity(Intent(this, MainActivity::class.java))
-
-        }
+//        buttonLogout.setOnClickListener {
+//            //Do firebase stuff/logout account
+//            FirebaseAuth.getInstance().signOut()    // Sign user out of system
+//            val intent = Intent(this, MainActivity::class.java)
+//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+//            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//            //OPEN main_activity
+//            startActivity(Intent(this, MainActivity::class.java))
+//
+//        }
 
             GlobalScope.launch {
                 val results = GlobalScope.async { isLoggedIn() }
