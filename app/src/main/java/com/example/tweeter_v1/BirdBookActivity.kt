@@ -1,40 +1,16 @@
 package com.example.tweeter_v1
 
-import android.Manifest
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.location.Geocoder
-import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
-import android.net.Uri
-import android.os.Bundle
-import android.text.Editable
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.*
-import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.bird_book.*
-import java.io.UnsupportedEncodingException
-import java.net.URLEncoder
-import java.util.*
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 var dbReference: DatabaseReference = FirebaseDatabase.getInstance().getReference("VerifiedBirds")
 var birds : MutableList<VerifyClassification.DBWrite> =  mutableListOf(VerifyClassification.DBWrite("","","","",""))
 var tweet : String = "Click here to display bird book!"
 var CurLoc: String = ""
-class BirdBookActivity: AppCompatActivity() {
+class BirdBookActivity: AppCompatActivity()
 
-    // Code to read from database!
+    /* Code to read from database!
     fun loadDB(){
         birds.clear()
         val user = Firebase.auth.currentUser
@@ -59,7 +35,7 @@ class BirdBookActivity: AppCompatActivity() {
                 val size = birds.size
                 Log.d("birds array completed","Total birds: $size")
             }
-        })
+        }
     }
 
 
@@ -354,4 +330,4 @@ class BirdBookActivity: AppCompatActivity() {
                 }
             }
         }
-fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
+fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)*/
