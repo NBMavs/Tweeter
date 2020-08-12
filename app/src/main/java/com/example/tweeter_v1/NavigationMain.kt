@@ -1,6 +1,7 @@
 package com.example.tweeter_v1
 
 import android.os.Bundle
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.tweeter_v1.fragments.*
@@ -11,6 +12,8 @@ class NavigationMain: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView( R.layout.navigation_main )
+
+        onBackPressedDispatcher.addCallback { this }
 
         val profileFragment = ProfileFragment()
         val androidFragment = AndroidFragment()

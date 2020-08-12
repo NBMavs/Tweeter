@@ -1,5 +1,6 @@
 package com.example.tweeter_v1.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,13 +9,16 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.tweeter_v1.MainActivity
 import com.example.tweeter_v1.R
 import com.example.tweeter_v1.user
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile.view.*
+import kotlinx.android.synthetic.main.user_menu.*
 
 
 class ProfileFragment : Fragment() {
@@ -63,6 +67,7 @@ class ProfileFragment : Fragment() {
                             if (task.isSuccessful) {
                                 Log.d("Profile_Update","Username updated to $username.")
                                 Toast.makeText(context, "Username updated to $username", Toast.LENGTH_LONG).show()
+                                view.textViewUsernameCurrent.text = username
                             }
                         }
                 }
@@ -94,6 +99,7 @@ class ProfileFragment : Fragment() {
                                 }
                             Log.d("Profile_Update","User email updated to $email.")
                             Toast.makeText(context, "User email updated to $email. Verification email sent.", Toast.LENGTH_LONG).show()
+                            view.textViewEmailCurrent.text = email
                         }
                         else
                             Toast.makeText(context, "Email authentication failed, please enter a full email address.", Toast.LENGTH_LONG).show()
@@ -125,6 +131,18 @@ class ProfileFragment : Fragment() {
                         }
                 }
             }
+        }
+
+        view.buttonLogoutProfile.setOnClickListener {
+            //Do firebase stuff/logout account
+            FirebaseAuth.getInstance().signOut()    // Sign user out of system
+            val intent = Intent(context, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            //OPEN main_activity
+            startActivity(Intent(context, MainActivity::class.java))
+
         }
 
     return view

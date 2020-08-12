@@ -34,7 +34,7 @@ class LoginScreen: AppCompatActivity() {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d("Log in","signInWithEmail:success")
                         val user = Firebase.auth.currentUser
-                        startActivity(Intent(this, UserMenu::class.java))
+                        startActivity(Intent(this, NavigationMain::class.java))
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.d("Log in","signInWithEmail:failure", task.exception)
