@@ -168,7 +168,7 @@ class ClassificationActivity: AppCompatActivity() {
 
 
         //Code to transform the probability predictions into label values
-        val ASSOCIATED_AXIS_LABELS = "labels.txt"
+        val ASSOCIATED_AXIS_LABELS = "our_labels.txt"
         var associatedAxisLabels: List<String?>? = null
         try {
             associatedAxisLabels = FileUtil.loadLabels(this , ASSOCIATED_AXIS_LABELS)
@@ -186,9 +186,15 @@ class ClassificationActivity: AppCompatActivity() {
                 probabilityProcessor.process(outputTensorBuffer)
             )
 
+            /**
+             * Results and percentage assumably are inside floatMap. May be able to use this to display classification details
+             */
+
             // Create a map to access the result based on label
             val floatMap: Map<String, Float> =
                 labels.getMapWithFloatValue()
+            println("\n***** FLOAT MAP DATA *****\n")
+            floatMap.forEach{ (String,float) -> println( "\nString = $String\nFloat = $float\n")}
 
             //function to retrieve the top K probability values, in this case 'k' value is 1.
             //retrieved values are storied in 'Recognition' object with label details.

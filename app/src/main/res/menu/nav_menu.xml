@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+    android:id="@+id/ic_account"
+    android:icon="@drawable/ic_baseline_account_circle"
+    android:title="Home"/>
+
+    <item
+        android:id="@+id/ic_android"
+        android:icon="@drawable/ic_baseline_android"
+        android:title="Android"/>
+
+    <item
+        android:id="@+id/ic_stats"
+        android:icon="@drawable/ic_baseline_data_usage"
+        android:title="Stats"/>
+
+    <item
+    android:id="@+id/ic_book"
+    android:icon="@drawable/ic_baseline_menu_book"
+    android:title="Book"/>
+
+    <item
+        android:id="@+id/ic_recorder"
+        android:icon="@drawable/ic_baseline_mic"
+        android:title="Recorder"/>
+
+</menu>
