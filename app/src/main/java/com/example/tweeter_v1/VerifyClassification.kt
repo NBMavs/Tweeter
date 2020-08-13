@@ -25,6 +25,7 @@ import java.util.*
 
 
 class VerifyClassification :  AppCompatActivity() {
+
     data class DBWrite(
     @SerializedName("user") var user: String,
     @SerializedName("time") var time: String,

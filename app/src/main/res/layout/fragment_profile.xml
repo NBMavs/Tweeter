@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#00669FD1"
-        android:backgroundTint="#D22F86EB"
+        android:backgroundTint="#2196F3"
         android:backgroundTintMode="add">
 
         <TextView
