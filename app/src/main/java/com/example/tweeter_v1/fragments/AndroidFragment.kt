@@ -72,13 +72,13 @@ class AndroidFragment : Fragment(), AudioListAdapter.onPlayClick {
         //context?.let { getAssetsFile(it, "blue_jay_1.wav", audioFilePath) }
         context?.let { getAssetsFile(it, "blue_jay_2.wav", audioFilePath) }
         //context?.let { getAssetsFile(it, "osprey_1.wav", audioFilePath) }
-        context?.let { getAssetsFile(it, "osprey_2.wav", audioFilePath) }
-        context?.let { getAssetsFile(it, "cedar_waxling_1.wav", audioFilePath) }
-        context?.let { getAssetsFile(it, "cedar_waxling_2.wav", audioFilePath) }
+        //context?.let { getAssetsFile(it, "osprey_2.wav", audioFilePath) }
+        //context?.let { getAssetsFile(it, "cedar_waxling_1.wav", audioFilePath) }
+        //context?.let { getAssetsFile(it, "cedar_waxling_2.wav", audioFilePath) }
         //context?.let { getAssetsFile(it, "great_horned_owl_1.wav", audioFilePath) }
-        context?.let { getAssetsFile(it, "great_horned_owl_2.wav", audioFilePath) }
-        context?.let { getAssetsFile(it, "tree_swallow_1.wav", audioFilePath) }
-        context?.let { getAssetsFile(it, "tree_swallow_2.wav", audioFilePath) }
+        //context?.let { getAssetsFile(it, "great_horned_owl_2.wav", audioFilePath) }
+        //context?.let { getAssetsFile(it, "tree_swallow_1.wav", audioFilePath) }
+        //context?.let { getAssetsFile(it, "tree_swallow_2.wav", audioFilePath) }
 
 
         var directory: File = File(audioFilePath)

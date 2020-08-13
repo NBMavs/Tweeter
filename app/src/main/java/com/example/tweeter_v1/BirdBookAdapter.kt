@@ -23,11 +23,11 @@ import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
 
 val birdsLocal = arrayListOf<Bird>(
-    Bird("Metallic Starling", R.drawable.metallic_starling, "https://en.wikipedia.org/wiki/Metallic_starling"),
-    Bird("Blue Jay", R.drawable.blue_jay, "https://en.wikipedia.org/wiki/Blue_jay"),
-    Bird("Common Blackbird", R.drawable.common_blackbird, "https://en.wikipedia.org/wiki/Common_blackbird"),
-    Bird("Eurasion Magpie", R.drawable.eurasion_magpie, "https://en.wikipedia.org/wiki/Eurasian_magpie"),
-    Bird("European Robin", R.drawable.european_robin, "https://en.wikipedia.org/wiki/European_robin")
+    Bird( "Tree Swallow", R.drawable.tree_swallow, "https://en.wikipedia.org/wiki/Tree_swallow" ),
+    Bird( "Blue Jay", R.drawable.blue_jay, "https://en.wikipedia.org/wiki/Blue_jay" ),
+    Bird( "Osprey", R.drawable.osprey, "https://en.wikipedia.org/wiki/Osprey" ),
+    Bird( "Cedar Waxwing", R.drawable.cedar_waxwing, "https://en.wikipedia.org/wiki/Cedar_waxwing" ),
+    Bird( "Great Horned Owl", R.drawable.great_horned_owl, "https://en.wikipedia.org/wiki/Great_horned_owl" )
 )
 
 //Global Twitter
@@ -162,6 +162,8 @@ class BirdBookAdapter (private var birdsArrayFromDB: MutableList<VerifyClassific
             if(bird.name == birdName){
                 return bird.image
             }
+            else
+                return R.drawable.metallic_starling
         }
         return 0
     }

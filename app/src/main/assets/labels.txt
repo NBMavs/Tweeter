@@ -1,6 +1,6 @@
 UNKNOWN
-OSPREY
-CEDAR WAXLING
-GREAT HORNED OWL
-TREE SWALLOW
-BLUE JAY
+Osprey
+Cedar Waxling
+Great Horned Owl
+Tree Swallow
+Blue Jay

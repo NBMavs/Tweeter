@@ -1,7 +1,6 @@
 package com.example.tweeter_v1
 
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -38,7 +37,6 @@ class BookFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("Birds Array Start",birdsArrayFromDB.toString())
     }
 
     override fun onCreateView(
@@ -54,22 +52,11 @@ class BookFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        val birdsLocal = arrayListOf<Bird>(
-            Bird("Metallic Starling", R.drawable.metallic_starling, "unknown"),
-            Bird("Blue Jay", R.drawable.blue_jay, "unknown"),
-            Bird("Common Blackbird", R.drawable.common_blackbird, "unknown"),
-            Bird("Eurasion Magpie", R.drawable.eurasion_magpie, "unknown"),
-            Bird("European Robin", R.drawable.european_robin, "unknown")
-        )
-
-
         userBirdBookRecyclerView = view.findViewById<RecyclerView>(R.id.birdbook_list_view)
 
         userBirdBookRecyclerView!!.setHasFixedSize(true)
         userBirdBookRecyclerView!!.layoutManager = LinearLayoutManager(context)
         userBirdBookRecyclerView!!.adapter = BirdBookAdapter(birdsArrayFromDB, requireContext())
-        //userBirdBookRecyclerView!!.adapter = BirdBookAdapter(birdsLocal!!, requireContext())
 
     }
 }
@@ -84,7 +71,6 @@ fun loadDB(): MutableList<VerifyClassification.DBWrite> {
 
         override fun onDataChange(snapshot: DataSnapshot) {
             tweet = "Click here to display bird book!"
-            Log.d("Snapshot UID", user.uid)
             snapshot.children.forEach {
                 if(snapshot.key!! == user.uid)
                 {
@@ -100,9 +86,3 @@ fun loadDB(): MutableList<VerifyClassification.DBWrite> {
     })
     return birdsArrayFromDB
 }
-
-/*private fun makeCurrentFragment( fragment: Fragment) =
-    supportFragmentManager.beginTransaction().apply{
-        TextUtils.replace(R.id.mapview, fragment)
-        commit()
-    }*/
