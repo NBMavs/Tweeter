@@ -15,13 +15,10 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 
-var birdsArrayFromDB : MutableList<VerifyClassification.DBWrite> =  mutableListOf(VerifyClassification.DBWrite("","","","",""))
 var dbReference: DatabaseReference = FirebaseDatabase.getInstance().getReference("VerifiedBirds")
-
+//var birdsInBook = loadDB()
 
 class BookFragment : Fragment() {
-
-    var birdsInBook = loadDB()
 
     private var userBirdBookRecyclerView: RecyclerView? = null
 
@@ -43,8 +40,6 @@ class BookFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        Log.d("onViewCreated Array 2", birdsInBook.toString())
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_book, container, false)
     }
@@ -56,7 +51,7 @@ class BookFragment : Fragment() {
 
         userBirdBookRecyclerView!!.setHasFixedSize(true)
         userBirdBookRecyclerView!!.layoutManager = LinearLayoutManager(context)
-        userBirdBookRecyclerView!!.adapter = BirdBookAdapter(birdsInBook, requireContext())
+        userBirdBookRecyclerView!!.adapter = BirdBookAdapter(birdsArrayFromDB, requireContext())
 
     }
 }

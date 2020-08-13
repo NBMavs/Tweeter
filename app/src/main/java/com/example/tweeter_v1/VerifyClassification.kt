@@ -19,10 +19,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.synthetic.main.verify_class.*
 import java.util.*
-
-
 
 class VerifyClassification :  AppCompatActivity() {
 
@@ -37,6 +34,7 @@ class VerifyClassification :  AppCompatActivity() {
 
     val database = FirebaseDatabase.getInstance()
     val user = Firebase.auth.currentUser
+
 
     fun writeNewBird(
         firebaseData: DatabaseReference,
@@ -65,31 +63,25 @@ class VerifyClassification :  AppCompatActivity() {
 
         var CurLoc = "Lat, Long"
 
-        fun getCompleteAddressString(LATITUDE:Double, LONGITUDE:Double):String {
+        fun getCompleteAddressString(LATITUDE: Double, LONGITUDE: Double): String {
             var strAdd = ""
             var geocoder = Geocoder(this, Locale.getDefault())
-            try
-            {
+            try {
                 val addresses = geocoder.getFromLocation(LATITUDE, LONGITUDE, 1)
-                if (addresses != null)
-                {
+                if (addresses != null) {
                     val returnedAddress = addresses.get(0)
                     val strReturnedAddress = StringBuilder("")
-                    for (i in 0..returnedAddress.getMaxAddressLineIndex())
-                    {
+                    for (i in 0..returnedAddress.getMaxAddressLineIndex()) {
                         strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n")
                     }
                     strAdd = strReturnedAddress.toString()
                     Log.d("Address", strReturnedAddress.toString())
+                } else {
+                    Log.w("Address", "No Address returned!")
                 }
-                else
-                {
-                    Log.w("Address","No Address returned!")
-                }
-            }
-            catch (e:Exception) {
+            } catch (e: Exception) {
                 e.printStackTrace()
-                Log.w("Address","Cannot get Address!")
+                Log.w("Address", "Cannot get Address!")
             }
             return strAdd
         }
@@ -103,26 +95,8 @@ class VerifyClassification :  AppCompatActivity() {
                     Log.d("Location", "" + CurLoc)
                 }
             })
-
-        var birdsType = ""
-        var birdType = ""
-
-
-
-        buttonWriteDB.setOnClickListener {
-                birdsType = editTextWriteDB.text.toString()
-                val ref = database.getReference("VerifiedBirds")
-                this.writeNewBird(ref, CurLoc, birdsType)
-            }
-
-
-
-        }
-
-
-
+    }
     class LocationHelper {
-
         val LOCATION_REFRESH_TIME =
             3000 // 3 seconds. The Minimum Time to get location update
         val LOCATION_REFRESH_DISTANCE =
