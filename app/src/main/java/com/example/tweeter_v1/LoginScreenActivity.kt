@@ -3,6 +3,7 @@ package com.example.tweeter_v1
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -16,7 +17,6 @@ class LoginScreen: AppCompatActivity() {
         setContentView( R.layout.login_screen )
 
         buttonSubmitLogin.setOnClickListener {
-
             //Take user input username & password
             val email = editTextEmailAddress.text.toString()
             val password = editTextPassword.text.toString()
@@ -27,7 +27,7 @@ class LoginScreen: AppCompatActivity() {
             }
 
             Log.d("Login", "Attempt login with email/pw: $email/***")
-
+            progressBar.visibility = View.VISIBLE
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
@@ -37,12 +37,12 @@ class LoginScreen: AppCompatActivity() {
                         startActivity(Intent(this, NavigationMain::class.java))
                     } else {
                         // If sign in fails, display a message to the user.
+                        progressBar.visibility = View.GONE
                         Log.d("Log in","signInWithEmail:failure", task.exception)
-                        Toast.makeText(baseContext, "Invalid username or password.", Toast.LENGTH_LONG).show()
+                        Toast.makeText(baseContext, "Login attempt failed.", Toast.LENGTH_LONG).show()
                     }
                 }
               //  .addOnFailureListener()
-
         }
 
         buttonForgotPassword.setOnClickListener {
