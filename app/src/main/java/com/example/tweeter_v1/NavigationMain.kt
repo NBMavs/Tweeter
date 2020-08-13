@@ -4,18 +4,23 @@ import android.os.Bundle
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.tweeter_v1.fragments.*
+import com.example.tweeter_v1.fragments.ProfileFragment
+import com.example.tweeter_v1.fragments.StatsFragment
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.navigation_main.*
 
 val user = Firebase.auth.currentUser
+var birdsArrayFromDB : MutableList<VerifyClassification.DBWrite> =  mutableListOf(VerifyClassification.DBWrite("","","","",""))
 
 class NavigationMain: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView( R.layout.navigation_main )
+
+        birdsArrayFromDB.clear()
+        var birdsArrayFromDB = loadDB()
 
         onBackPressedDispatcher.addCallback { this }
 
@@ -44,6 +49,7 @@ class NavigationMain: AppCompatActivity() {
     private fun makeCurrentFragment( fragment: Fragment) =
         supportFragmentManager.beginTransaction().apply{
             replace( R.id.fl_wrapper, fragment )
+            addToBackStack(null)
             commit()
         }
 

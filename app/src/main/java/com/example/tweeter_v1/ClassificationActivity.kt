@@ -112,7 +112,6 @@ class ClassificationActivity: AppCompatActivity() {
 
         buttonSubmitForClassification.setOnClickListener {
             writeNewBird(dbReference, CurLoc, result.toString())
-            loadDB()
             setContentView( R.layout.navigation_main )
             onBackPressedDispatcher.addCallback { this }
             val profileFragment = ProfileFragment()
@@ -124,11 +123,16 @@ class ClassificationActivity: AppCompatActivity() {
 
                 top_navigation.setOnNavigationItemSelectedListener {
                     when (it.itemId ){
-                        R.id.ic_account -> supportFragmentManager.beginTransaction().apply{ replace( R.id.fl_wrapper, profileFragment ).commit()}
-                        R.id.ic_android -> supportFragmentManager.beginTransaction().apply{ replace( R.id.fl_wrapper, androidFragment ).commit()}
-                        R.id.ic_book -> supportFragmentManager.beginTransaction().apply{ replace( R.id.fl_wrapper, bookFragment ).commit()}
-                        R.id.ic_recorder -> supportFragmentManager.beginTransaction().apply{ replace( R.id.fl_wrapper, recorderFragment ).commit()}
-                        R.id.ic_stats -> supportFragmentManager.beginTransaction().apply{ replace( R.id.fl_wrapper, statsFragment ).commit()}
+                        R.id.ic_account -> supportFragmentManager.beginTransaction().apply{ replace( R.id.fl_wrapper, profileFragment ).commit()
+                            addToBackStack(null)}
+                        R.id.ic_android -> supportFragmentManager.beginTransaction().apply{ replace( R.id.fl_wrapper, androidFragment ).commit()
+                            addToBackStack(null)}
+                        R.id.ic_book -> supportFragmentManager.beginTransaction().apply{ replace( R.id.fl_wrapper, bookFragment ).commit()
+                            addToBackStack(null)}
+                        R.id.ic_recorder -> supportFragmentManager.beginTransaction().apply{ replace( R.id.fl_wrapper, recorderFragment ).commit()
+                            addToBackStack(null)}
+                        R.id.ic_stats -> supportFragmentManager.beginTransaction().apply{ replace( R.id.fl_wrapper, statsFragment ).commit()
+                            addToBackStack(null)}
                     }
                     true
                 }
