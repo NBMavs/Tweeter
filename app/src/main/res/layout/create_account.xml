@@ -8,6 +8,14 @@
     android:background="@drawable/tweeter_bird"
     >
 
+    <ImageView
+        android:layout_width="255dp"
+        android:layout_height="129dp"
+        android:src="@drawable/tweeter_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
         android:id="@+id/editTextEmailAddress"
         android:layout_width="0dp"
@@ -15,14 +23,15 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="232dp"
         android:layout_marginEnd="16dp"
-        android:background="#CCFFFFFF"
+        android:background="@drawable/edittext_rounded"
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textAlignment="center"/>
 
     <EditText
         android:id="@+id/editTextUsernameCreateAccount"
@@ -31,14 +40,15 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        android:background="#CCFFFFFF"
+        android:background="@drawable/edittext_rounded"
         android:ems="10"
         android:hint="Username"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.468"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEmailAddress" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextEmailAddress"
+        android:textAlignment="center"/>
 
     <EditText
         android:id="@+id/editTextPassword"
@@ -47,14 +57,15 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        android:background="#CCFFFFFF"
+        android:background="@drawable/edittext_rounded"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextUsernameCreateAccount" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextUsernameCreateAccount"
+        android:textAlignment="center"/>
 
     <EditText
         android:id="@+id/editTextPasswordConfirm"
@@ -63,14 +74,15 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        android:background="#CCFFFFFF"
+        android:background="@drawable/edittext_rounded"
         android:ems="10"
         android:hint="Confirm Password"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextPassword"
+        android:textAlignment="center"/>
 
     <Button
         android:id="@+id/buttonCreateAccountSubmit"
@@ -79,7 +91,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="32dp"
-        android:backgroundTint="#BF5BCAD3"
+        android:backgroundTint="#995BCAD3"
         android:text="Submit"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
