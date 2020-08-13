@@ -14,6 +14,8 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import twitter4j.Twitter
 import twitter4j.auth.AccessToken
@@ -34,9 +36,13 @@ lateinit var twitter: Twitter
 var accToken: AccessToken? = null
 var tweet: String = ""
 
+
 class BirdBookAdapter (private var birdsArrayFromDB: MutableList<VerifyClassification.DBWrite>, private val context: Context) :
     RecyclerView.Adapter<BirdBookAdapter.ViewHolder>(){
 
+    var fm: FragmentManager = (context as AppCompatActivity).supportFragmentManager
+
+    // Tweet send function
     fun shareTwitter(tweet: String) {
         val tweetIntent = Intent(Intent.ACTION_SEND)
         val c = tweet
@@ -78,8 +84,12 @@ class BirdBookAdapter (private var birdsArrayFromDB: MutableList<VerifyClassific
         }
     }
 
+    companion object {
+        fun newInstance() = ViewMapActivity()
+    }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val birdBookEntrySpecies: TextView = itemView.findViewById(R.id.bird_species)
         val birdBookEntryTimeDate: TextView? = itemView.findViewById(R.id.time_spotted)
@@ -90,31 +100,39 @@ class BirdBookAdapter (private var birdsArrayFromDB: MutableList<VerifyClassific
         val birdBookEntryViewMapButton: Button = itemView.findViewById(R.id.view_map_btn)
         val birdBookEntryWikiButton: Button = itemView.findViewById(R.id.view_wiki_btn)
 
-        init{
+        init {
 
 
             //Click listener for classify button
             birdBookEntryTweetButton.setOnClickListener { View ->
-                tweet = "I just verified a " + birdsArrayFromDB[position].birdsType + " at " + birdsArrayFromDB[position].location + " on " + birdsArrayFromDB[position].time + " on the Tweeter app!"
+                tweet =
+                    "I just verified a " + birdsArrayFromDB[position].birdsType + " at " + birdsArrayFromDB[position].location + " on " + birdsArrayFromDB[position].time + " on the Tweeter app!"
                 shareTwitter(tweet)
                 //TwitterActivity.shareTwitter(tweet)
                 Toast.makeText(context, "Clicked TWEET", Toast.LENGTH_SHORT).show()
 
             }
 
-            birdBookEntryViewMapButton.setOnClickListener {View ->
-
+            //fm.beginTransaction().replace(R.id.mapview, newInstance()).commit()
+            birdBookEntryViewMapButton.setOnClickListener {
+                var uri: String = "geo:0,0?q=" + birdsArrayFromDB[position].location
+                Log.d("URI String: ",Uri.parse("$uri").toString())
+                val gmmIntentUri = Uri.parse("$uri")
+                val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                mapIntent.setPackage("com.google.android.apps.maps")
+                context.startActivity(mapIntent)
             }
 
-            birdBookEntryWikiButton.setOnClickListener {View ->
-                    val wiki : String = getWiki(birdsArrayFromDB[position].birdsType)
+
+                birdBookEntryWikiButton.setOnClickListener { View ->
+                    val wiki: String = getWiki(birdsArrayFromDB[position].birdsType)
                     val uriUrl = Uri.parse(wiki)
                     val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
                     context.startActivity(launchBrowser)
+                }
             }
         }
 
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
