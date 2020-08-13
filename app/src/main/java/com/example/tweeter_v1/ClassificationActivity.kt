@@ -74,24 +74,11 @@ class ClassificationActivity: AppCompatActivity() {
 
 
         /** 5 Bird Data CLASSES declared */
-        val treeSwallow = Bird(
-            "Tree Swallow",
-            R.drawable.tree_swallow,
-            "https://en.wikipedia.org/wiki/Tree_swallow"
-        )
-        val blueJay =
-            Bird("Blue Jay", R.drawable.blue_jay, "https://en.wikipedia.org/wiki/Blue_jay")
+        val treeSwallow = Bird("Tree Swallow", R.drawable.tree_swallow, "https://en.wikipedia.org/wiki/Tree_swallow")
+        val blueJay = Bird("Blue Jay", R.drawable.blue_jay, "https://en.wikipedia.org/wiki/Blue_jay")
         val osprey = Bird("Osprey", R.drawable.osprey, "https://en.wikipedia.org/wiki/Osprey")
-        val cedarWaxwing = Bird(
-            "Cedar Waxwing",
-            R.drawable.cedar_waxwing,
-            "https://en.wikipedia.org/wiki/Cedar_waxwing"
-        )
-        val greatHornedOwl = Bird(
-            "Great Horned Owl",
-            R.drawable.great_horned_owl,
-            "https://en.wikipedia.org/wiki/Great_horned_owl"
-        )
+        val cedarWaxwing = Bird("Cedar Waxwing", R.drawable.cedar_waxwing, "https://en.wikipedia.org/wiki/Cedar_waxwing")
+        val greatHornedOwl = Bird("Great Horned Owl", R.drawable.great_horned_owl, "https://en.wikipedia.org/wiki/Great_horned_owl")
 
         var audioFilePath = intent.getStringExtra("audio_file_path").toString()
         var audioFile = intent.getStringExtra("audio_file").toString()
@@ -104,15 +91,15 @@ class ClassificationActivity: AppCompatActivity() {
         val result = classifyNoise(audioFilePath)
 
         //Bird image shown according to classification result
-        if (result == "OSPREY") {
+        if (result == "Osprey") {
             imageViewClassificationImage.setImageResource(osprey.image)
-        } else if (result == "CEDAR WAXLING") {
+        } else if (result == "Cedar Waxwing") {
             imageViewClassificationImage.setImageResource(cedarWaxwing.image)
-        } else if (result == "GREAT HORNED OWL") {
+        } else if (result == "Great Horned Owl") {
             imageViewClassificationImage.setImageResource(greatHornedOwl.image)
-        } else if (result == "TREE SWALLOW") {
+        } else if (result == "Tree Swallow") {
             imageViewClassificationImage.setImageResource(treeSwallow.image)
-        } else if (result == "BLUE JAY") {
+        } else if (result == "Blue Jay") {
             imageViewClassificationImage.setImageResource(blueJay.image)
         } else {
             imageViewClassificationImage.setImageResource(R.drawable.tweeter_bird)
