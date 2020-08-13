@@ -3,13 +3,13 @@ package com.example.tweeter_v1
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-
+/**
 var dbReference: DatabaseReference = FirebaseDatabase.getInstance().getReference("VerifiedBirds")
 var birds : MutableList<VerifyClassification.DBWrite> =  mutableListOf(VerifyClassification.DBWrite("","","","",""))
 var tweet : String = "Click here to display bird book!"
 var CurLoc: String = ""
 class BirdBookActivity: AppCompatActivity()
-
+*/
     /* Code to read from database!
     fun loadDB(){
         birds.clear()
