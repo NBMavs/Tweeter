@@ -1,10 +1,6 @@
-osprey
-blue jay
-cedar waxling
-great horned owl
-tree swallow
-class_six
-class_seven
-class_eight
-class_nine
-class_ten
+UNKNOWN
+OSPREY
+CEDAR WAXLING
+GREAT HORNED OWL
+TREE SWALLOW
+BLUE JAY

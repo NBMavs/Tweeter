@@ -1,4 +1,4 @@
-//ORIGINAL ORDERING
+
 blue jay
 cedar waxling
 great horned owl
@@ -9,3 +9,6 @@ tree swallow
 ...
 ...
 ...
+
+
+//ORIGINAL ORDERING
