@@ -43,10 +43,6 @@ class AndroidFragment : Fragment(), AudioListAdapter.onPlayClick {
     private var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>? = null
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -66,7 +62,7 @@ class AndroidFragment : Fragment(), AudioListAdapter.onPlayClick {
 
         //Getting path for all phone-recorded audio files
         var audioFilePath: String = requireActivity().getExternalFilesDir("/")!!.absolutePath
-        Log.d("audio_file_path", "Audio Files stored in $audioFilePath" )
+        Log.d("audio_file_path", "Audio Files stored in $audioFilePath")
 
         // Bird Sound Test Data (Assets folder)
         context?.let { getAssetsFile(it, "Sample1.wav", audioFilePath) }
@@ -81,9 +77,8 @@ class AndroidFragment : Fragment(), AudioListAdapter.onPlayClick {
         context?.let { getAssetsFile(it, "Sample10.wav", audioFilePath) }
 
 
-
         var directory: File = File(audioFilePath)
-        fileList.addAll(directory!!.listFiles())
+        fileList.addAll(directory.listFiles())
 
 
         audioFileList!!.setHasFixedSize(true)
@@ -96,7 +91,7 @@ class AndroidFragment : Fragment(), AudioListAdapter.onPlayClick {
 
         seekBar = view.findViewById(R.id.seek_bar)
 
-        playerPlayButton!!.setOnClickListener(View.OnClickListener {View ->
+        playerPlayButton!!.setOnClickListener(View.OnClickListener { View ->
             if (isPlaying) {
                 pause()
             } else {
@@ -115,7 +110,8 @@ class AndroidFragment : Fragment(), AudioListAdapter.onPlayClick {
 
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-                    (bottomSheetBehavior as BottomSheetBehavior<ConstraintLayout>).state = BottomSheetBehavior.STATE_COLLAPSED
+                    (bottomSheetBehavior as BottomSheetBehavior<ConstraintLayout>).state =
+                        BottomSheetBehavior.STATE_COLLAPSED
                 }
             }
         })
@@ -196,9 +192,6 @@ class AndroidFragment : Fragment(), AudioListAdapter.onPlayClick {
             }
         }
     }
-
-
-
 
 
     private fun getAssetsFile(context: Context, fileName: String, filePath: String) {
