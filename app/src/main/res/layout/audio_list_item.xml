@@ -75,9 +75,7 @@
             android:layout_below="@id/list_play_btn"
             android:layout_alignRight="@+id/text_LL"
             android:src="@drawable/ic_delete"
-            android:tint="#aaB90E0A"
-
-            />
+            app:tint="#aaB90E0A" />
 
     </RelativeLayout>
 
