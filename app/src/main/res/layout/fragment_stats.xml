@@ -12,14 +12,58 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
+            android:id="@+id/textViewStatsBullets"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="STATS FRAGMENT"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:text="- peak accuracy of 85% on optimal samples\n- practical accuracy of 78% on optimal samples\n- bird needs to be optimal with a minimum\n- 2 convolution layers\n- 2 sets of neurons\n- uses mel frequency cepstral coefficients in an array"
+            android:textColor="#F8F5F5"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+        <TextView
+            android:id="@+id/textViewStatsParagraph"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:text="   The machine learning model achieves a peak accuracy of 85% and an average accuracy of 79%. This accuracy is achieved with recordings where the bird is noticeably audible and calls more than once per recording for has one long call.\n\n   The model design is on the simpler side with just 2 layers and 2 sets of neurons, using softmax optimization and a callback to reduce the learning rate over the course of fitting the model.\n\n   The data in the model is not a pure .wav file but rather is the mean of a mel frequency cepstral coefficients in a numpy array which better arranges the data for the machine learning model to work upon."
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="100dp"
+            android:text="Summary:"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="64dp"
+            android:text="About:"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewStatsBullets" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
