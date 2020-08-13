@@ -162,10 +162,8 @@ class BirdBookAdapter (private var birdsArrayFromDB: MutableList<VerifyClassific
             if(bird.name == birdName){
                 return bird.image
             }
-            else
-                return R.drawable.metallic_starling
         }
-        return 0
+        return R.drawable.metallic_starling
     }
 
     private fun getWiki(birdName: String) : String {
