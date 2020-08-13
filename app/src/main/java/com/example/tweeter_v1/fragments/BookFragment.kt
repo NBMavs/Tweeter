@@ -21,7 +21,7 @@ var dbReference: DatabaseReference = FirebaseDatabase.getInstance().getReference
 
 class BookFragment : Fragment() {
 
-    var birdsArrayFromDB = loadDB()
+    var birdsInBook = loadDB()
 
     private var userBirdBookRecyclerView: RecyclerView? = null
 
@@ -44,7 +44,7 @@ class BookFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        Log.d("onViewCreated Array 2", birdsArrayFromDB.toString())
+        Log.d("onViewCreated Array 2", birdsInBook.toString())
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_book, container, false)
     }
@@ -56,7 +56,7 @@ class BookFragment : Fragment() {
 
         userBirdBookRecyclerView!!.setHasFixedSize(true)
         userBirdBookRecyclerView!!.layoutManager = LinearLayoutManager(context)
-        userBirdBookRecyclerView!!.adapter = BirdBookAdapter(birdsArrayFromDB, requireContext())
+        userBirdBookRecyclerView!!.adapter = BirdBookAdapter(birdsInBook, requireContext())
 
     }
 }
