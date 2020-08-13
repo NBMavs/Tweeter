@@ -5,16 +5,21 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ImageButton
+import android.widget.ListView
+import android.widget.SeekBar
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import java.io.*
+import java.io.File
+import java.io.FileOutputStream
+import java.io.OutputStream
 
 class AndroidFragment : Fragment(), AudioListAdapter.onPlayClick {
 
@@ -64,13 +69,13 @@ class AndroidFragment : Fragment(), AudioListAdapter.onPlayClick {
         Log.d("audio_file_path", "Audio Files stored in $audioFilePath" )
 
         // Bird Sound Test Data (Assets folder)
-        context?.let { getAssetsFile(it, "blue_jay_1.wav", audioFilePath) }
+        //context?.let { getAssetsFile(it, "blue_jay_1.wav", audioFilePath) }
         context?.let { getAssetsFile(it, "blue_jay_2.wav", audioFilePath) }
-        context?.let { getAssetsFile(it, "osprey_1.wav", audioFilePath) }
+        //context?.let { getAssetsFile(it, "osprey_1.wav", audioFilePath) }
         context?.let { getAssetsFile(it, "osprey_2.wav", audioFilePath) }
         context?.let { getAssetsFile(it, "cedar_waxling_1.wav", audioFilePath) }
         context?.let { getAssetsFile(it, "cedar_waxling_2.wav", audioFilePath) }
-        context?.let { getAssetsFile(it, "great_horned_owl_1.wav", audioFilePath) }
+        //context?.let { getAssetsFile(it, "great_horned_owl_1.wav", audioFilePath) }
         context?.let { getAssetsFile(it, "great_horned_owl_2.wav", audioFilePath) }
         context?.let { getAssetsFile(it, "tree_swallow_1.wav", audioFilePath) }
         context?.let { getAssetsFile(it, "tree_swallow_2.wav", audioFilePath) }
