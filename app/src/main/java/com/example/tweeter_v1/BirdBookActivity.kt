@@ -1,15 +1,13 @@
 package com.example.tweeter_v1
 
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-/**
-var dbReference: DatabaseReference = FirebaseDatabase.getInstance().getReference("VerifiedBirds")
+
+
 var birds : MutableList<VerifyClassification.DBWrite> =  mutableListOf(VerifyClassification.DBWrite("","","","",""))
-var tweet : String = "Click here to display bird book!"
+
 var CurLoc: String = ""
 class BirdBookActivity: AppCompatActivity()
-*/
+
     /* Code to read from database!
     fun loadDB(){
         birds.clear()
@@ -226,34 +224,34 @@ class BirdBookActivity: AppCompatActivity()
 //            //Overwwriting textViewLocation in
 //            val textViewLocation = rowMain.findViewById<TextView>(R.id.textViewLocation)
 //            textViewLocation.text = birds.get(position).location
-//
-//            //Using image from arrayListOf<Bird>
-//            val imageViewBird = rowMain.findViewById<ImageView>(R.id.imageViewBird)
-//            imageViewBird.setImageResource(birdslocal.get(position).image)
-//
-//            //Overwriting textViewDate in row_main.xml
-//            val textViewDate = rowMain.findViewById<TextView>(R.id.textViewDate)
-//            textViewDate.text = "Date: ${birds.get(position).time}"
-//
-//            //Apply function to individual row Buttons. Add functionality from birds ArrayList
-//            val buttonPlaySound = rowMain.findViewById<Button>(R.id.buttonPlaySound)
-//            buttonPlaySound.setOnClickListener {
-//                Toast.makeText(
-//                    mContext,
-//                    "Button clicked for item #$position",
-//                    Toast.LENGTH_SHORT
-//                ).show()
-//            }
-//
-////            val textView = TextView(mContext)
-////            textView.text = "Here is my ROW for my ListView"
-////            return textView
-//
-//            return rowMain
-//        }
-//
-//
-//    }
+
+            //Using image from arrayListOf<Bird>
+            val imageViewBird = rowMain.findViewById<ImageView>(R.id.imageViewBird)
+            imageViewBird.setImageResource(birdslocal.get(position).image)
+
+            //Overwriting textViewDate in row_main.xml
+            val textViewDate = rowMain.findViewById<TextView>(R.id.textViewDate)
+            textViewDate.text = "Date: ${birds.get(position).time}"
+
+            //Apply function to individual row Buttons. Add functionality from birds ArrayList
+            val buttonPlaySound = rowMain.findViewById<Button>(R.id.buttonPlaySound)
+            buttonPlaySound.setOnClickListener {
+                Toast.makeText(
+                    mContext,
+                    "Button clicked for item #$position",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            val textView = TextView(mContext)
+            textView.text = "Here is my ROW for my ListView"
+            return textView
+
+           return rowMain
+       }
+
+
+    }
 
             class LocationHelper {
 

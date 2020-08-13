@@ -1,11 +1,19 @@
 package com.example.tweeter_v1
 
+import android.location.Geocoder
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
+import com.example.tweeter_v1.fragments.ProfileFragment
+import com.example.tweeter_v1.fragments.StatsFragment
+import com.google.firebase.database.DatabaseReference
 import com.ml.quaterion.noiseClassification.Recognition
 import kotlinx.android.synthetic.main.classification.*
+import kotlinx.android.synthetic.main.navigation_main.*
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.Interpreter
 import org.tensorflow.lite.support.common.FileUtil
@@ -23,47 +31,91 @@ import java.util.*
 import kotlin.Comparator
 import kotlin.collections.ArrayList
 
+
 class ClassificationActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView( R.layout.classification )
+        setContentView(R.layout.classification)
+
+        fun getCompleteAddressString(LATITUDE: Double, LONGITUDE: Double): String {
+            var strAdd = ""
+            var geocoder = Geocoder(this, Locale.getDefault())
+            try {
+                val addresses = geocoder.getFromLocation(LATITUDE, LONGITUDE, 1)
+                if (addresses != null) {
+                    val returnedAddress = addresses.get(0)
+                    val strReturnedAddress = StringBuilder("")
+                    for (i in 0..returnedAddress.getMaxAddressLineIndex()) {
+                        strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n")
+                    }
+                    strAdd = strReturnedAddress.toString()
+                    Log.d("Address", strReturnedAddress.toString())
+                } else {
+                    Log.w("Address", "No Address returned!")
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Log.w("Address", "Cannot get Address!")
+            }
+            return strAdd
+        }
+        VerifyClassification.LocationHelper().startListeningUserLocation(
+            this,
+            object : VerifyClassification.LocationHelper.MyLocationListener {
+                override fun onLocationChanged(location: Location) {
+                    // Here you got user location :)
+                    //CurLoc = location.latitude.toString() + "," + location.longitude.toString()
+                    CurLoc = getCompleteAddressString(location.latitude, location.longitude)
+                    Log.d("Location", "" + CurLoc)
+                }
+            })
+
+
 
         /** 5 Bird Data CLASSES declared */
-        val treeSwallow = Bird( "Tree Swallow", R.drawable.tree_swallow, "unknown" )
-        val blueJay =  Bird( "Blue Jay", R.drawable.blue_jay, "unknown" )
-        val osprey =  Bird( "Osprey", R.drawable.osprey, "unknown" )
-        val cedarWaxwing =  Bird( "Cedar Waxwing", R.drawable.cedar_waxwing, "unknown" )
-        val greatHornedOwl =  Bird( "Great Horned Owl", R.drawable.great_horned_owl, "unknown" )
+        val treeSwallow = Bird(
+            "Tree Swallow",
+            R.drawable.tree_swallow,
+            "https://en.wikipedia.org/wiki/Tree_swallow"
+        )
+        val blueJay =
+            Bird("Blue Jay", R.drawable.blue_jay, "https://en.wikipedia.org/wiki/Blue_jay")
+        val osprey = Bird("Osprey", R.drawable.osprey, "https://en.wikipedia.org/wiki/Osprey")
+        val cedarWaxwing = Bird(
+            "Cedar Waxwing",
+            R.drawable.cedar_waxwing,
+            "https://en.wikipedia.org/wiki/Cedar_waxwing"
+        )
+        val greatHornedOwl = Bird(
+            "Great Horned Owl",
+            R.drawable.great_horned_owl,
+            "https://en.wikipedia.org/wiki/Great_horned_owl"
+        )
 
-        var audioFilePath = intent.getStringExtra( "audio_file_path" ).toString()
-        var audioFile = intent.getStringExtra("audio_file" ).toString()
-        Log.d("File_path", "file path is $audioFilePath" )
-        val textFileName = findViewById<TextView>( R.id.textViewClassificationTitle)
+        var audioFilePath = intent.getStringExtra("audio_file_path").toString()
+        var audioFile = intent.getStringExtra("audio_file").toString()
+        Log.d("File_path", "file path is $audioFilePath")
+        val textFileName = findViewById<TextView>(R.id.textViewClassificationTitle)
         textFileName.text = audioFile
 
-        val classificationResult = findViewById<TextView>( R.id.textViewClassificationResult )
+        val classificationResult = findViewById<TextView>(R.id.textViewClassificationResult)
 
-        val result = classifyNoise( audioFilePath )
+        val result = classifyNoise(audioFilePath)
 
         //Bird image shown according to classification result
-        if(result == "OSPREY"){
-            imageViewClassificationImage.setImageResource( osprey.image )
-        }
-        else if(result == "CEDAR WAXLING"){
-            imageViewClassificationImage.setImageResource( cedarWaxwing.image )
-        }
-        else if(result == "GREAT HORNED OWL"){
-            imageViewClassificationImage.setImageResource( greatHornedOwl.image )
-        }
-        else if(result == "TREE SWALLOW"){
-            imageViewClassificationImage.setImageResource( treeSwallow.image )
-        }
-        else if(result == "BLUE JAY"){
-            imageViewClassificationImage.setImageResource( blueJay.image )
-        }
-        else{
-            imageViewClassificationImage.setImageResource( R.drawable.tweeter_bird )
+        if (result == "OSPREY") {
+            imageViewClassificationImage.setImageResource(osprey.image)
+        } else if (result == "CEDAR WAXLING") {
+            imageViewClassificationImage.setImageResource(cedarWaxwing.image)
+        } else if (result == "GREAT HORNED OWL") {
+            imageViewClassificationImage.setImageResource(greatHornedOwl.image)
+        } else if (result == "TREE SWALLOW") {
+            imageViewClassificationImage.setImageResource(treeSwallow.image)
+        } else if (result == "BLUE JAY") {
+            imageViewClassificationImage.setImageResource(blueJay.image)
+        } else {
+            imageViewClassificationImage.setImageResource(R.drawable.tweeter_bird)
         }
 
         val result_1 = "Predicted Noise: $result"
@@ -72,17 +124,38 @@ class ClassificationActivity: AppCompatActivity() {
 
 
         buttonSubmitForClassification.setOnClickListener {
+            writeNewBird(dbReference, CurLoc, result.toString())
+            loadDB()
+            setContentView( R.layout.navigation_main )
+            onBackPressedDispatcher.addCallback { this }
+            val profileFragment = ProfileFragment()
+            val androidFragment = AndroidFragment()
+            val bookFragment = BookFragment()
+            val recorderFragment = RecorderFragment()
+            val statsFragment = StatsFragment()
+            supportFragmentManager.beginTransaction().apply{ replace( R.id.fl_wrapper, bookFragment ).commit()
 
-            /** BUTTON TO ADD CLASSIFICATION TO BIRD BOOK */
+                top_navigation.setOnNavigationItemSelectedListener {
+                    when (it.itemId ){
+                        R.id.ic_account -> supportFragmentManager.beginTransaction().apply{ replace( R.id.fl_wrapper, profileFragment ).commit()}
+                        R.id.ic_android -> supportFragmentManager.beginTransaction().apply{ replace( R.id.fl_wrapper, androidFragment ).commit()}
+                        R.id.ic_book -> supportFragmentManager.beginTransaction().apply{ replace( R.id.fl_wrapper, bookFragment ).commit()}
+                        R.id.ic_recorder -> supportFragmentManager.beginTransaction().apply{ replace( R.id.fl_wrapper, recorderFragment ).commit()}
+                        R.id.ic_stats -> supportFragmentManager.beginTransaction().apply{ replace( R.id.fl_wrapper, statsFragment ).commit()}
+                    }
+                    true
+                }
+
+            }
         }
     }
 
-    fun classifyNoise ( audioFilePath: String ): String? {
+    fun classifyNoise(audioFilePath: String): String? {
 
         val mNumFrames: Int
         val mSampleRate: Int
         val mChannels: Int
-        var meanMFCCValues : FloatArray = FloatArray(1)
+        var meanMFCCValues: FloatArray = FloatArray(1)
 
         var predictedResult: String? = "Unknown"
 
@@ -161,7 +234,7 @@ class ClassificationActivity: AppCompatActivity() {
     }
 
 
-    private fun loadModelAndMakePredictions(meanMFCCValues : FloatArray) : String? {
+    private fun loadModelAndMakePredictions(meanMFCCValues: FloatArray): String? {
 
         var predictedResult: String? = "unknown"
 
@@ -202,7 +275,7 @@ class ClassificationActivity: AppCompatActivity() {
         val ASSOCIATED_AXIS_LABELS = "labels.txt"
         var associatedAxisLabels: List<String?>? = null
         try {
-            associatedAxisLabels = FileUtil.loadLabels(this , ASSOCIATED_AXIS_LABELS)
+            associatedAxisLabels = FileUtil.loadLabels(this, ASSOCIATED_AXIS_LABELS)
         } catch (e: IOException) {
             Log.e("tfliteSupport", "Error reading label file", e)
         }
@@ -225,7 +298,7 @@ class ClassificationActivity: AppCompatActivity() {
             val floatMap: Map<String, Float> =
                 labels.getMapWithFloatValue()
             println("\n***** FLOAT MAP DATA *****\n")
-            floatMap.forEach{ (String,float) -> println( "\nString = $String\nFloat = $float\n")}
+            floatMap.forEach { (String, float) -> println("\nString = $String\nFloat = $float\n") }
 
             //function to retrieve the top K probability values, in this case 'k' value is 1.
             //retrieved values are storied in 'Recognition' object with label details.
@@ -240,8 +313,8 @@ class ClassificationActivity: AppCompatActivity() {
     }
 
 
-    fun getPredictedValue(predictedList:List<Recognition>?): String?{
-        val top1PredictedValue : Recognition? = predictedList?.get(0)
+    fun getPredictedValue(predictedList: List<Recognition>?): String? {
+        val top1PredictedValue: Recognition? = predictedList?.get(0)
         return top1PredictedValue?.getTitle()
     }
 
@@ -270,5 +343,30 @@ class ClassificationActivity: AppCompatActivity() {
             recognitions.add(pq.poll())
         }
         return recognitions
+    }
+
+    fun writeNewBird(
+        firebaseData: DatabaseReference,
+        CurLoc: String,
+        birdsType: String
+    ) {
+        val currentTime = Calendar.getInstance().getTime()
+        val User: List<VerifyClassification.DBWrite> = mutableListOf(
+            VerifyClassification.DBWrite("", "", "", "", "")
+        )
+        User.forEach {
+            it.birdsType = birdsType
+            it.user = user!!.displayName.toString()
+            it.time = currentTime.toString()
+            it.location = CurLoc
+            it.id = user!!.uid
+            firebaseData.child(user.uid).child(it.time).setValue(it)
+        }
+        Log.d("Write_Bird_Book", "$birdsType added to bird book at $currentTime from $CurLoc")
+        Toast.makeText(
+            this,
+            "$birdsType added to bird book at $currentTime from $CurLoc",
+            Toast.LENGTH_LONG
+        ).show()
     }
 }
