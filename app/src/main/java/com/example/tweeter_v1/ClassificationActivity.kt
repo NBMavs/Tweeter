@@ -29,6 +29,7 @@ class ClassificationActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView( R.layout.classification )
 
+        /** 5 Bird Data CLASSES declared */
         val treeSwallow = Bird( "Tree Swallow", R.drawable.tree_swallow, "unknown" )
         val blueJay =  Bird( "Blue Jay", R.drawable.blue_jay, "unknown" )
         val osprey =  Bird( "Osprey", R.drawable.osprey, "unknown" )
@@ -42,11 +43,7 @@ class ClassificationActivity: AppCompatActivity() {
         textFileName.text = audioFile
 
         val classificationResult = findViewById<TextView>( R.id.textViewClassificationResult )
-//        OSPREY
-//        CEDAR WAXLING
-//                GREAT HORNED OWL
-//        TREE SWALLOW
-//                BLUE JAY
+
         val result = classifyNoise( audioFilePath )
 
         //Bird image shown according to classification result
@@ -75,6 +72,8 @@ class ClassificationActivity: AppCompatActivity() {
 
 
         buttonSubmitForClassification.setOnClickListener {
+
+            /** BUTTON TO ADD CLASSIFICATION TO BIRD BOOK */
         }
     }
 
