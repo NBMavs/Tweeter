@@ -108,12 +108,6 @@ class AudioListAdapter(private val allFiles: ArrayList<File>, private var onPlay
         notifyItemRemoved(position)
     }
 
-//    private fun classifySound(position: Int) {
-//        try {
-//            //wavFile = WavFile.openWavFile(allFiles[position])
-//        }
-//    }
-
     public interface onPlayClick {
         fun onClickListener(file: File, position: Int)
     }
