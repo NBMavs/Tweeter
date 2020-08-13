@@ -6,10 +6,14 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
+import com.example.tweeter_v1.fragments.ProfileFragment
+import com.example.tweeter_v1.fragments.StatsFragment
 import com.google.firebase.database.DatabaseReference
 import com.ml.quaterion.noiseClassification.Recognition
 import kotlinx.android.synthetic.main.classification.*
+import kotlinx.android.synthetic.main.navigation_main.*
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.Interpreter
 import org.tensorflow.lite.support.common.FileUtil
@@ -123,8 +127,25 @@ class ClassificationActivity: AppCompatActivity() {
             writeNewBird(dbReference, CurLoc, result.toString())
             loadDB()
             setContentView( R.layout.navigation_main )
+            onBackPressedDispatcher.addCallback { this }
+            val profileFragment = ProfileFragment()
+            val androidFragment = AndroidFragment()
             val bookFragment = BookFragment()
+            val recorderFragment = RecorderFragment()
+            val statsFragment = StatsFragment()
             supportFragmentManager.beginTransaction().apply{ replace( R.id.fl_wrapper, bookFragment ).commit()
+
+                top_navigation.setOnNavigationItemSelectedListener {
+                    when (it.itemId ){
+                        R.id.ic_account -> supportFragmentManager.beginTransaction().apply{ replace( R.id.fl_wrapper, profileFragment ).commit()}
+                        R.id.ic_android -> supportFragmentManager.beginTransaction().apply{ replace( R.id.fl_wrapper, androidFragment ).commit()}
+                        R.id.ic_book -> supportFragmentManager.beginTransaction().apply{ replace( R.id.fl_wrapper, bookFragment ).commit()}
+                        R.id.ic_recorder -> supportFragmentManager.beginTransaction().apply{ replace( R.id.fl_wrapper, recorderFragment ).commit()}
+                        R.id.ic_stats -> supportFragmentManager.beginTransaction().apply{ replace( R.id.fl_wrapper, statsFragment ).commit()}
+                    }
+                    true
+                }
+
             }
         }
     }
