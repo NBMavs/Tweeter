@@ -29,6 +29,12 @@ class ClassificationActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView( R.layout.classification )
 
+        val treeSwallow = Bird( "Tree Swallow", R.drawable.tree_swallow, "unknown" )
+        val blueJay =  Bird( "Blue Jay", R.drawable.blue_jay, "unknown" )
+        val osprey =  Bird( "Osprey", R.drawable.osprey, "unknown" )
+        val cedarWaxwing =  Bird( "Cedar Waxwing", R.drawable.cedar_waxwing, "unknown" )
+        val greatHornedOwl =  Bird( "Great Horned Owl", R.drawable.great_horned_owl, "unknown" )
+
         var audioFilePath = intent.getStringExtra( "audio_file_path" ).toString()
         var audioFile = intent.getStringExtra("audio_file" ).toString()
         Log.d("File_path", "file path is $audioFilePath" )
@@ -36,15 +42,40 @@ class ClassificationActivity: AppCompatActivity() {
         textFileName.text = audioFile
 
         val classificationResult = findViewById<TextView>( R.id.textViewClassificationResult )
+//        OSPREY
+//        CEDAR WAXLING
+//                GREAT HORNED OWL
+//        TREE SWALLOW
+//                BLUE JAY
+        val result = classifyNoise( audioFilePath )
 
-        buttonSubmitForClassification.setOnClickListener{
-            val result = classifyNoise( audioFilePath )
-            val result_1 = "Predicted Noise: $result"
-            Log.d("RESULT", result_1)
-
-            classificationResult.text = result_1
+        //Bird image shown according to classification result
+        if(result == "OSPREY"){
+            imageViewClassificationImage.setImageResource( osprey.image )
+        }
+        else if(result == "CEDAR WAXLING"){
+            imageViewClassificationImage.setImageResource( cedarWaxwing.image )
+        }
+        else if(result == "GREAT HORNED OWL"){
+            imageViewClassificationImage.setImageResource( greatHornedOwl.image )
+        }
+        else if(result == "TREE SWALLOW"){
+            imageViewClassificationImage.setImageResource( treeSwallow.image )
+        }
+        else if(result == "BLUE JAY"){
+            imageViewClassificationImage.setImageResource( blueJay.image )
+        }
+        else{
+            imageViewClassificationImage.setImageResource( R.drawable.tweeter_bird )
         }
 
+        val result_1 = "Predicted Noise: $result"
+        Log.d("RESULT", result_1)
+        classificationResult.text = result_1
+
+
+        buttonSubmitForClassification.setOnClickListener {
+        }
     }
 
     fun classifyNoise ( audioFilePath: String ): String? {
