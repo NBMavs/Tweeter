@@ -8,6 +8,8 @@
     android:clickable="true"
     android:focusable="true"
     android:foreground="?selectableItemBackground"
+    app:cardBackgroundColor="@android:color/transparent"
+    app:cardElevation="0dp"
     app:cardCornerRadius="10dp"
     android:descendantFocusability="blocksDescendants"
 
@@ -18,13 +20,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="20dp"
-        android:background="#2196F3">
+        android:background="#33000000">
 
         <ImageButton
             android:id="@+id/list_play_btn"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="#2196F3"
+            android:background="#002196F3"
             android:tint="#ffffff"
             android:layout_margin="10dp"
             app:srcCompat="@drawable/player_play_btn"
@@ -73,7 +75,7 @@
             android:layout_below="@id/list_play_btn"
             android:layout_alignRight="@+id/text_LL"
             android:src="@drawable/ic_delete"
-            android:tint="#B90E0A"
+            android:tint="#aaB90E0A"
 
             />
 

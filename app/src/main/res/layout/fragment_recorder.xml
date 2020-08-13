@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RecorderFragment"
-    android:background="#2196F3">
+    android:background="@drawable/blue_gradient">
 
     <TextView
         android:id="@+id/record_header_text"
@@ -68,7 +68,7 @@
         android:id="@+id/record_btn"
         android:layout_width="215dp"
         android:layout_height="218dp"
-        android:background="#2196F3"
+        android:background="#002196F3"
         android:src="@drawable/record_btn_stopped"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
