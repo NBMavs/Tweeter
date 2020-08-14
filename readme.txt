@@ -12,8 +12,6 @@ Installing:
     From the source page of this repository, copy the url directly after "git clone" (excluding the git clone)
     From android studio splash menu, click “Get from Version Control”
     Make sure that “Repository URL” is selected in the left-hand column
-    Copy and paste the following URL into the URL text box: 
-        https://bitbucket.org/ekeng92/tweeter.git
     Paste in the url copied from the bitbucket repo
     Click "clone" in the bottom right corner
     
