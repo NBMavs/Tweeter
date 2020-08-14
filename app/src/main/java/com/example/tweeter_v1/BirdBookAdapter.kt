@@ -43,8 +43,8 @@ class BirdBookAdapter (var birdsArrayFromDB: MutableList<VerifyClassification.DB
         val tweetIntent = Intent(Intent.ACTION_SEND)
         val c = tweet
         tweetIntent.putExtra(Intent.EXTRA_TEXT, c)
-        tweetIntent.setType("text/plain")
-        val packManager = context.getPackageManager()
+        tweetIntent.type = "text/plain"
+        val packManager = context.packageManager
         val resolvedInfoList =
             packManager.queryIntentActivities(tweetIntent, PackageManager.MATCH_DEFAULT_ONLY)
         var resolved = false
@@ -93,26 +93,27 @@ class BirdBookAdapter (var birdsArrayFromDB: MutableList<VerifyClassification.DB
         init {
 
 
-            //Click listener for classify button
-            birdBookEntryTweetButton.setOnClickListener { View ->
-                tweet =
-                    "I just verified a " + birdsArrayFromDB[position].birdsType + " at " + birdsArrayFromDB[position].location + " on " + birdsArrayFromDB[position].time + " on the Tweeter app!"
-                shareTwitter(tweet)
-                //TwitterActivity.shareTwitter(tweet)
-                Toast.makeText(context, "Clicked TWEET", Toast.LENGTH_SHORT).show()
+                //Click listener for classify button
+                birdBookEntryTweetButton.setOnClickListener { View ->
+                    tweet =
+                        "I just verified a " + birdsArrayFromDB[position].birdsType + " at " + birdsArrayFromDB[position].location + " on " + birdsArrayFromDB[position].time + " on the Tweeter app!"
+                    shareTwitter(tweet)
+                    //TwitterActivity.shareTwitter(tweet)
+                    Toast.makeText(context, "Clicked TWEET", Toast.LENGTH_SHORT).show()
 
-            }
+                }
 
-            birdBookEntryViewMapButton.setOnClickListener {
-                var uri: String = "geo:0,0?q=" + birdsArrayFromDB[position].location
-                Log.d("URI String: ",Uri.parse("$uri").toString())
-                val gmmIntentUri = Uri.parse("$uri")
-                val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
-                mapIntent.setPackage("com.google.android.apps.maps")
-                context.startActivity(mapIntent)
-            }
+                //Click listener for view map button
+                birdBookEntryViewMapButton.setOnClickListener {
+                    var uri: String = "geo:0,0?q=" + birdsArrayFromDB[position].location
+                    Log.d("URI String: ",Uri.parse("$uri").toString())
+                    val gmmIntentUri = Uri.parse("$uri")
+                    val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                    mapIntent.setPackage("com.google.android.apps.maps")
+                    context.startActivity(mapIntent)
+                }
 
-
+                //Click listener for wiki button
                 birdBookEntryWikiButton.setOnClickListener { View ->
                     val wiki: String = getWiki(birdsArrayFromDB[position].birdsType)
                     val uriUrl = Uri.parse(wiki)
@@ -133,7 +134,6 @@ class BirdBookAdapter (var birdsArrayFromDB: MutableList<VerifyClassification.DB
     override fun getItemCount(): Int {
         Log.d("ALL_FILES_SIZE", birdsArrayFromDB.size.toString())
         return birdsArrayFromDB.size
-
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -145,6 +145,7 @@ class BirdBookAdapter (var birdsArrayFromDB: MutableList<VerifyClassification.DB
             birdsArrayFromDB[position].birdsType), null))
     }
 
+    //Returns the drawable image of the bird in question
     private fun getImageDrawable(birdName: String) : Int {
         for(bird in birdsLocal){
             if(bird.name == birdName){
@@ -154,6 +155,7 @@ class BirdBookAdapter (var birdsArrayFromDB: MutableList<VerifyClassification.DB
         return R.drawable.metallic_starling
     }
 
+    //Returns the url
     private fun getWiki(birdName: String) : String {
         for(bird in birdsLocal){
             if(bird.name == birdName){

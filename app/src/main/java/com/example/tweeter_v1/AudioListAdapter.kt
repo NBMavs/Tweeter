@@ -22,6 +22,7 @@ class AudioListAdapter(private val allFiles: ArrayList<File>, private var onPlay
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
 
+        //Initializes ui items on each card
         val list_play_btn: ImageView = itemView.findViewById(id.list_play_btn)
         val list_title: TextView = itemView.findViewById(id.list_title)
         val list_duration: TextView = itemView.findViewById(id.list_duration)
@@ -30,6 +31,8 @@ class AudioListAdapter(private val allFiles: ArrayList<File>, private var onPlay
 
 
         init{
+
+            //Click listener for play button
             list_play_btn.setOnClickListener(this)
 
             //Click listener for classify button
@@ -53,13 +56,9 @@ class AudioListAdapter(private val allFiles: ArrayList<File>, private var onPlay
 
                 }
 
-                else{
-
-                    Toast.makeText(itemView.context,"Add some birds, dude...", Toast.LENGTH_SHORT).show()
-
-                }
             }
 
+            //Click listener for delete button
             list_delete_btn.setOnClickListener {View ->
                 val position: Int = absoluteAdapterPosition
                 Toast.makeText(itemView.context,"You clicked on delete recording ${position + 1}", Toast.LENGTH_SHORT).show()
@@ -86,10 +85,12 @@ class AudioListAdapter(private val allFiles: ArrayList<File>, private var onPlay
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        //Sets name and audio clip duration
         holder.list_title.text = allFiles[position].name
         holder.list_duration.text = getDuration(allFiles[position]).toString()
     }
 
+    // Returns duration of a sound file as a formatted string
     private fun getDuration(file: File): String {
         val mediaMetadataRetriever = MediaMetadataRetriever()
         mediaMetadataRetriever.setDataSource(file.absolutePath)
@@ -101,6 +102,7 @@ class AudioListAdapter(private val allFiles: ArrayList<File>, private var onPlay
         return String.format("%02d:%02d", minutes, seconds)
     }
 
+    // Deletes a file in the arraylist of bird recordings
     private fun onDeleteCLick(position: Int) {
         val file: File = File(allFiles[position].absolutePath)
         file.delete()
@@ -108,6 +110,7 @@ class AudioListAdapter(private val allFiles: ArrayList<File>, private var onPlay
         notifyItemRemoved(position)
     }
 
+    //Interface for play button (it needs to work with the audio list page directly)
     public interface onPlayClick {
         fun onClickListener(file: File, position: Int)
     }
